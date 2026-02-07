@@ -3,96 +3,97 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Вхід • Cardastika</title>
+  <title>Cardastika</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Forum&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles/global.css" />
-  <link rel="stylesheet" href="pages/auth/auth.css" />
   <link rel="stylesheet" href="assets/css/ui-shell.css" />
+  <link rel="stylesheet" href="pages/auth/auth.css" />
 </head>
 
-<body class="app">
-  <main class="screen auth">
-    <section class="welcome" id="welcomeScreen">
-      <h1 class="welcome__title">Cardastika</h1>
-      <p class="welcome__lead">Збери унікальну колоду магічних карт і кинь виклик стихіям.</p>
+<body>
+  <div id="app" class="app">
 
-      <div class="welcome__actions">
-        <button class="btn primary" id="startNewBtn" type="button">Почати гру</button>
-        <button class="btn secondary" id="startLoginBtn" type="button">Вхід для гравців</button>
-      </div>
-    </section>
+    <!-- ============ AUTH SCREEN ============ -->
+    <main id="authScreen" class="screen auth" style="display: none;">
+      <section class="welcome" id="welcomeScreen">
+        <h1 class="welcome__title">Cardastika</h1>
+        <p class="welcome__lead">Збери унікальну колоду магічних карт і кинь виклик стихіям.</p>
 
-    <section class="panel is-hidden" id="authPanel" hidden>
-      <div class="tabs" role="tablist" aria-label="auth tabs">
-        <button class="tab is-active" data-tab="login" role="tab" type="button">Логін</button>
-      </div>
+        <div class="welcome__actions">
+          <button class="btn primary" id="startNewBtn" type="button">Почати гру</button>
+          <button class="btn secondary" id="startLoginBtn" type="button">Вхід для гравців</button>
+        </div>
+      </section>
 
-      <form class="form" id="authForm" autocomplete="off">
-        <div class="field">
-          <label class="label" for="name">Ім'я</label>
-          <input class="input" id="name" name="name" inputmode="text" maxlength="24" placeholder="Напр. Yarik" />
-          <div class="hint">3-24 символи: літери/цифри/._-</div>
+      <section class="panel is-hidden" id="authPanel" hidden>
+        <div class="tabs" role="tablist" aria-label="auth tabs">
+          <button class="tab is-active" data-tab="login" role="tab" type="button">Логін</button>
         </div>
 
-        <div class="field">
-          <label class="label" for="pass">Пароль</label>
-          <input class="input" id="pass" name="pass" type="password" maxlength="64" placeholder="••••••••" />
-          <div class="hint">Мінімум 6 символів</div>
+        <form class="form" id="authForm" autocomplete="off">
+          <div class="field">
+            <label class="label" for="name">Ім'я</label>
+            <input class="input" id="name" name="name" inputmode="text" maxlength="24" placeholder="Напр. Yarik" />
+            <div class="hint">3-24 символи: літери/цифри/._-</div>
+          </div>
+
+          <div class="field">
+            <label class="label" for="pass">Пароль</label>
+            <input class="input" id="pass" name="pass" type="password" maxlength="64" placeholder="••••••••" />
+            <div class="hint">Мінімум 6 символів</div>
+          </div>
+
+          <div class="row">
+            <label class="check">
+              <input type="checkbox" id="remember" checked />
+              <span>Запам'ятати мене</span>
+            </label>
+
+            <button type="button" class="ghost" id="togglePass">Показати</button>
+          </div>
+
+          <div class="msg" id="msg" aria-live="polite"></div>
+
+          <button class="btn primary" id="submitBtn" type="submit">Увійти</button>
+
+          <div class="sub">
+            <span class="sub__text" id="subText">Реєстрація доступна у профілі через кнопку «Зберегти профіль».</span>
+          </div>
+        </form>
+
+        <button class="back" id="backToWelcomeBtn" type="button">Назад</button>
+      </section>
+    </main>
+
+    <!-- ============ MAIN SCREEN (after auth) ============ -->
+    <main id="mainScreen" class="screen" style="display: none;">
+
+      <!-- HUD -->
+      <header id="hud" class="hud">
+        <div class="hud__left">
+          <span class="hud__icon">⚔️</span>
+          <span class="hud__value" id="hudPower">180</span>
         </div>
 
-        <div class="row">
-          <label class="check">
-            <input type="checkbox" id="remember" checked />
-            <span>Запам'ятати мене</span>
-          </label>
-
-          <button type="button" class="ghost" id="togglePass">Показати</button>
+        <div class="hud__right">
+          <div class="hud__pill" title="Silver">
+            <img class="hud__icon" src="assets/icons/coin-silver.svg" alt="Silver" />
+            <span class="hud__value" id="hudSilver">300</span>
+          </div>
+          <div class="hud__pill" title="Diamonds">
+            <img class="hud__icon" src="assets/icons/diamond.svg" alt="Diamonds" />
+            <span class="hud__value" id="hudDiamonds">0</span>
+          </div>
+          <div class="hud__pill" title="Gold">
+            <img class="hud__icon" src="assets/icons/coin-gold.svg" alt="Gold" />
+            <span class="hud__value" id="hudGold">12</span>
+          </div>
         </div>
-
-        <div class="msg" id="msg" aria-live="polite"></div>
-
-        <button class="btn primary" id="submitBtn" type="submit">Увійти</button>
-
-        <div class="sub">
-          <span class="sub__text" id="subText">Реєстрація доступна у профілі через кнопку «Зберегти профіль».</span>
-        </div>
-      </form>
-
-      <button class="back" id="backToWelcomeBtn" type="button">Назад</button>
-    </section>
-  </main>
-  <!-- Hidden app HUD (backup main view) -->
-  <div id="app" class="app" hidden>
-
-    <!-- HUD -->
-    <header id="hud" class="hud">
-      <div class="hud__left">
-        <span class="hud__icon">⚔️</span>
-        <span class="hud__value" id="hudPower">180</span>
-      </div>
-
-      <div class="hud__right">
-        <div class="hud__pill" title="Silver">
-          <img class="hud__icon" src="assets/icons/coin-silver.svg" alt="Silver" />
-          <span class="hud__value" id="hudSilver">300</span>
-        </div>
-        <div class="hud__pill" title="Diamonds">
-          <img class="hud__icon" src="assets/icons/diamond.svg" alt="Diamonds" />
-          <span class="hud__value" id="hudDiamonds">0</span>
-        </div>
-        <div class="hud__pill" title="Gold">
-          <img class="hud__icon" src="assets/icons/coin-gold.svg" alt="Gold" />
-          <span class="hud__value" id="hudGold">12</span>
-        </div>
-      </div>
-    </header>
-
-    <!-- Screen -->
-    <main id="screen" class="screen">
+      </header>
 
       <!-- 2x3 tiles -->
       <section class="tiles">
@@ -169,7 +170,7 @@
     <div id="modalHost" class="modal-host" aria-hidden="true"></div>
 
     <!-- Botbar (3 кнопки) -->
-    <nav id="botbar" class="botbar botbar--3" aria-label="Bottom navigation">
+    <nav id="botbar" class="botbar botbar--3" aria-label="Bottom navigation" style="display: none;">
       <button class="botbar__btn" data-route="home" type="button">
         <span class="botbar__icon" aria-hidden="true"></span>
         <span class="botbar__text">Головна</span>
@@ -187,6 +188,36 @@
     </nav>
 
   </div>
+
+  <script type="module">
+    // Check if user has active session
+    const userSession = localStorage.getItem('cardastika:player');
+    const authScreen = document.getElementById('authScreen');
+    const mainScreen = document.getElementById('mainScreen');
+    const botbar = document.getElementById('botbar');
+
+    function showAuthScreen() {
+      authScreen.style.display = '';
+      mainScreen.style.display = 'none';
+      botbar.style.display = 'none';
+    }
+
+    function showMainScreen() {
+      authScreen.style.display = 'none';
+      mainScreen.style.display = '';
+      botbar.style.display = '';
+    }
+
+    // Show appropriate screen based on session
+    if (userSession) {
+      showMainScreen();
+    } else {
+      showAuthScreen();
+    }
+
+    // Export for auth script
+    window.screenController = { showAuthScreen, showMainScreen };
+  </script>
 
   <script type="module" src="pages/auth/auth.js"></script>
   <script type="module" defer src="src/ui-shell.js"></script>

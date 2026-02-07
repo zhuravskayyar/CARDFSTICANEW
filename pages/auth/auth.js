@@ -128,6 +128,7 @@ togglePassBtn?.addEventListener("click", () => {
 function setActive(name) {
   localStorage.setItem(ACTIVE_KEY, name);
   localStorage.setItem(REMEMBER_KEY, rememberEl && rememberEl.checked ? "1" : "0");
+  localStorage.setItem("cardastika:player", name);
 
   if (window.AccountSystem?.setActive) {
     try {
@@ -144,16 +145,12 @@ function redirectAfterAuth() {
     window.location.href = "../profile/profile.html";
     return;
   }
-  // If the page contains an embedded `#app` (HUD), show it instead of navigating.
-  const app = document.getElementById("app");
-  if (app) {
-    app.hidden = false;
-    // hide auth UI
-    showAuth(false);
-    // If ui-shell initialized earlier it will wire up UI; otherwise load fallback.
-    return;
+  // Show main screen instead of redirecting
+  if (window.screenController?.showMainScreen) {
+    window.screenController.showMainScreen();
+  } else {
+    window.location.href = "../../index.html";
   }
-  window.location.href = "../../index.html";
 }
 
 function rarityToNumber(raw) {
@@ -262,12 +259,18 @@ startNewBtn?.addEventListener("click", async () => {
     localStorage.setItem("cardastika:diamonds", String(STARTER_DIAMONDS));
     localStorage.setItem("cardastika:silver", String(STARTER_SILVER));
     localStorage.setItem("cardastika:gems", String(STARTER_SILVER));
+    // Set a session flag to show main screen
+    localStorage.setItem("cardastika:player", "new-game");
   } catch (err) {
     console.warn("[auth] failed to prepare starter state for new game", err);
   }
 
-  // If HUD is embedded, reveal it instead of navigating away.
-  redirectAfterAuth();
+  // Show main screen instead of redirecting
+  if (window.screenController?.showMainScreen) {
+    window.screenController.showMainScreen();
+  } else {
+    window.location.href = "../../index.html";
+  }
 });
 
 startLoginBtn?.addEventListener("click", () => {
