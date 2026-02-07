@@ -221,15 +221,39 @@ function checkArenaAccess() {
     if (main) {
       main.innerHTML = `
         <div class="arena-locked">
-          <div class="arena-locked__icon">🔒</div>
-          <div class="arena-locked__title">Арена заблокована</div>
-          <div class="arena-locked__text">
-            Для доступу до арени потрібен рейтинг дуелей <strong>${ARENA_MIN_DUEL_RATING}</strong>
+          <div class="arena-locked__header">АРЕНА</div>
+          
+          <div class="arena-locked__info">
+            <p class="arena-locked__desc">Мінімальний рейтинг дуелей, який ви повинні досягти, щоб отримати доступ на арену:</p>
+            
+            <div class="arena-locked__rating-box">
+              <img class="arena-locked__league-icon" src="../../assets/icons/leagues/league-purple-3.svg" alt="Ліга">
+              <span class="arena-locked__rating-value">${ARENA_MIN_DUEL_RATING}</span>
+            </div>
+            
+            <p class="arena-locked__tagline">Тільки найсильніші отримують право змагатися на арені!</p>
+            
+            <a href="arena-rules.html" class="arena-locked__rules-link">» Правила арени «</a>
           </div>
-          <div class="arena-locked__current">
-            Ваш поточний рейтинг: <strong>${duelRating}</strong>
+          
+          <div class="arena-locked__menu">
+            <a href="../tournament/tournament.html" class="arena-menu-btn">
+              <span class="arena-menu-btn__icon">🏆</span>
+              <span class="arena-menu-btn__text">Турнір</span>
+            </a>
+            <a href="arena.html" class="arena-menu-btn arena-menu-btn--disabled">
+              <span class="arena-menu-btn__icon">📊</span>
+              <span class="arena-menu-btn__text">Рейтинг арени</span>
+            </a>
+            <a href="../tasks/tasks.html" class="arena-menu-btn">
+              <span class="arena-menu-btn__icon">📋</span>
+              <span class="arena-menu-btn__text">Завдання</span>
+            </a>
+            <a href="../shop/shop.html" class="arena-menu-btn">
+              <span class="arena-menu-btn__icon">🛒</span>
+              <span class="arena-menu-btn__text">Крамниця</span>
+            </a>
           </div>
-          <a href="../duel/duel.html" class="arena-locked__btn">Перейти до дуелей</a>
         </div>
       `;
       
@@ -239,42 +263,109 @@ function checkArenaAccess() {
         .arena-locked {
           display: flex;
           flex-direction: column;
+          min-height: 100%;
+          gap: 1rem;
+        }
+        .arena-locked__header {
+          background: linear-gradient(90deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.15));
+          border: 1px solid rgba(255, 215, 0, 0.5);
+          border-radius: 4px;
+          padding: 0.75rem 1rem;
+          text-align: center;
+          font-family: 'Forum', serif;
+          font-size: 1.5rem;
+          font-weight: 400;
+          color: #ffd700;
+          text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+          letter-spacing: 0.1em;
+        }
+        .arena-locked__info {
+          background: linear-gradient(180deg, rgba(80, 40, 60, 0.6) 0%, rgba(60, 30, 50, 0.8) 100%);
+          border: 1px solid rgba(180, 100, 140, 0.4);
+          border-radius: 8px;
+          padding: 1.5rem 1rem;
+          text-align: center;
+        }
+        .arena-locked__desc {
+          font-family: 'EB Garamond', serif;
+          font-size: 1rem;
+          color: #d4a5c0;
+          margin: 0 0 1rem 0;
+          line-height: 1.5;
+        }
+        .arena-locked__rating-box {
+          display: flex;
           align-items: center;
           justify-content: center;
-          padding: 48px 24px;
-          text-align: center;
-          gap: 16px;
+          gap: 0.75rem;
+          background: rgba(30, 30, 50, 0.8);
+          border: 2px solid rgba(100, 140, 200, 0.5);
+          border-radius: 8px;
+          padding: 0.75rem 2rem;
+          margin: 0 auto 1rem auto;
+          width: fit-content;
         }
-        .arena-locked__icon {
-          font-size: 4rem;
+        .arena-locked__league-icon {
+          width: 32px;
+          height: 32px;
         }
-        .arena-locked__title {
+        .arena-locked__rating-value {
+          font-family: 'Forum', serif;
           font-size: 1.5rem;
           font-weight: 700;
-          color: #ff6b6b;
+          color: #60a5fa;
         }
-        .arena-locked__text {
-          font-size: 1rem;
-          color: #ccc;
-        }
-        .arena-locked__current {
+        .arena-locked__tagline {
+          font-family: 'EB Garamond', serif;
           font-size: 0.95rem;
-          color: #888;
+          font-style: italic;
+          color: #c4a080;
+          margin: 0 0 1rem 0;
         }
-        .arena-locked__btn {
+        .arena-locked__rules-link {
           display: inline-block;
-          margin-top: 16px;
-          padding: 12px 32px;
-          background: linear-gradient(135deg, #60a5fa, #3b82f6);
-          color: #fff;
+          font-family: 'EB Garamond', serif;
+          font-size: 1rem;
+          color: #60a5fa;
           text-decoration: none;
+          transition: color 0.2s;
+        }
+        .arena-locked__rules-link:hover {
+          color: #93c5fd;
+          text-decoration: underline;
+        }
+        .arena-locked__menu {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          margin-top: auto;
+        }
+        .arena-menu-btn {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          padding: 1rem 1.25rem;
+          background: url('../../assets/textures/btnwood.png') center/cover;
+          border: 1px solid rgba(180, 140, 60, 0.5);
           border-radius: 8px;
-          font-weight: 600;
+          text-decoration: none;
           transition: transform 0.15s, box-shadow 0.15s;
         }
-        .arena-locked__btn:hover {
-          transform: scale(1.05);
-          box-shadow: 0 4px 16px rgba(59,130,246,0.4);
+        .arena-menu-btn:hover {
+          transform: scale(1.02);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .arena-menu-btn--disabled {
+          opacity: 0.5;
+          pointer-events: none;
+        }
+        .arena-menu-btn__icon {
+          font-size: 1.5rem;
+        }
+        .arena-menu-btn__text {
+          font-family: 'EB Garamond', serif;
+          font-size: 1.1rem;
+          color: #e0d0b0;
         }
       `;
       document.head.appendChild(style);
