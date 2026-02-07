@@ -2,6 +2,7 @@
   let ENEMY_PROF = {};
   let CURRENT_DUEL = null;
   let selectedPlayerCard = null;
+  let isTurnAnimating = false;
 
   const URL_PARAMS = new URLSearchParams(location.search || "");
   const BATTLE_MODE = String(URL_PARAMS.get("mode") || "").toLowerCase();
@@ -706,54 +707,65 @@
   }
 
   function bindUI(){
-    // клік по своїй карті = дзеркальна атака 1в1 (слот i -> слот i)
-    els.playerBtns.forEach((btn, idx)=>{
-      btn.addEventListener("click", ()=>{
-        if (!CURRENT_DUEL || CURRENT_DUEL.finished) return;
+    function runAttackAnimation(idx){
+      const attackerBtn = els.playerBtns[idx];
+      const defenderBtn = els.enemyBtns[idx];
+      if (!attackerBtn || !defenderBtn) return;
 
-        // якщо слот порожній — пробуємо дотягнути з колоди і перерендерити
-        if (!CURRENT_DUEL.player.hand[idx] || !CURRENT_DUEL.enemy.hand[idx]) {
-          ensureSlotCard(CURRENT_DUEL.player, idx);
-          ensureSlotCard(CURRENT_DUEL.enemy, idx);
-          renderAll();
-          return;
-        }
+      attackerBtn.classList.remove("is-attacking");
+      defenderBtn.classList.remove("is-hit");
+      // Restart CSS animation on rapid repeated attacks.
+      void attackerBtn.offsetWidth;
+      void defenderBtn.offsetWidth;
 
+      attackerBtn.classList.add("is-attacking");
+      setTimeout(() => defenderBtn.classList.add("is-hit"), 120);
+      setTimeout(() => {
+        attackerBtn.classList.remove("is-attacking");
+        defenderBtn.classList.remove("is-hit");
+      }, 320);
+    }
+
+    function performTurnWithAnimation(idx){
+      if (!CURRENT_DUEL || CURRENT_DUEL.finished || isTurnAnimating) return;
+
+      // if slot is empty, refill first and do not spend animation on an invalid turn
+      if (!CURRENT_DUEL.player.hand[idx] || !CURRENT_DUEL.enemy.hand[idx]) {
+        ensureSlotCard(CURRENT_DUEL.player, idx);
+        ensureSlotCard(CURRENT_DUEL.enemy, idx);
+        renderAll();
+        return;
+      }
+
+      isTurnAnimating = true;
+      runAttackAnimation(idx);
+
+      setTimeout(() => {
         try {
           CURRENT_DUEL = window.playTurn(CURRENT_DUEL, idx);
         } catch (e) {
           console.error("playTurn failed:", e);
           alert("Помилка ходу. Відкрий консоль (F12) щоб побачити деталі.");
+          isTurnAnimating = false;
           return;
         }
 
         renderAll();
-        if (CURRENT_DUEL.finished) endBattle();
-      });
+        if (CURRENT_DUEL.finished) {
+          endBattle();
+        }
+        isTurnAnimating = false;
+      }, 170);
+    }
+
+    // клік по своїй карті = дзеркальна атака 1в1 (слот i -> слот i)
+    els.playerBtns.forEach((btn, idx)=>{
+      btn.addEventListener("click", ()=> performTurnWithAnimation(idx));
     });
 
     // клик по карте врага теперь зеркальный — слот i атакует слот i
     els.enemyBtns.forEach((btn, idx)=>{
-      btn.addEventListener("click", ()=>{
-        if (!CURRENT_DUEL || CURRENT_DUEL.finished) return;
-        if (!CURRENT_DUEL.player.hand[idx] || !CURRENT_DUEL.enemy.hand[idx]) {
-          ensureSlotCard(CURRENT_DUEL.player, idx);
-          ensureSlotCard(CURRENT_DUEL.enemy, idx);
-          renderAll();
-          return;
-        }
-
-        try {
-          CURRENT_DUEL = window.playTurn(CURRENT_DUEL, idx);
-        } catch (e) {
-          console.error("playTurn failed:", e);
-          alert("Помилка ходу. Відкрий консоль (F12) щоб побачити деталі.");
-          return;
-        }
-
-        renderAll();
-        if (CURRENT_DUEL.finished) endBattle();
-      });
+      btn.addEventListener("click", ()=> performTurnWithAnimation(idx));
     });
   }
 

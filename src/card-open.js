@@ -400,6 +400,12 @@
       if (card.rarity) frame.classList.add(card.rarity);
     }
 
+    const powerIcon = $("cardPowerIcon");
+    if (powerIcon) {
+      powerIcon.classList.remove("rarity-1", "rarity-2", "rarity-3", "rarity-4", "rarity-5", "rarity-6");
+      powerIcon.classList.add(card.rarity || "rarity-1");
+    }
+
     const art = $("cardArt");
     if (art) {
       const url = String(card?.art || "").trim() || buildPlaceholderArt(card?.element, card?.title);

@@ -43,12 +43,12 @@
       <!-- Daily Bonus Header -->
       <div class="tasks-header">
         <div class="tasks-header__text">
-          Виконайте сьогодні 6 завдань, і завтра нагорода подвоїться!
+          Окремі ігрові завдання (не кампанія): виконуйте, забирайте нагороди та бонуси арени.
         </div>
         <div class="tasks-header__multiplier">
-          <span class="tasks-header__mult">x1</span>
-          <span class="tasks-header__arrow">→</span>
-          <span class="tasks-header__mult tasks-header__mult--next">x2</span>
+          <span class="tasks-header__mult">x3</span>
+          <span class="tasks-header__arrow">•</span>
+          <span class="tasks-header__mult tasks-header__mult--next">множник нагород</span>
         </div>
       </div>
 
@@ -93,41 +93,34 @@
     document.addEventListener('DOMContentLoaded', () => {
       const CLAIMED_KEY = 'cardastika:tasks:claimed';
       const PROGRESS_KEY = 'cardastika:tasks:progress';
-
-      const ACTS = [
+      const TASKS = [
+        { id: 't_buy_cards_5', title: 'Купіть 5 карт', target: 5, start: 5, rewardDiamonds: 2, href: '../shop/shop.html', goLabel: 'Крамниця', multiplier: 3 },
+        { id: 't_upgrade_battle_1', title: 'Покращте бойову карту 1 раз', target: 1, start: 1, rewardDiamonds: 1, href: '../deck/deck.html', goLabel: 'Бойова колода', multiplier: 3 },
+        { id: 't_win_duel_20', title: 'Виграйте 20 дуелей', target: 20, start: 11, rewardDiamonds: 1, href: '../duel/duel.html', goLabel: 'Дуелі', multiplier: 3 },
+        { id: 't_play_duel_30', title: 'Проведіть 30 дуелей', target: 30, start: 11, rewardDiamonds: 1, href: '../duel/duel.html', goLabel: 'Дуелі', multiplier: 3 },
+        { id: 't_campaign_cards_3', title: 'Здобудьте 3 карти в кампанії', target: 3, start: 1, rewardDiamonds: 1, href: '../campaign/campaign.html', goLabel: 'Кампанія', multiplier: 3 },
+        { id: 't_absorb_cards_10', title: 'Поглиніть 10 карт', target: 10, start: 4, rewardDiamonds: 1, href: '../deck/deck.html', goLabel: 'Бойова колода', multiplier: 3 },
         {
-          id: 'act1',
-          title: 'Акт I — Міський плац',
-          intro: 'Перші випробування на площі: дуелі, базова колода та крамниця.',
-          boss: 'Бос: Вартовий Плацу',
-          tasks: [
-            { id: 'a1_shop_4', title: 'Купіть 4 карти на ярмарку', target: 4, start: 0, rewardGold: 100, rewardDiamonds: 1, href: '../shop/shop.html', goLabel: 'Крамниця' },
-            { id: 'a1_duel_10', title: 'Зіграйте 10 дуелей на міському плацу', target: 10, start: 0, rewardGold: 100, rewardDiamonds: 1, href: '../duel/duel.html', goLabel: 'Дуелі' },
-            { id: 'a1_upgrade_3', title: 'Удоскональте карти 3 рази у коваля', target: 3, start: 0, rewardGold: 100, rewardDiamonds: 1, href: '../deck/deck.html', goLabel: 'Колода' },
-            { id: 'a1_profile_1', title: 'Збережіть профіль', target: 1, start: 0, rewardGold: 30, rewardDiamonds: 1, href: '../profile/profile.html', goLabel: 'Профіль' },
-          ],
+          id: 't_buy_gold_200',
+          title: 'Купіть 200 золота',
+          target: 200,
+          start: 0,
+          rewardDiamonds: 20,
+          href: '../shop/buy-gold.html',
+          goLabel: 'Купити золото',
+          multiplier: 3,
+          extraRewards: ['+ зіграних арен: 2', '+ перемог на арені: 1', '+ здоров\'я дракона +80'],
         },
         {
-          id: 'act2',
-          title: 'Акт II — Мито печер і згаслі смолоскипи',
-          intro: 'Стежки ведуть глибше. Під каменем — мито, караул і перші тіні варти.',
-          boss: 'Бос: Капітан Підземної Варти',
-          tasks: [
-            { id: 'a2_shop_6', title: 'Купіть 6 карт у контрабандистів', target: 6, start: 0, rewardGold: 150, rewardDiamonds: 2, href: '../shop/shop.html', goLabel: 'Крамниця' },
-            { id: 'a2_duel_12', title: 'Зіграйте 12 дуелей у «Сірому турнірі»', target: 12, start: 0, rewardGold: 150, rewardDiamonds: 2, href: '../duel/duel.html', goLabel: 'Дуелі' },
-            { id: 'a2_campaign_4', title: 'Виборіть 4 перемоги в кампанії', target: 4, start: 0, rewardGold: 120, rewardDiamonds: 2, href: '../campaign/campaign.html', goLabel: 'Кампанія' },
-          ],
-        },
-        {
-          id: 'act3',
-          title: 'Акт III — Цитадель бур',
-          intro: 'Останній рубіж: важкі дуелі і максимальні ставки за кожну помилку.',
-          boss: 'Бос: Магістр Штормової Цитаделі',
-          tasks: [
-            { id: 'a3_duel_20', title: 'Виграйте 20 дуелей проти еліти', target: 20, start: 0, rewardGold: 250, rewardDiamonds: 3, href: '../duel/duel.html', goLabel: 'Дуелі' },
-            { id: 'a3_upgrade_8', title: 'Удоскональте карти 8 разів', target: 8, start: 0, rewardGold: 220, rewardDiamonds: 3, href: '../deck/deck.html', goLabel: 'Колода' },
-            { id: 'a3_claim_5', title: 'Отримайте 5 нагород за завдання', target: 5, start: 0, rewardGold: 180, rewardDiamonds: 3, href: '../tasks/tasks.html', goLabel: 'Завдання' },
-          ],
+          id: 't_buy_gold_1000',
+          title: 'Купіть 1000 золота',
+          target: 1000,
+          start: 0,
+          rewardDiamonds: 50,
+          href: '../shop/buy-gold.html',
+          goLabel: 'Купити золото',
+          multiplier: 3,
+          extraRewards: ['+ зіграних арен: 6', '+ перемог на арені: 3', '+ здоров\'я дракона +320'],
         },
       ];
 
@@ -152,53 +145,19 @@
         return `<span class="task-reward-inline"><img src="${icon}" alt="" class="icon icon--gold"><span class="task-reward__value">${value}</span></span>`;
       }
 
-      function actTaskIds(act) {
-        return (act?.tasks || []).map((t) => t.id);
-      }
-
       function isTaskComplete(progressMap, task) {
         const current = Math.max(0, Number(progressMap?.[task.id] ?? 0));
         return current >= Math.max(1, Number(task.target || 1));
       }
 
-      function isTaskClaimed(claimedMap, taskId) {
-        return Boolean(claimedMap?.[taskId]);
-      }
-
-      function isActClaimed(claimedMap, act) {
-        const ids = actTaskIds(act);
-        return ids.length > 0 && ids.every((id) => Boolean(claimedMap?.[id]));
-      }
-
-      function getActiveActIndex(claimedMap) {
-        for (let i = 0; i < ACTS.length; i += 1) {
-          if (!isActClaimed(claimedMap, ACTS[i])) return i;
-        }
-        return ACTS.length - 1;
-      }
-
       function ensureState() {
         const progress = readJson(PROGRESS_KEY, {});
-        const claimedRaw = readJson(CLAIMED_KEY, {});
-        const claimed = { ...claimedRaw };
+        const claimed = readJson(CLAIMED_KEY, {});
 
-        // Migration from old ids (task1Progress..task4Progress) to act1 ids.
-        const legacyToNew = {
-          task1Progress: 'a1_shop_4',
-          task2Progress: 'a1_duel_10',
-          task3Progress: 'a1_upgrade_3',
-          task4Progress: 'a1_profile_1',
-        };
-        Object.entries(legacyToNew).forEach(([legacyId, newId]) => {
-          if (claimedRaw?.[legacyId]) claimed[newId] = true;
-        });
-
-        ACTS.forEach((act) => {
-          act.tasks.forEach((task) => {
-            if (!Number.isFinite(Number(progress[task.id]))) {
-              progress[task.id] = Math.max(0, Number(task.start || 0));
-            }
-          });
+        TASKS.forEach((task) => {
+          if (!Number.isFinite(Number(progress[task.id]))) {
+            progress[task.id] = Math.max(0, Number(task.start || 0));
+          }
         });
 
         writeJson(PROGRESS_KEY, progress);
@@ -207,12 +166,7 @@
       }
 
       function grantRewards(task) {
-        const gold = Math.max(0, Number(task.rewardGold || 0));
         const diamonds = Math.max(0, Number(task.rewardDiamonds || 0));
-        if (gold > 0) {
-          const cur = Number(localStorage.getItem('cardastika:gold') || 0) || 0;
-          localStorage.setItem('cardastika:gold', String(Math.max(0, cur + gold)));
-        }
         if (diamonds > 0) {
           const cur = Number(localStorage.getItem('cardastika:diamonds') || 0) || 0;
           localStorage.setItem('cardastika:diamonds', String(Math.max(0, cur + diamonds)));
@@ -221,49 +175,41 @@
 
       function render() {
         const { progress, claimed } = ensureState();
-        const activeActIndex = getActiveActIndex(claimed);
-        const act = ACTS[activeActIndex];
-        if (!tasksList || !act) return;
+        if (!tasksList) return;
 
-        const allDone = ACTS.every((a) => isActClaimed(claimed, a));
-        if (allDone && activeActIndex === ACTS.length - 1 && isActClaimed(claimed, act)) {
-          tasksList.innerHTML = `
-            <section class="tasks-act">
-              <div class="tasks-act__head">
-                <h2 class="tasks-act__title">Усі акти завершено</h2>
-                <p class="tasks-act__intro">Вітаємо! Ви пройшли всі доступні акти кампанії завдань.</p>
-                <p class="tasks-act__boss">Очікуйте нові акти в наступних оновленнях.</p>
-              </div>
-            </section>
-          `;
-          if (completedEl) completedEl.textContent = String(act.tasks.length);
-          return;
-        }
-
-        const itemsHtml = act.tasks.map((task) => {
+        const itemsHtml = TASKS.map((task) => {
           const current = Math.max(0, Number(progress?.[task.id] ?? 0));
           const target = Math.max(1, Number(task.target || 1));
           const pct = Math.max(0, Math.min(100, Math.round((current / target) * 100)));
           const complete = current >= target;
-          const claimedTask = isTaskClaimed(claimed, task.id);
+          const claimedTask = Boolean(claimed?.[task.id]);
           const cardClass = `task-item${complete ? ' is-complete' : ''}${claimedTask ? ' is-claimed' : ''}`;
+          const extraHtml = Array.isArray(task.extraRewards) && task.extraRewards.length
+            ? `
+              <div class="task-extra">
+                <div class="task-extra__title">Подарунки за завдання:</div>
+                ${task.extraRewards.map((line) => `<div class="task-extra__line">${line}</div>`).join('')}
+              </div>
+            `
+            : '';
           return `
             <div class="${cardClass}" data-task-id="${task.id}">
               <div class="task-header">
                 <h3 class="task-title">${task.title}</h3>
+                <span class="task-mult">x${task.multiplier || 1}</span>
               </div>
               <div class="task-progress">
-                <span>Прогрес: <b id="${task.id}Progress">${current} з ${target}</b></span>
+                <span>${complete ? '<b>Виконано!</b>' : `Прогрес: <b id="${task.id}Progress">${current} з ${target}</b>`}</span>
                 <span class="task-rewards-wrap">
-                  ${rewardPill('../../assets/icons/coin-gold.svg', task.rewardGold)}
-                  ${rewardPill('../../assets/icons/diamond.svg', task.rewardDiamonds)}
+                  Нагорода: ${rewardPill('../../assets/icons/diamond.svg', task.rewardDiamonds)}
                 </span>
               </div>
               <div class="task-bar"><i style="width:${pct}%"></i></div>
+              ${extraHtml}
               <div class="task-actions">
-                <button class="task-btn task-btn--go" data-href="${task.href}" ${complete ? 'hidden' : ''}><span>${task.goLabel}</span></button>
+                <button class="task-btn task-btn--go" data-href="${task.href}" ${complete ? 'hidden' : ''}><span>${task.goLabel || 'Відкрити'}</span></button>
                 <button class="task-btn task-btn--claim" data-task-id="${task.id}" ${complete ? '' : 'hidden disabled'}>
-                  <span>${claimedTask ? 'Отримано' : 'Забрати'}</span>
+                  <span>${claimedTask ? 'Отримано' : 'Забрати нагороду'}</span>
                 </button>
               </div>
             </div>
@@ -271,18 +217,18 @@
         }).join('');
 
         tasksList.innerHTML = `
-          <section class="tasks-act" data-act-id="${act.id}">
+          <section class="tasks-act" data-act-id="daily">
             <div class="tasks-act__head">
-              <h2 class="tasks-act__title">${act.title}</h2>
-              <p class="tasks-act__intro">${act.intro}</p>
-              <p class="tasks-act__boss">${act.boss}</p>
+              <h2 class="tasks-act__title">Щоденні завдання</h2>
+              <p class="tasks-act__intro">Список завдань оновлено та адаптовано окремо від кампанії.</p>
+              <p class="tasks-act__boss">Виконуйте в будь-якому порядку.</p>
             </div>
             ${itemsHtml}
           </section>
         `;
 
         let doneCount = 0;
-        act.tasks.forEach((task) => {
+        TASKS.forEach((task) => {
           if (isTaskComplete(progress, task)) doneCount += 1;
         });
         if (completedEl) completedEl.textContent = String(doneCount);
@@ -301,8 +247,7 @@
           if (!claimBtn || claimBtn.disabled) return;
 
           const taskId = claimBtn.dataset.taskId;
-          const act = ACTS.find((a) => a.tasks.some((t) => t.id === taskId));
-          const task = act?.tasks.find((t) => t.id === taskId);
+          const task = TASKS.find((t) => t.id === taskId);
           if (!task) return;
 
           const progress = readJson(PROGRESS_KEY, {});
@@ -323,7 +268,7 @@
       window.TaskActs = {
         add(taskId, amount = 1) {
           const progress = readJson(PROGRESS_KEY, {});
-          const task = ACTS.flatMap((a) => a.tasks).find((t) => t.id === taskId);
+          const task = TASKS.find((t) => t.id === taskId);
           if (!task) return false;
           const cur = Math.max(0, Number(progress[taskId] || 0));
           const next = Math.min(task.target, cur + Math.max(0, Number(amount) || 0));
@@ -334,7 +279,7 @@
         },
         set(taskId, value = 0) {
           const progress = readJson(PROGRESS_KEY, {});
-          const task = ACTS.flatMap((a) => a.tasks).find((t) => t.id === taskId);
+          const task = TASKS.find((t) => t.id === taskId);
           if (!task) return false;
           const next = Math.max(0, Math.min(task.target, Number(value) || 0));
           progress[taskId] = next;
@@ -344,10 +289,9 @@
         },
         state() {
           return {
-            acts: ACTS,
+            tasks: TASKS,
             progress: readJson(PROGRESS_KEY, {}),
             claimed: readJson(CLAIMED_KEY, {}),
-            activeActIndex: getActiveActIndex(readJson(CLAIMED_KEY, {})),
           };
         },
         render,

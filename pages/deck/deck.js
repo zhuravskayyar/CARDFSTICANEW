@@ -217,8 +217,22 @@ function canReachNextLevelByAbsorb({ levelsData, card, candidatesTotalElements }
 }
 
 async function render() {
-  const [, levelsData] = await Promise.all([ensureCardCatalogLoaded(), loadCardLevelsData()]);
-  migrateActiveCards(levelsData);
+  let levelsData = { byLevel: new Map(), maxLevel: 180 };
+  try {
+    await ensureCardCatalogLoaded();
+  } catch (e) {
+    console.warn("[deck] card catalog unavailable, fallback to local data", e);
+  }
+  try {
+    levelsData = await loadCardLevelsData();
+  } catch (e) {
+    console.warn("[deck] cardLevels unavailable, fallback to local deck render", e);
+  }
+  try {
+    migrateActiveCards(levelsData);
+  } catch (e) {
+    console.warn("[deck] migrateActiveCards failed", e);
+  }
   const buttons = Array.from(document.querySelectorAll(".deck-grid .ref-card"));
   if (!buttons.length) return;
 

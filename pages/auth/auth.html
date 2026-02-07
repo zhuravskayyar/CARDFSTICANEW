@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="uk">
 <head>
   <meta charset="utf-8" />
@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Forum&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Forum&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="../../styles/global.css" />
   <link rel="stylesheet" href="./auth.css" />
@@ -15,22 +15,26 @@
 
 <body class="app">
   <main class="screen auth">
-    <header class="hud">
-      <div class="hud__title">Cardastika</div>
-      <div class="hud__subtitle">Вхід до акаунту</div>
-    </header>
+    <section class="welcome" id="welcomeScreen">
+      <h1 class="welcome__title">Cardastika</h1>
+      <p class="welcome__lead">Збери унікальну колоду магічних карт і кинь виклик стихіям.</p>
 
-    <section class="panel">
+      <div class="welcome__actions">
+        <button class="btn primary" id="startNewBtn" type="button">Почати гру</button>
+        <button class="btn secondary" id="startLoginBtn" type="button">Вхід для гравців</button>
+      </div>
+    </section>
+
+    <section class="panel is-hidden" id="authPanel" hidden>
       <div class="tabs" role="tablist" aria-label="auth tabs">
-        <button class="tab is-active" data-tab="login" role="tab">Логін</button>
-        <button class="tab" data-tab="register" role="tab">Реєстрація</button>
+        <button class="tab is-active" data-tab="login" role="tab" type="button">Логін</button>
       </div>
 
       <form class="form" id="authForm" autocomplete="off">
         <div class="field">
-          <label class="label" for="name">Імʼя</label>
+          <label class="label" for="name">Ім'я</label>
           <input class="input" id="name" name="name" inputmode="text" maxlength="24" placeholder="Напр. Yarik" />
-          <div class="hint">3–24 символи: літери/цифри/._-</div>
+          <div class="hint">3-24 символи: літери/цифри/._-</div>
         </div>
 
         <div class="field">
@@ -42,7 +46,7 @@
         <div class="row">
           <label class="check">
             <input type="checkbox" id="remember" checked />
-            <span>Запамʼятати мене</span>
+            <span>Запам'ятати мене</span>
           </label>
 
           <button type="button" class="ghost" id="togglePass">Показати</button>
@@ -53,14 +57,12 @@
         <button class="btn primary" id="submitBtn" type="submit">Увійти</button>
 
         <div class="sub">
-          <span class="sub__text" id="subText">Немає акаунту? Перемкнись на “Реєстрація”.</span>
+          <span class="sub__text" id="subText">Реєстрація доступна у профілі через кнопку «Зберегти профіль».</span>
         </div>
       </form>
-    </section>
 
-    <footer class="foot">
-      <div class="foot__note">Локальна авторизація (без серверу). Пароль зберігається як хеш.</div>
-    </footer>
+      <button class="back" id="backToWelcomeBtn" type="button">Назад</button>
+    </section>
   </main>
 
   <script type="module" src="./auth.js"></script>

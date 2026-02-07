@@ -765,8 +765,11 @@ function renderReadyBundles({ state, now }) {
       `<h4 class="shop-card__name">${bundle.title}</h4>` +
       `<p class="shop-card__desc">После покупки баннер набора исчезнет на 24 часа.</p>` +
     `</div>` +
-    `<div class="shop-card__footer"><span class="shop-card__price">${bundle.priceGold}</span><img class="shop-card__currency" src="../../assets/icons/coin-gold.svg" alt="Gold" /></div>` +
-    `<button class="shop-card__btn" type="button">Купить</button>`;
+    `<button class="shop-card__btn" type="button">` +
+      `<span class="shop-card__btn-label">Купить за</span> ` +
+      `<img class="shop-card__btn-coin" data-btn-currency-icon src="../../assets/icons/coin-gold.svg" alt=""> ` +
+      `<span class="shop-card__btn-price" data-btn-price>${bundle.priceGold}</span>` +
+    `</button>`;
 
   host.appendChild(card);
 }

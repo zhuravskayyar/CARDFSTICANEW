@@ -1,11 +1,9 @@
-// auth.js — local login/register (name+password).
-// Пароль зберігається як SHA-256 хеш.
+﻿import "../../src/account.js";
 
-import "../../src/account.js";
-
-const DB_KEY = "cardastika:auth:users"; // { [name]: { passHash, created } }
-const ACTIVE_KEY = "cardastika:auth:active"; // active username
+const DB_KEY = "cardastika:auth:users";
+const ACTIVE_KEY = "cardastika:auth:active";
 const REMEMBER_KEY = "cardastika:auth:remember";
+const FIRST_OPEN_KEY = "cardastika:onboarding:seen";
 
 const STARTER_DECK_SIZE = 9;
 const STARTER_CARD_POWER = 12;
@@ -28,6 +26,12 @@ const RARITY_TO_NUM = {
   "rarity-6": 6,
 };
 
+const welcomeScreen = document.getElementById("welcomeScreen");
+const authPanel = document.getElementById("authPanel");
+const startNewBtn = document.getElementById("startNewBtn");
+const startLoginBtn = document.getElementById("startLoginBtn");
+const backToWelcomeBtn = document.getElementById("backToWelcomeBtn");
+
 const form = document.getElementById("authForm");
 const nameEl = document.getElementById("name");
 const passEl = document.getElementById("pass");
@@ -35,14 +39,21 @@ const rememberEl = document.getElementById("remember");
 const msgEl = document.getElementById("msg");
 const submitBtn = document.getElementById("submitBtn");
 const subText = document.getElementById("subText");
-
-const tabs = [...document.querySelectorAll(".tab")];
 const togglePassBtn = document.getElementById("togglePass");
 
-let mode = "login"; // "login" | "register"
+const params = new URLSearchParams(location.search);
+const from = String(params.get("from") || "").toLowerCase().trim();
 
 function clamp(v, a, b) {
   return Math.max(a, Math.min(b, v));
+}
+
+function markOnboardingSeen() {
+  try {
+    localStorage.setItem(FIRST_OPEN_KEY, "1");
+  } catch {
+    // ignore
+  }
 }
 
 function setMsg(text, kind = "") {
@@ -71,7 +82,6 @@ function normName(v) {
 }
 
 function validName(name) {
-  // 3–24, лат/укр/цифри/._-
   if (name.length < 3 || name.length > 24) return false;
   return /^[a-zA-Z0-9._\-А-Яа-яІіЇїЄєҐґ]+$/.test(name);
 }
@@ -87,23 +97,22 @@ async function sha256(text) {
   return arr.map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-function setMode(next) {
-  mode = next;
-  tabs.forEach((t) => t.classList.toggle("is-active", t.dataset.tab === mode));
-
-  if (mode === "login") {
-    submitBtn.textContent = "Увійти";
-    subText.textContent = "Немає акаунту? Перемкнись на “Реєстрація”.";
-  } else {
-    submitBtn.textContent = "Зареєструватися";
-    subText.textContent = "Вже є акаунт? Перемкнись на “Логін”.";
-  }
+function setModeLogin() {
+  if (submitBtn) submitBtn.textContent = "Увійти";
+  if (subText) subText.textContent = "Реєстрація доступна у профілі через кнопку «Зберегти профіль».";
   setMsg("");
 }
 
-tabs.forEach((t) => t.addEventListener("click", () => setMode(t.dataset.tab)));
+function showAuth(show) {
+  if (!welcomeScreen || !authPanel) return;
+  welcomeScreen.classList.toggle("is-hidden", show);
+  welcomeScreen.hidden = !!show;
+  authPanel.classList.toggle("is-hidden", !show);
+  authPanel.hidden = !show;
+  if (show) setModeLogin();
+}
 
-togglePassBtn.addEventListener("click", () => {
+togglePassBtn?.addEventListener("click", () => {
   const isPass = passEl.type === "password";
   passEl.type = isPass ? "text" : "password";
   togglePassBtn.textContent = isPass ? "Сховати" : "Показати";
@@ -111,14 +120,14 @@ togglePassBtn.addEventListener("click", () => {
 
 (function initRemember() {
   const remember = localStorage.getItem(REMEMBER_KEY);
-  rememberEl.checked = remember !== "0";
+  if (rememberEl) rememberEl.checked = remember !== "0";
   const active = localStorage.getItem(ACTIVE_KEY);
-  if (active) nameEl.value = active;
+  if (active && nameEl) nameEl.value = active;
 })();
 
 function setActive(name) {
   localStorage.setItem(ACTIVE_KEY, name);
-  localStorage.setItem(REMEMBER_KEY, rememberEl.checked ? "1" : "0");
+  localStorage.setItem(REMEMBER_KEY, rememberEl && rememberEl.checked ? "1" : "0");
 
   if (window.AccountSystem?.setActive) {
     try {
@@ -130,6 +139,11 @@ function setActive(name) {
 }
 
 function redirectAfterAuth() {
+  markOnboardingSeen();
+  if (from === "profile") {
+    window.location.href = "../profile/profile.html";
+    return;
+  }
   window.location.href = "../../index.html";
 }
 
@@ -166,8 +180,6 @@ function buildStarterCard(base, idx) {
 async function createStarterDeck() {
   const out = [];
   try {
-    // Starter deck must be constant and must not belong to any collections.
-    // We take it from data/cards.json by `starter_` prefix.
     const r = await fetch("../../data/cards.json", { cache: "no-store" });
     if (r.ok) {
       const json = await r.json();
@@ -179,7 +191,6 @@ async function createStarterDeck() {
     // ignore
   }
 
-  // Fallback: if cards.json is missing/broken, use base pool (legacy behavior)
   if (out.length < STARTER_DECK_SIZE) {
     try {
       const r = await fetch("../../assets/data/cards.base.json", { cache: "no-store" });
@@ -196,10 +207,7 @@ async function createStarterDeck() {
     }
   }
 
-  for (let i = out.length; i < STARTER_DECK_SIZE; i++) {
-    out.push(buildStarterCard(null, i));
-  }
-
+  for (let i = out.length; i < STARTER_DECK_SIZE; i++) out.push(buildStarterCard(null, i));
   return out;
 }
 
@@ -228,36 +236,57 @@ async function ensureGameAccount(name) {
   }
 }
 
-form.addEventListener("submit", async (e) => {
+startNewBtn?.addEventListener("click", async () => {
+  markOnboardingSeen();
+  localStorage.removeItem(ACTIVE_KEY);
+  localStorage.removeItem("activeAccount");
+  localStorage.removeItem("cardastika:profile");
+  localStorage.removeItem("cardastika:avatarUrl");
+  sessionStorage.removeItem("openCard");
+
+  // Start as a new local player: force starter deck/resources.
+  try {
+    const starterDeck = await createStarterDeck();
+    localStorage.setItem("cardastika:deck", JSON.stringify(starterDeck));
+    localStorage.setItem("cardastika:inventory", JSON.stringify(starterDeck));
+    localStorage.setItem("cardastika:gold", String(STARTER_GOLD));
+    localStorage.setItem("cardastika:diamonds", String(STARTER_DIAMONDS));
+    localStorage.setItem("cardastika:silver", String(STARTER_SILVER));
+    localStorage.setItem("cardastika:gems", String(STARTER_SILVER));
+  } catch (err) {
+    console.warn("[auth] failed to prepare starter state for new game", err);
+  }
+
+  window.location.href = "../../index.html";
+});
+
+startLoginBtn?.addEventListener("click", () => {
+  showAuth(true);
+});
+
+backToWelcomeBtn?.addEventListener("click", () => {
+  showAuth(false);
+});
+
+showAuth(false);
+
+form?.addEventListener("submit", async (e) => {
   e.preventDefault();
   setMsg("");
 
-  const name = normName(nameEl.value);
-  const pass = String(passEl.value || "");
+  const name = normName(nameEl?.value);
+  const pass = String(passEl?.value || "");
 
-  if (!validName(name)) return setMsg("Некоректне імʼя (3–24, літери/цифри/._-).", "err");
-  if (!validPass(pass)) return setMsg("Пароль має бути 6–64 символів.", "err");
+  if (!validName(name)) return setMsg("Некоректне ім'я (3-24, літери/цифри/._-).", "err");
+  if (!validPass(pass)) return setMsg("Пароль має бути 6-64 символів.", "err");
 
-  submitBtn.disabled = true;
+  if (submitBtn) submitBtn.disabled = true;
 
   try {
     const users = loadUsers();
     const passHash = await sha256(pass);
 
-    if (mode === "register") {
-      if (users[name]) return setMsg("Акаунт з таким імʼям уже існує.", "err");
-
-      users[name] = { passHash, created: Date.now() };
-      saveUsers(users);
-
-      await ensureGameAccount(name);
-      setActive(name);
-      setMsg("Акаунт створено. Вхід виконано.", "ok");
-      setTimeout(redirectAfterAuth, 350);
-      return;
-    }
-
-    if (!users[name]) return setMsg("Акаунт не знайдено. Зареєструйся.", "err");
+    if (!users[name]) return setMsg("Акаунт не знайдено. Зареєструй профіль на сторінці «Профіль».", "err");
     if (users[name].passHash !== passHash) return setMsg("Невірний пароль.", "err");
 
     await ensureGameAccount(name);
@@ -265,6 +294,6 @@ form.addEventListener("submit", async (e) => {
     setMsg("Вхід виконано.", "ok");
     setTimeout(redirectAfterAuth, 250);
   } finally {
-    submitBtn.disabled = false;
+    if (submitBtn) submitBtn.disabled = false;
   }
 });

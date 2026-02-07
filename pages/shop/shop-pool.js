@@ -570,10 +570,6 @@ async function main() {
       location.href = `./shop.html?buy=${encodeURIComponent(cfg.offerBuyParam)}`;
     });
   }
-
-  const refresh = document.getElementById("poolRefreshInfo");
-  if (refresh) refresh.textContent = `Текущая неделя: ${weekRangeLabel(new Date())}`;
-
   const cards = await loadCards();
   const host = document.getElementById("poolSections");
   if (host) {
@@ -593,3 +589,4 @@ document.addEventListener("DOMContentLoaded", () => {
     location.href = "./shop.html";
   });
 });
+

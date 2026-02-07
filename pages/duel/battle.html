@@ -39,104 +39,106 @@
         </div>
       </div>
 
-      <!-- РљР°СЂС‚Рё РїСЂРѕС‚РёРІРЅРёРєР° -->
-      <div class="battle-cards battle-cards--enemy">
-        <div class="battle-card-slot">
-          <button class="ref-card elem-fire rarity-3" type="button" id="enemyCard0">
-            <div class="ref-card__top">
-              <span class="ref-card__type"></span>
-              <span class="ref-card__power" id="enemyCard0Power">9</span>
-              <span class="ref-card__name" id="enemyCard0Name"></span>
-            </div>
-            <div class="ref-card__art"></div>
-            <div class="ref-card__elem"></div>
-          </button>
+      <section class="battle-arena-frame" aria-label="Поле карт">
+        <!-- РљР°СЂС‚Рё РїСЂРѕС‚РёРІРЅРёРєР° -->
+        <div class="battle-cards battle-cards--enemy">
+          <div class="battle-card-slot">
+            <button class="ref-card elem-fire rarity-3" type="button" id="enemyCard0">
+              <div class="ref-card__top">
+                <span class="ref-card__type"></span>
+                <span class="ref-card__power" id="enemyCard0Power">9</span>
+                <span class="ref-card__name" id="enemyCard0Name"></span>
+              </div>
+              <div class="ref-card__art"></div>
+              <div class="ref-card__elem"></div>
+            </button>
+          </div>
+
+          <div class="battle-card-slot">
+            <button class="ref-card elem-earth rarity-4" type="button" id="enemyCard1">
+              <div class="ref-card__top">
+                <span class="ref-card__type"></span>
+                <span class="ref-card__power" id="enemyCard1Power">9</span>
+                <span class="ref-card__name" id="enemyCard1Name"></span>
+              </div>
+              <div class="ref-card__art"></div>
+              <div class="ref-card__elem"></div>
+            </button>
+          </div>
+
+          <div class="battle-card-slot">
+            <button class="ref-card elem-water rarity-2" type="button" id="enemyCard2">
+              <div class="ref-card__top">
+                <span class="ref-card__type"></span>
+                <span class="ref-card__power" id="enemyCard2Power">8</span>
+                <span class="ref-card__name" id="enemyCard2Name"></span>
+              </div>
+              <div class="ref-card__art"></div>
+              <div class="ref-card__elem"></div>
+            </button>
+          </div>
         </div>
 
-        <div class="battle-card-slot">
-          <button class="ref-card elem-earth rarity-4" type="button" id="enemyCard1">
-            <div class="ref-card__top">
-              <span class="ref-card__type"></span>
-              <span class="ref-card__power" id="enemyCard1Power">9</span>
-              <span class="ref-card__name" id="enemyCard1Name"></span>
-            </div>
-            <div class="ref-card__art"></div>
-            <div class="ref-card__elem"></div>
-          </button>
+        <div class="battle-multipliers">
+          <div class="battle-multiplier">
+            <img class="battle-multiplier__icon" src="../../assets/icons/swords-umgewandelt-von-png.svg" alt=""> x1
+            <span id="enemyMult0"></span>
+            <span id="playerDamage0" class="damage"></span>
+            <span id="enemyDamage0" class="damage"></span>
+          </div>
+          <div class="battle-multiplier battle-multiplier--bonus">
+            <img class="battle-multiplier__icon" src="../../assets/icons/swords-umgewandelt-von-png.svg" alt=""> x1.5
+            <span id="enemyMult1"></span>
+            <span id="playerDamage1" class="damage"></span>
+            <span id="enemyDamage1" class="damage"></span>
+          </div>
+          <div class="battle-multiplier">
+            <img class="battle-multiplier__icon" src="../../assets/icons/swords-umgewandelt-von-png.svg" alt=""> x1
+            <span id="enemyMult2"></span>
+            <span id="playerDamage2" class="damage"></span>
+            <span id="enemyDamage2" class="damage"></span>
+          </div>
         </div>
 
-        <div class="battle-card-slot">
-          <button class="ref-card elem-water rarity-2" type="button" id="enemyCard2">
-            <div class="ref-card__top">
-              <span class="ref-card__type"></span>
-              <span class="ref-card__power" id="enemyCard2Power">8</span>
-              <span class="ref-card__name" id="enemyCard2Name"></span>
-            </div>
-            <div class="ref-card__art"></div>
-            <div class="ref-card__elem"></div>
-          </button>
-        </div>
-      </div>
+        <!-- РљР°СЂС‚Рё РіСЂР°РІС†СЏ -->
+        <div class="battle-cards">
+          <div class="battle-card-slot">
+            <button class="ref-card elem-fire rarity-5" type="button" id="playerCard0">
+              <div class="ref-card__top">
+                <span class="ref-card__type"></span>
+                <span class="ref-card__power" id="playerCard0Power">9</span>
+                <span class="ref-card__name" id="playerCard0Name"></span>
+              </div>
+              <div class="ref-card__art"></div>
+              <div class="ref-card__elem"></div>
+            </button>
+          </div>
 
-      <div class="battle-multipliers">
-        <div class="battle-multiplier">
-          <img class="battle-multiplier__icon" src="../../assets/icons/swords-umgewandelt-von-png.svg" alt=""> x1
-          <span id="enemyMult0"></span>
-          <span id="playerDamage0" class="damage"></span>
-          <span id="enemyDamage0" class="damage"></span>
-        </div>
-        <div class="battle-multiplier battle-multiplier--bonus">
-          <img class="battle-multiplier__icon" src="../../assets/icons/swords-umgewandelt-von-png.svg" alt=""> x1.5
-          <span id="enemyMult1"></span>
-          <span id="playerDamage1" class="damage"></span>
-          <span id="enemyDamage1" class="damage"></span>
-        </div>
-        <div class="battle-multiplier">
-          <img class="battle-multiplier__icon" src="../../assets/icons/swords-umgewandelt-von-png.svg" alt=""> x1
-          <span id="enemyMult2"></span>
-          <span id="playerDamage2" class="damage"></span>
-          <span id="enemyDamage2" class="damage"></span>
-        </div>
-      </div>
+          <div class="battle-card-slot">
+            <button class="ref-card elem-earth rarity-3" type="button" id="playerCard1">
+              <div class="ref-card__top">
+                <span class="ref-card__type"></span>
+                <span class="ref-card__power" id="playerCard1Power">9</span>
+                <span class="ref-card__name" id="playerCard1Name"></span>
+              </div>
+              <div class="ref-card__art"></div>
+              <div class="ref-card__elem"></div>
+            </button>
+          </div>
 
-      <!-- РљР°СЂС‚Рё РіСЂР°РІС†СЏ -->
-      <div class="battle-cards">
-        <div class="battle-card-slot">
-          <button class="ref-card elem-fire rarity-5" type="button" id="playerCard0">
-            <div class="ref-card__top">
-              <span class="ref-card__type"></span>
-              <span class="ref-card__power" id="playerCard0Power">9</span>
-              <span class="ref-card__name" id="playerCard0Name"></span>
-            </div>
-            <div class="ref-card__art"></div>
-            <div class="ref-card__elem"></div>
-          </button>
+          <div class="battle-card-slot">
+            <button class="ref-card elem-air rarity-2" type="button" id="playerCard2">
+              <div class="ref-card__top">
+                <span class="ref-card__type"></span>
+                <span class="ref-card__power" id="playerCard2Power">8</span>
+                <span class="ref-card__name" id="playerCard2Name"></span>
+              </div>
+              <div class="ref-card__art"></div>
+              <div class="ref-card__elem"></div>
+            </button>
+          </div>
         </div>
-
-        <div class="battle-card-slot">
-          <button class="ref-card elem-earth rarity-3" type="button" id="playerCard1">
-            <div class="ref-card__top">
-              <span class="ref-card__type"></span>
-              <span class="ref-card__power" id="playerCard1Power">9</span>
-              <span class="ref-card__name" id="playerCard1Name"></span>
-            </div>
-            <div class="ref-card__art"></div>
-            <div class="ref-card__elem"></div>
-          </button>
-        </div>
-
-        <div class="battle-card-slot">
-          <button class="ref-card elem-air rarity-2" type="button" id="playerCard2">
-            <div class="ref-card__top">
-              <span class="ref-card__type"></span>
-              <span class="ref-card__power" id="playerCard2Power">8</span>
-              <span class="ref-card__name" id="playerCard2Name"></span>
-            </div>
-            <div class="ref-card__art"></div>
-            <div class="ref-card__elem"></div>
-          </button>
-        </div>
-      </div>
+      </section>
 
       <!-- РџР°РЅРµР»СЊ РіСЂР°РІС†СЏ (Р·РЅРёР·Сѓ РїС–Рґ РєР°СЂС‚Р°РјРё) -->
       <div class="battle-player battle-player--self">

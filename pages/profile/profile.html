@@ -37,155 +37,105 @@
       </div>
     </header>
 
-    <!-- Main screen container -->
     <main id="screen" class="screen profile-screen">
-      <!-- Тут контент конкретної сторінки -->
-      <section class="panel">
-        <h1 class="panel__title">Профіль</h1>
-        <p class="panel__text" id="profileWho">Тут буде профіль гравця з статистикою. Каркас готовий. Далі підключимо логіку.</p>
+      <section class="profile-card" aria-label="Профіль гравця">
+        <header class="profile-card__header">Ваш профіль</header>
 
-        <div class="profile-block">
-          <div class="profile-stats" aria-label="Статистика">
-            <div class="profile-stat">
-              <div class="profile-stat__label">Рівень</div>
-              <div class="profile-stat__value" id="profLevel">1</div>
-            </div>
-            <div class="profile-stat">
-              <div class="profile-stat__label">XP бонус</div>
-              <div class="profile-stat__value" id="profXpBonus">0%</div>
-            </div>
-            <div class="profile-stat">
-              <div class="profile-stat__label">Срібло бонус</div>
-              <div class="profile-stat__value" id="profSilverBonus">0%</div>
+        <div class="profile-hero">
+          <div class="profile-hero__user">
+            <img id="profAvatar" class="profile-hero__avatar" src="../../assets/cards/demo/fire_01.jpg" alt="Аватар">
+            <div>
+              <div class="profile-hero__name" id="profileName">Гравець</div>
+              <div class="profile-hero__level"><span id="profLevel">1</span> ур.</div>
             </div>
           </div>
 
-          <div class="profile-xpbar" aria-label="Прогрес досвіду">
-            <div class="profile-xpbar__line">
-              <span>XP</span>
-              <span><span id="profXpInto">0</span>/<span id="profXpNeed">0</span></span>
-            </div>
-            <div class="profile-xpbar__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-              <div class="profile-xpbar__fill" id="profXpFill" style="width:0%"></div>
-            </div>
-          </div>
-
-          <div class="profile-league" aria-label="Ліга дуелей">
-            <div class="profile-league__left">
-              <img id="profLeagueIcon" class="profile-league__icon" src="../../assets/icons/leagues/league-gray-1.svg" alt="Ліга">
-              <div>
-                <div class="profile-league__name" id="profLeagueName">—</div>
-                <div class="profile-league__sub">База срібла: <b id="profLeagueBaseSilver">0</b></div>
-              </div>
-            </div>
-            <label class="profile-league__select">
-              <span>Ліга</span>
-              <select id="leagueSelect"></select>
-            </label>
-          </div>
-
-          <div class="profile-duel-gold" aria-label="Ліміт золота дуелей">
-            <div>Золото сьогодні: <b><span id="profGoldToday">0</span>/<span id="profGoldLimit">0</span></b></div>
-            <div class="profile-duel-gold__hint">Ліміт = рівень (+ колекції) × титул.</div>
-          </div>
-
-          <div class="profile-form" aria-label="Бонуси">
-            <div class="profile-form__row">
-              <label for="inpGuildLevel">Рівень гільдії (%)</label>
-              <input id="inpGuildLevel" type="number" min="0" max="999" step="1">
-            </div>
-
-            <div class="profile-form__row">
-              <label for="inpXpDaily">Щоденний XP бонус (%)</label>
-              <select id="inpXpDaily">
-                <option value="0">0%</option>
-                <option value="100">100%</option>
-                <option value="200">200%</option>
-                <option value="300">300%</option>
-              </select>
-            </div>
-
-            <div class="profile-form__row profile-form__row--check">
-              <label for="inpXpPotion">Настойка XP (+100%)</label>
-              <input id="inpXpPotion" type="checkbox">
-            </div>
-
-            <div class="profile-form__row">
-              <label for="inpXpGuildArena">Арена гільдій XP (%)</label>
-              <select id="inpXpGuildArena">
-                <option value="0">0%</option>
-                <option value="20">20%</option>
-                <option value="40">40%</option>
-                <option value="60">60%</option>
-                <option value="80">80%</option>
-                <option value="100">100%</option>
-              </select>
-            </div>
-
-            <div class="profile-form__row">
-              <label for="inpXpEvent">Акційний XP бонус (%)</label>
-              <input id="inpXpEvent" type="number" min="0" max="1000" step="1">
-            </div>
-
-            <div class="profile-form__sep" role="separator"></div>
-
-            <div class="profile-form__row">
-              <label for="inpSilverDaily">Щоденний бонус срібла (%)</label>
-              <select id="inpSilverDaily">
-                <option value="0">0%</option>
-                <option value="100">100%</option>
-              </select>
-            </div>
-
-            <div class="profile-form__row profile-form__row--check">
-              <label for="inpSilverPotion">Настойка срібла (+100%)</label>
-              <input id="inpSilverPotion" type="checkbox">
-            </div>
-
-            <div class="profile-form__row">
-              <label for="inpSilverGuildArena">Арена гільдій срібло (%)</label>
-              <select id="inpSilverGuildArena">
-                <option value="0">0%</option>
-                <option value="20">20%</option>
-                <option value="40">40%</option>
-                <option value="60">60%</option>
-                <option value="80">80%</option>
-                <option value="100">100%</option>
-              </select>
-            </div>
-
-            <div class="profile-form__row">
-              <label for="inpSilverEvent">Акційний бонус срібла (%)</label>
-              <input id="inpSilverEvent" type="number" min="0" max="1000" step="1">
-            </div>
-
-            <div class="profile-form__sep" role="separator"></div>
-
-            <div class="profile-form__row profile-form__row--check">
-              <label for="inpTitleTournament">Титул “Чемпіон турніру” (×2 ліміт золота)</label>
-              <input id="inpTitleTournament" type="checkbox">
-            </div>
-
-            <div class="profile-form__row profile-form__row--check">
-              <label for="inpTitleDuel">Титул “Чемпіон дуелей” (+50% срібла)</label>
-              <input id="inpTitleDuel" type="checkbox">
-            </div>
-
-            <div class="profile-form__row profile-form__row--check">
-              <label for="inpTitleAbsolute">Титул “Абсолютний чемпіон” (міфік +1% за невдачу у магазині 50)</label>
-              <input id="inpTitleAbsolute" type="checkbox">
-            </div>
-          </div>
-
-          <div class="profile-medals" aria-label="Медалі">
-            <div class="profile-medals__title">Медалі</div>
-            <div class="profile-medals__list" id="profMedals">—</div>
+          <div class="profile-hero__rank">
+            <img id="profLeagueIcon" class="profile-hero__rank-icon" src="../../assets/icons/leagues/league-gray-1.svg" alt="Ліга">
+            <div class="profile-hero__rank-name" id="profLeagueName">Ліга</div>
           </div>
         </div>
 
-        <div class="duel-actions" style="margin-top: 12px;">
-          <button class="btn-attack" id="saveProfileBtn" type="button">Зберегти профіль</button>
-          <button class="btn-search" id="logoutBtn" type="button">Вийти</button>
+        <div class="profile-power">Сила колоди + <span id="profDeckPower">0</span></div>
+
+        <div class="profile-menu">
+          <button class="profile-menu__item" id="btnMail" type="button">Моя пошта</button>
+          <button class="profile-menu__item" id="btnDeck" type="button">Бойова колода</button>
+          <button class="profile-menu__item" id="btnEquipment" type="button">Спорядження</button>
+        </div>
+
+        <section class="profile-promo" aria-label="Промо">
+          <p>Переможи всіх</p>
+          <p>і отримай кубок сезону</p>
+        </section>
+
+        <section class="profile-section" aria-label="Рекорди">
+          <h2 class="profile-section__title">Рекорди</h2>
+          <div class="profile-records">
+            <article class="profile-record">
+              <div class="profile-record__label">Кращий титул</div>
+              <div class="profile-record__value" id="recTitle">Титулів немає</div>
+            </article>
+            <article class="profile-record">
+              <div class="profile-record__label">Медалі дракона</div>
+              <div class="profile-record__value" id="recMedals">Медалей немає</div>
+            </article>
+            <article class="profile-record">
+              <div class="profile-record__label">Нагорода турніру</div>
+              <div class="profile-record__value" id="recTournament">Нагород немає</div>
+            </article>
+            <article class="profile-record">
+              <div class="profile-record__label">Краще досягнення</div>
+              <div class="profile-record__value" id="recAchievement">Досягнень немає</div>
+            </article>
+          </div>
+        </section>
+
+        <section class="profile-section" aria-label="Рейтинги">
+          <h2 class="profile-section__title">Рейтинги</h2>
+          <div class="profile-ratings">
+            <article class="profile-rating">
+              <div class="profile-rating__label">Колода</div>
+              <div class="profile-rating__value" id="ratingDeck">0</div>
+              <div class="profile-rating__sub">сила</div>
+            </article>
+            <article class="profile-rating">
+              <div class="profile-rating__label">Дуелі</div>
+              <div class="profile-rating__value" id="ratingDuels">0</div>
+              <div class="profile-rating__sub" id="ratingDuelsSub">0 боїв</div>
+            </article>
+            <article class="profile-rating">
+              <div class="profile-rating__label">Арена</div>
+              <div class="profile-rating__value" id="ratingArena">—</div>
+              <div class="profile-rating__sub">Не грав</div>
+            </article>
+            <article class="profile-rating">
+              <div class="profile-rating__label">Турнір</div>
+              <div class="profile-rating__value" id="ratingTournament">—</div>
+              <div class="profile-rating__sub">Не грав</div>
+            </article>
+          </div>
+        </section>
+
+        <section class="profile-section" aria-label="Бонуси">
+          <h2 class="profile-section__title">Використовуються бонуси</h2>
+          <p class="profile-note" id="profBonuses">Бонусів немає.</p>
+        </section>
+
+        <section class="profile-section" aria-label="Активність">
+          <h2 class="profile-section__title">Активність</h2>
+          <p class="profile-note">Досвід за годину: <b id="profXpHour">0</b> (<span id="profXpPct">0</span>%)</p>
+          <p class="profile-note">Днів у грі: <b id="profDays">1</b></p>
+        </section>
+
+        <section class="profile-section" aria-label="Подарунки">
+          <h2 class="profile-section__title">Подарунки від магів</h2>
+          <p class="profile-note" id="profGifts">Подарунків немає.</p>
+        </section>
+
+        <div class="profile-menu profile-menu--bottom">
+          <button class="profile-menu__item" id="btnAllGifts" type="button">Усі подарунки</button>
+          <button class="profile-menu__item" id="btnSettings" type="button">Налаштування</button>
         </div>
       </section>
     </main>
