@@ -4492,6 +4492,20 @@ p, span, div:not(.hud__title):not(.panel__title):not(.tile__label) {
   line-height: 1;
 }
 
+.profile-rating__row{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.profile-rating__league-icon{
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
 .profile-rating__sub{
   margin-top: 4px;
   font-size: 10px;
@@ -5761,6 +5775,195 @@ p, span, div:not(.hud__title):not(.panel__title):not(.tile__label) {
 
 .tournament-trophy--dark {
   filter: saturate(0.3) brightness(0.6) drop-shadow(0 3px 6px rgba(0,0,0,0.5));
+}
+
+/* ============================================================
+   ARENA START SECTION
+   ============================================================ */
+
+.arena-start-section {
+  padding: 16px;
+  text-align: center;
+}
+
+.arena-start-btn {
+  width: 100%;
+  max-width: 280px;
+  padding: 16px 24px;
+  font-family: 'EB Garamond', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #3d2f1f;
+  background: linear-gradient(135deg, #888 0%, #666 100%);
+  border: 3px solid #555;
+  border-radius: 12px;
+  cursor: not-allowed;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.6;
+}
+
+.arena-start-btn--enabled,
+.arena-start-btn:not(:disabled) {
+  background: linear-gradient(135deg, #ffd700 0%, #b8941a 50%, #ffd700 100%);
+  border-color: #b8941a;
+  color: #3d2f1f;
+  cursor: pointer;
+  opacity: 1;
+  box-shadow: 0 4px 15px rgba(184, 148, 26, 0.4);
+}
+
+.arena-start-btn:not(:disabled):hover {
+  background: linear-gradient(135deg, #ffe44d 0%, #d4af37 50%, #ffe44d 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(184, 148, 26, 0.5);
+}
+
+.arena-start-btn:not(:disabled):active {
+  transform: translateY(0);
+}
+
+.arena-start-btn__icon {
+  font-size: 24px;
+}
+
+.arena-start-note {
+  margin-top: 12px;
+  font-size: 14px;
+  color: #d4af37;
+  min-height: 60px;
+}
+
+.arena-note--granted {
+  color: #4caf50;
+}
+
+.arena-note--denied {
+  color: #ff6b35;
+}
+
+.arena-access-granted,
+.arena-access-denied {
+  display: block;
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.arena-access-league,
+.arena-access-progress,
+.arena-access-needed {
+  display: block;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.arena-note--success {
+  color: #4caf50;
+}
+
+/* ============================================================
+   ARENA PROGRESS SECTION
+   ============================================================ */
+
+.arena-progress-section {
+  padding: 16px;
+  margin: 0 16px;
+  background: rgba(42, 79, 110, 0.3);
+  border: 1px solid rgba(184, 148, 70, 0.3);
+  border-radius: 12px;
+}
+
+.arena-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.arena-progress-title {
+  font-family: 'EB Garamond', serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #d4af37;
+}
+
+.arena-progress-value {
+  font-family: 'EB Garamond', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffd700;
+}
+
+.arena-progress-bar {
+  height: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.arena-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4fc3f7, #81d4fa);
+  border-radius: 6px;
+  transition: width 0.5s ease, background 0.3s ease;
+}
+
+.arena-progress-note {
+  font-size: 12px;
+  color: #aaa;
+  text-align: center;
+}
+
+/* ============================================================
+   ARENA STATS SECTION
+   ============================================================ */
+
+.arena-stats-section {
+  display: flex;
+  justify-content: space-around;
+  padding: 12px 16px;
+  margin: 12px 16px;
+  background: rgba(30, 60, 90, 0.3);
+  border: 1px solid rgba(184, 148, 70, 0.2);
+  border-radius: 10px;
+}
+
+.arena-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.arena-stat__label {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.arena-stat__value {
+  font-family: 'EB Garamond', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffd700;
+}
+
+/* ============================================================
+   ARENA TOAST
+   ============================================================ */
+
+.toast--info {
+  background: rgba(42, 79, 110, 0.95);
+  color: #fff;
+  border: 1px solid rgba(184, 148, 70, 0.5);
 }
 
 .arena-menu {
@@ -8061,6 +8264,92 @@ img.inventory-slot__icon {
   text-shadow: 0 6px 18px rgba(0, 0, 0, 0.75);
 }
 
+/* Arena mystery cards (cooldown) */
+.ref-card.is-mystery .ref-card__top {
+  opacity: 0;
+}
+
+.ref-card.is-mystery .ref-card__elem {
+  display: none;
+}
+
+.ref-card.is-mystery .ref-card__art {
+  background-image:
+    radial-gradient(140% 120% at 30% 20%, rgba(255, 255, 255, 0.08), transparent 60%),
+    radial-gradient(160% 140% at 70% 80%, rgba(0, 0, 0, 0.55), transparent 62%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 6px, rgba(0, 0, 0, 0.12) 6px 12px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.55)) !important;
+  filter: saturate(0.85) contrast(1.05);
+}
+
+.ref-card.is-mystery .ref-card__art::after {
+  content: "?";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: "Forum", serif;
+  font-size: 42px;
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.75);
+}
+
+/* Arena targets row */
+.arena-targets {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.arena-target {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.arena-target:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: scale(1.1);
+}
+
+.arena-target.is-selected {
+  border-color: #ffc107;
+  box-shadow: 0 0 12px rgba(255, 193, 7, 0.5);
+}
+
+.arena-target.is-defeated {
+  opacity: 0.4;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+.arena-target__avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.arena-target__hp {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  background: rgba(139, 30, 30, 0.85);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
 .battle-card-damage {
   background: linear-gradient(180deg, #8b1e1e, #5a1010);
   padding: 4px 12px;
@@ -8113,6 +8402,19 @@ img.inventory-slot__icon {
   background: rgba(60, 200, 90, 0.3);
   color: #4ade80;
   border: 1px solid rgba(60, 200, 90, 0.5);
+}
+
+.battle-multiplier--penalty {
+  background: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+}
+
+.damage {
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 24px;
+  text-align: center;
 }
 
 /* Battle log */
@@ -8330,4 +8632,429 @@ img.inventory-slot__icon {
   filter: drop-shadow(0 1px 0 rgba(0,0,0,0.65));
 }
 
+/* ===== ARENA BATTLE STYLES ===== */
 
+/* Карта з кулдауном */
+.ref-card--cooldown{
+  opacity: 0.6;
+  filter: grayscale(0.4);
+  pointer-events: none;
+}
+
+.ref-card__cooldown{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  border-radius: inherit;
+  z-index: 10;
+}
+
+/* Кнопки дій арени */
+.arena-actions{
+  display: flex;
+  gap: 10px;
+  padding: 16px;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.arena-action-btn{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  min-width: 90px;
+  
+  background: linear-gradient(180deg, #3a3329 0%, #2a2319 100%);
+  border: 1px solid rgba(184,148,70,0.3);
+  border-radius: 8px;
+  
+  color: var(--ink);
+  font-family: "EB Garamond", serif;
+  font-size: 12px;
+  cursor: pointer;
+  
+  transition: all 0.2s ease;
+}
+
+.arena-action-btn:hover{
+  background: linear-gradient(180deg, #4a4339 0%, #3a3329 100%);
+  border-color: rgba(184,148,70,0.5);
+}
+
+.arena-action-btn:active{
+  transform: scale(0.97);
+}
+
+.arena-action-btn--primary{
+  background: linear-gradient(180deg, var(--heraldic-gold) 0%, #8b6d2a 100%);
+  border-color: rgba(255,255,255,0.2);
+  color: #1a1510;
+}
+
+.arena-action-btn--primary:hover{
+  background: linear-gradient(180deg, #c9a550 0%, var(--heraldic-gold) 100%);
+}
+
+.arena-action-btn__icon{
+  font-size: 20px;
+  line-height: 1;
+}
+
+.arena-action-btn__text{
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.arena-action-btn__cost{
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background: var(--heraldic-red);
+  border-radius: 10px;
+  
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+}
+/* Стилізовані кнопки арени (стиль гри) */
+.arena-action-btn--styled{
+  position: relative;
+  flex: 1;
+  min-height: 48px;
+  font-size: 14px;
+}
+
+.arena-action-btn--styled .arena-action-btn__cost{
+  position: absolute;
+  top: -8px;
+  right: -8px;
+}
+
+.arena-action-btn--gold{
+  background: linear-gradient(180deg, var(--heraldic-gold), #8b6d2a) !important;
+  border-color: rgba(255,215,0,0.4) !important;
+  color: #1a1510 !important;
+}
+
+.arena-action-btn--gold::before{
+  background: linear-gradient(180deg, var(--heraldic-gold), #8b6d2a) !important;
+}
+
+/* Battle log time */
+.battle-log__time{
+  color: rgba(184,148,70,0.8);
+  font-size: 11px;
+  margin-right: 8px;
+}
+
+.battle-log__msg{
+  flex: 1;
+}
+
+.battle-log__entries{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+/* ============================================================
+   ARENA (queue / lobby) — як на скріні 1
+   ============================================================ */
+
+.arena-screen{
+  display:flex;
+  flex-direction:column;
+  padding-top: calc(var(--hudH) + 6px);
+  padding-bottom: calc(var(--botH) + 6px);
+  min-height: 100%;
+  background:
+    radial-gradient(120% 90% at 50% 10%, rgba(184,148,70,0.08), transparent 60%),
+    radial-gradient(120% 90% at 50% 90%, rgba(80,190,255,0.06), transparent 60%),
+    linear-gradient(180deg, rgba(10,15,20,0.94), rgba(6,10,14,0.96));
+}
+
+.arena-titlebar{
+  margin: 0;
+  padding: 10px 12px;
+  text-align:center;
+  font-family: "EB Garamond", serif;
+  font-weight: 900;
+  letter-spacing: .8px;
+  color: #20170a;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.35);
+  border-bottom: 1px solid rgba(0,0,0,0.75);
+  background: linear-gradient(180deg, rgba(231,199,106,0.95), rgba(170,126,38,0.92));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.35),
+    0 10px 18px rgba(0,0,0,0.35);
+}
+
+.arena-panel{
+  margin: 10px 12px 0;
+  padding: 14px 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(184,148,70,0.30);
+  background: rgba(0,0,0,0.32);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.arena-panel__msg{
+  text-align:center;
+  font-family: "EB Garamond", serif;
+  color: rgba(244,233,212,0.92);
+  line-height: 1.25;
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+.arena-panel__msg b{ color: #ffd777; }
+
+.arena-queue-btns{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  align-items:center;
+  margin: 0 0 10px;
+}
+
+/* кнопки як "Обновить / Выйти" у рефі */
+.arena-queue-btn{
+  width: min(260px, 100%);
+  min-height: 42px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(0,0,0,0.25);
+  color: rgba(235,255,225,0.95);
+  font-family: "EB Garamond", serif;
+  font-weight: 800;
+  letter-spacing: .3px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.45);
+}
+.arena-queue-btn::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:.75;
+  pointer-events:none;
+}
+.arena-queue-btn--refresh::before{ background-image: var(--btn-tex-blue); background-size:cover; background-position:center; }
+.arena-queue-btn--exit::before{ background-image: var(--btn-tex-wood); background-size:cover; background-position:center; opacity:.55; }
+
+.arena-queue-btn:hover{ transform: translateY(-1px); }
+.arena-queue-btn:active{ transform: translateY(1px); }
+
+.arena-rating{
+  display:flex;
+  justify-content:center;
+  gap: 8px;
+  align-items:center;
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(184,148,70,0.18);
+  font-family: "EB Garamond", serif;
+  color: rgba(244,233,212,0.85);
+  font-size: 13px;
+}
+.arena-rating__val{
+  font-weight: 900;
+  color: #ffd777;
+  font-variant-numeric: tabular-nums;
+}
+
+.arena-task{
+  margin: 10px 12px 0;
+  padding: 10px 12px;
+  text-align:center;
+  font-family: "EB Garamond", serif;
+  font-size: 13px;
+  color: rgba(244,233,212,0.78);
+  border-top: 1px solid rgba(80,190,255,0.14);
+  border-bottom: 1px solid rgba(80,190,255,0.14);
+  background: rgba(0,0,0,0.22);
+}
+
+.arena-link{
+  display:block;
+  margin: 10px 12px 0;
+  padding: 8px 10px;
+  text-align:center;
+  text-decoration:none;
+  color: rgba(120,200,255,0.95);
+  font-family: "EB Garamond", serif;
+  font-weight: 800;
+  font-size: 13px;
+}
+.arena-link:hover{ filter: brightness(1.1); }
+
+.arena-chat-head{
+  margin: 8px 12px 0;
+  padding: 8px 10px;
+  text-align:center;
+  color: rgba(120,200,255,0.85);
+  font-family: "EB Garamond", serif;
+  font-weight: 900;
+  letter-spacing: .4px;
+  border-top: 1px solid rgba(80,190,255,0.12);
+}
+
+.arena-chat-box{
+  margin: 8px 12px 12px;
+  height: 130px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+}
+
+/* кнопка "назад" як внизу справа (зелена) */
+.arena-back{
+  position: fixed;
+  right: calc((100vw - var(--stageW)) / 2 + 12px);
+  bottom: calc(var(--botH) + 12px);
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid rgba(90,210,120,0.35);
+  background: linear-gradient(180deg, rgba(40,120,40,0.85), rgba(16,60,16,0.70));
+  box-shadow: 0 14px 26px rgba(0,0,0,0.55);
+  cursor:pointer;
+}
+.arena-back::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image: var(--btn-tex-green);
+  background-size: cover;
+  background-position:center;
+  opacity:.55;
+  border-radius: inherit;
+}
+.arena-back::after{
+  content:"";
+  position:absolute;
+  inset: 10px;
+  background: rgba(0,0,0,0.92);
+  -webkit-mask: url("./icons/arrow-left.svg") center/contain no-repeat;
+          mask: url("./icons/arrow-left.svg") center/contain no-repeat;
+  opacity:.95;
+}
+
+/* ============================================================
+   ARENA RESULT (victory/defeat/draw) — як на скріні 3
+   ============================================================ */
+
+.arena-result{
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+  padding-top: calc(var(--hudH) + 6px);
+  padding-bottom: calc(var(--botH) + 6px);
+  background: radial-gradient(120% 120% at 50% 0%, rgba(184,148,70,0.06), transparent 55%),
+              linear-gradient(180deg, rgba(8,10,12,0.97), rgba(6,8,10,0.98));
+}
+
+.arena-result__enemies{
+  text-align:center;
+  font-family:"EB Garamond", serif;
+  font-weight: 900;
+  color: rgba(255,120,120,0.95);
+  letter-spacing: .6px;
+  margin-top: 6px;
+}
+
+.arena-result__slots{
+  margin: 0 12px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.28);
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  justify-items:center;
+}
+
+.arena-slot{
+  width: 86px;
+  height: 72px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  position:relative;
+  overflow:hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.arena-slot.is-empty::after{
+  content:"R.I.P.";
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  font-family:"Forum", serif;
+  font-weight: 900;
+  letter-spacing: .8px;
+  color: rgba(180,180,180,0.75);
+  background: rgba(0,0,0,0.30);
+}
+
+.arena-result__banner{
+  margin: 0 12px;
+  padding: 10px 12px;
+  text-align:center;
+  font-family:"EB Garamond", serif;
+  font-weight: 900;
+  color: rgba(244,233,212,0.92);
+  border-top: 1px solid rgba(184,148,70,0.22);
+  border-bottom: 1px solid rgba(184,148,70,0.22);
+  background: rgba(0,0,0,0.22);
+}
+
+/* Лог бою — компактний як в рефі */
+.arena-log{
+  margin: 0 12px 12px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(0,0,0,0.26);
+}
+.arena-log__title{
+  text-align:center;
+  font-family:"EB Garamond", serif;
+  font-weight: 900;
+  color: rgba(120,200,255,0.85);
+  margin-bottom: 8px;
+}
+.arena-log__entry{
+  padding: 6px 8px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  font-family:"EB Garamond", serif;
+  font-size: 13px;
+  color: rgba(244,233,212,0.86);
+}
+.arena-log__entry .e{ color: rgba(255,120,120,0.95); font-weight:900; }
+.arena-log__entry .p{ color: rgba(120,255,160,0.90); font-weight:900; }
+.arena-log__entry .n{ font-variant-numeric: tabular-nums; font-weight:900; }

@@ -1,5 +1,6 @@
 import "../../src/progression-system.js";
-import { getDuelLeagueIconPath } from "../../src/core/leagues.js";
+import { getDuelLeagueIconPath, getDuelLeagueByRating } from "../../src/core/leagues.js";
+import { getArenaState, getArenaLeagueByRating, getArenaLeagueIconPath, canAccessArena, ARENA_MIN_DUEL_RATING } from "../../src/core/arena-leagues.js";
 import { emitCampaignEvent } from "../../src/campaign/campaign-events.js";
 
 const AUTH_DB_KEY = "cardastika:auth:users";
@@ -364,19 +365,51 @@ function render() {
   const silver = asInt(acc?.silver, readNumFromStorage("cardastika:silver", 0));
   const gold = asInt(acc?.gold, readNumFromStorage("cardastika:gold", 0));
 
-  const arenaRating = readFirstNum(["cardastika:arena:rating", "cardastika:arenaRating"], null);
+  // Арена - з нової системи ліг
+  const arenaState = getArenaState();
+  const arenaRating = arenaState?.rating || null;
+  const arenaLeague = arenaRating ? getArenaLeagueByRating(arenaRating, arenaState?.leagueId) : null;
+  const arenaAccessible = canAccessArena(duelRating);
+  
   const tournamentRating = readFirstNum(
     ["cardastika:tournament:rating", "cardastika:tournamentRating", "cardastika:tournament:wins"],
     null
   );
+  
+  // Ліга дуелей
+  const duelLeague = getDuelLeagueByRating(duelRating);
 
   setText("profileName", name);
   setText("profLevel", level);
   setText("profDeckPower", fmtNum(deckPower));
   setText("ratingDeck", fmtNum(deckPower));
   setText("ratingDuels", fmtNum(duelRating));
-  setText("ratingDuelsSub", `${fmtNum(duelPlayed)} боїв • ${fmtNum(silver)} срібла • ${fmtNum(gold)} золота`);
-  setText("ratingArena", arenaRating == null ? "—" : fmtNum(arenaRating));
+  setText("ratingDuelsSub", `${fmtNum(duelPlayed)} боїв • ${duelLeague?.name || 'Без ліги'}`);
+  
+  // Ліга дуелей іконка
+  const duelLeagueIcon = document.getElementById("duelLeagueIcon");
+  if (duelLeagueIcon && duelLeague) {
+    duelLeagueIcon.src = getDuelLeagueIconPath(duelLeague.id);
+    duelLeagueIcon.style.display = "block";
+  }
+  
+  // Арена
+  if (arenaAccessible && arenaRating != null) {
+    setText("ratingArena", fmtNum(arenaRating));
+    setText("ratingArenaSub", arenaLeague?.name || 'Без ліги');
+    const arenaLeagueIconEl = document.getElementById("arenaLeagueIcon");
+    if (arenaLeagueIconEl && arenaLeague) {
+      arenaLeagueIconEl.src = getArenaLeagueIconPath(arenaLeague.id);
+      arenaLeagueIconEl.style.display = "block";
+    }
+  } else if (!arenaAccessible) {
+    setText("ratingArena", "🔒");
+    setText("ratingArenaSub", `Потрібно ${fmtNum(ARENA_MIN_DUEL_RATING)} дуель`);
+  } else {
+    setText("ratingArena", "—");
+    setText("ratingArenaSub", "Не грав");
+  }
+  
   setText("ratingTournament", tournamentRating == null ? "—" : fmtNum(tournamentRating));
 
   const avatar = document.getElementById("profAvatar");

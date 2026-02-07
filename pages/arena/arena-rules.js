@@ -26,15 +26,14 @@ class ArenaRulesScreen {
     const routes = {
       back: '../arena/arena.html',
       home: '../../index.html',
-      profile: '../../pages/profile/profile.html    };
-    if (routes[route]) {
-      window.location.href = routes[route];
-    }
+      profile: '../../pages/profile/profile.html',
+      guild: '../../pages/guild/guild.html',
+    };
+
+    if (routes[route]) window.location.href = routes[route];
   }
 }
 
-// Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   new ArenaRulesScreen();
 });
-

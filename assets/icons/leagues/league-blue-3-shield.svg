@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <radialGradient id="glow-blue-s" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#60a5fa" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="shield-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 4 L56 14 L56 32 Q56 52 32 60 Q8 52 8 32 L8 14 Z" fill="url(#glow-blue-s)"/>
+  <path d="M32 8 L52 16 L52 32 Q52 48 32 56 Q12 48 12 32 L12 16 Z" fill="#0a1828"/>
+  <path d="M32 8 L52 16 L52 32 Q52 48 32 56 Q12 48 12 32 L12 16 Z" fill="none" stroke="url(#shield-blue)" stroke-width="3"/>
+  <path d="M32 11 L49 18 L49 32 Q49 46 32 53 Q15 46 15 32 L15 18 Z" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+  <text x="32" y="40" text-anchor="middle" font-family="Times New Roman, serif" font-size="22" font-weight="bold" fill="#60a5fa">III</text>
+</svg>

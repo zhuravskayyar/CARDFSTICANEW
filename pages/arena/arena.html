@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Forum&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="../../assets/css/ui-shell.css">
+  <link rel="stylesheet" href="../../assets/css/arena.css">
 </head>
 <body>
   <div id="app" class="app">
@@ -17,73 +18,84 @@
     <!-- HUD -->
     <header id="hud" class="hud">
       <div class="hud__left">
-        <span class="hud__icon">⚔️</span>
-        <span class="hud__value" id="hudPower">180</span>
+        <span class="hud__icon hud__icon--swords" aria-hidden="true"></span>
+        <span class="hud__value" id="hudPower">—</span>
       </div>
 
       <div class="hud__right">
         <div class="hud__pill" title="Silver">
-          <img class="hud__icon" src="../../assets/icons/coin-silver.svg" alt="Silver" />
-          <span class="hud__value" id="hudSilver">300</span>
+          <img class="hud__icon" src="../../assets/icons/coin-silver.svg" alt="Silver">
+          <span class="hud__value" id="hudSilver">—</span>
         </div>
         <div class="hud__pill" title="Diamonds">
-          <img class="hud__icon" src="../../assets/icons/diamond.svg" alt="Diamonds" />
-          <span class="hud__value" id="hudDiamonds">0</span>
+          <img class="hud__icon" src="../../assets/icons/diamond.svg" alt="Diamonds">
+          <span class="hud__value" id="hudDiamonds">—</span>
         </div>
         <div class="hud__pill" title="Gold">
-          <img class="hud__icon" src="../../assets/icons/coin-gold.svg" alt="Gold" />
-          <span class="hud__value" id="hudGold">12</span>
+          <img class="hud__icon" src="../../assets/icons/coin-gold.svg" alt="Gold">
+          <span class="hud__value" id="hudGold">—</span>
         </div>
       </div>
     </header>
 
     <!-- Main screen -->
-    <main id="screen" class="screen arena-screen arena-view">
+    <main id="screen" class="screen arena-screen">
       
-      <!-- Header -->
-      <div class="arena-header">
+      <!-- Заголовок Арена -->
+      <div class="arena-title-bar">
         <h1 class="arena-title">Арена</h1>
       </div>
 
-      <!-- Description Block -->
-      <div class="arena-info-block">
-        <div class="arena-description">
-          <p>Мінімальний рейтинг дуелей, який ви повинні досягти, щоб отримати доступ на арену:</p>
-        </div>
-
-        <div class="arena-requirement">
-          <span class="arena-requirement-icon"></span>
-          <span class="arena-requirement-value">2000</span>
-        </div>
-
-        <div class="arena-note">
-          Тільки найсильніші отримують право змагатися на арені!
-        </div>
-
-        <a class="arena-rules-link" href="arena-rules.html">» Правила арени «</a>
+      <!-- Час очікування -->
+      <div class="arena-queue-info">
+        <p>Час очікування в черзі<br>не більше <span id="queueTime">25</span> секунд.</p>
       </div>
 
-      <!-- Menu Items -->
-      <div class="arena-menu">
-        <a class="arena-menu-item" href="tournament.html">
-          <span class="arena-menu-icon">🏆</span>
-          <span class="arena-menu-text">Турнір</span>
-        </a>
-
-        <button class="arena-menu-item" data-action="rating">
-          <span class="arena-menu-icon">📊</span>
-          <span class="arena-menu-text">Рейтинг арени</span>
+      <!-- Кнопки дій -->
+      <div class="arena-actions">
+        <button class="arena-btn arena-btn--primary" id="joinQueueBtn">
+          Записатися
         </button>
-
-        <button class="arena-menu-item" data-action="tasks">
-          <span class="arena-menu-icon">📋</span>
-          <span class="arena-menu-text">Завдання</span>
+        <button class="arena-btn arena-btn--secondary" id="refreshBtn">
+          Оновити
         </button>
+      </div>
 
-        <button class="arena-menu-item" data-action="shop">
-          <span class="arena-menu-icon">🛒</span>
-          <span class="arena-menu-text">Крамниця</span>
-        </button>
+      <!-- Рейтинг арени -->
+      <div class="arena-rating">
+        <span class="arena-rating__label">Ваш рейтинг арени</span>
+        <div class="arena-rating__league">
+          <img id="arenaLeagueIcon" class="arena-rating__league-icon" src="../../assets/icons/leagues/league-gray-1-shield.svg" alt="Ліга">
+          <span id="arenaLeagueName" class="arena-rating__league-name">Сіра ліга I</span>
+        </div>
+        <span class="arena-rating__value">
+          <span id="arenaRating">1400</span>
+        </span>
+      </div>
+
+      <!-- Прогрес завдань -->
+      <div class="arena-tasks-progress">
+        <p>До виконання завдань залишилось:</p>
+        <p class="arena-tasks-progress__detail">
+          зіграти <span id="tasksPlay">10</span>, виграти <span id="tasksWin">5</span> арени.
+        </p>
+      </div>
+
+      <!-- Посилання на правила -->
+      <a class="arena-rules-link" href="arena-rules.html">» Правила арени «</a>
+
+      <!-- Чат арени -->
+      <div class="arena-chat-section">
+        <div class="arena-chat-header">
+          <span class="arena-chat-title">Чат арени</span>
+        </div>
+        <div class="arena-chat-messages" id="chatMessages">
+          <!-- Повідомлення чату -->
+        </div>
+        <div class="arena-chat-input">
+          <input type="text" id="chatInput" placeholder="Написати повідомлення..." maxlength="200">
+          <button class="arena-chat-send" id="chatSendBtn">➤</button>
+        </div>
       </div>
 
     </main>
@@ -92,7 +104,7 @@
     <div id="toastHost" class="toast-host" aria-live="polite"></div>
     <div id="modalHost" class="modal-host" aria-hidden="true"></div>
 
-    <!-- Bottom navigation (3 buttons) -->
+    <!-- Bottom navigation -->
     <nav id="botbar" class="botbar botbar--3" aria-label="Bottom navigation">
       <button class="botbar__btn" data-route="home" type="button">
         <span class="botbar__icon" aria-hidden="true"></span>
