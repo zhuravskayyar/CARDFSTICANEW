@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cardastika — Головна (backup)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600;700&family=Forum&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./assets/css/ui-shell.css">
+</head>
+<body>
+  <div id="app" class="app">
+
+    <!-- HUD -->
+    <header id="hud" class="hud">
+      <div class="hud__left">
+        <span class="hud__icon">⚔️</span>
+        <span class="hud__value" id="hudPower">180</span>
+      </div>
+
+      <div class="hud__right">
+        <div class="hud__pill" title="Silver">
+          <img class="hud__icon" src="assets/icons/coin-silver.svg" alt="Silver" />
+          <span class="hud__value" id="hudSilver">300</span>
+        </div>
+        <div class="hud__pill" title="Diamonds">
+          <img class="hud__icon" src="assets/icons/diamond.svg" alt="Diamonds" />
+          <span class="hud__value" id="hudDiamonds">0</span>
+        </div>
+        <div class="hud__pill" title="Gold">
+          <img class="hud__icon" src="assets/icons/coin-gold.svg" alt="Gold" />
+          <span class="hud__value" id="hudGold">12</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Screen -->
+    <main id="screen" class="screen">
+
+      <!-- 2x3 tiles -->
+      <section class="tiles">
+        <a class="tile" href="pages/duel/duel.html">
+          <div class="tile__art"></div>
+          <div class="tile__label">Дуелі: <b>10</b></div>
+        </a>
+
+        <a class="tile" href="pages/campaign/campaign.html">
+          <div class="tile__art"></div>
+          <div class="tile__label">Кампанія</div>
+        </a>
+
+        <a class="tile" href="pages/arena/arena.html">
+          <div class="tile__art"></div>
+          <div class="tile__label">Арена</div>
+        </a>
+
+        <a class="tile" href="pages/arena/tournament.html">
+          <div class="tile__art"></div>
+          <div class="tile__label">Турнір</div>
+        </a>
+
+        <a class="tile" href="pages/deck/deck.html">
+          <div class="tile__art"></div>
+          <div class="tile__label">
+            <span id="tileDeckName">Бойова колода</span>
+            <b class="tile__deck-power"><span class="hud__icon hud__icon--swords" aria-hidden="true"></span><span id="tileDeckPower">180</span></b>
+          </div>
+        </a>
+
+        <a class="tile" href="pages/invasion/invasion.html">
+          <div class="tile__art"></div>
+          <div class="tile__label">Нашестя Урфіна</div>
+        </a>
+      </section>
+
+      <!-- list menu -->
+      <section class="menu-list">
+        <a class="menu-item" href="pages/tasks/tasks.html">
+          <span class="menu-item__icon">📌</span>
+          <span class="menu-item__text">Завдання</span>
+        </a>
+
+        <a class="menu-item" href="pages/battlepass/battlepass.html">
+          <span class="menu-item__icon">💎</span>
+          <span class="menu-item__text">Алмазні нагороди</span>
+        </a>
+
+        <a class="menu-item" href="pages/equipment/equipment.html">
+          <span class="menu-item__icon">🧰</span>
+          <span class="menu-item__text">Спорядження</span>
+        </a>
+
+        <a class="menu-item" href="pages/collections/collections.html">
+          <span class="menu-item__icon">📚</span>
+          <span class="menu-item__text">Колекції</span>
+        </a>
+
+        <a class="menu-item" href="pages/shop/shop.html">
+          <span class="menu-item__icon">🛒</span>
+          <span class="menu-item__text">Крамниця</span>
+        </a>
+
+        <a class="menu-item menu-item--gold" href="pages/shop/buy-gold.html">
+          <img class="menu-item__icon" src="assets/icons/coin-gold.svg" alt="Gold" />
+          <span class="menu-item__text">Купити золото</span>
+        </a>
+      </section>
+
+    </main>
+
+    <div id="toastHost" class="toast-host" aria-live="polite"></div>
+    <div id="modalHost" class="modal-host" aria-hidden="true"></div>
+
+    <!-- Botbar (3 кнопки) -->
+    <nav id="botbar" class="botbar botbar--3" aria-label="Bottom navigation">
+      <button class="botbar__btn" data-route="home" type="button">
+        <span class="botbar__icon" aria-hidden="true"></span>
+        <span class="botbar__text">Головна</span>
+      </button>
+
+      <button class="botbar__btn" data-route="profile" type="button">
+        <span class="botbar__icon" aria-hidden="true"></span>
+        <span class="botbar__text">Профіль</span>
+      </button>
+
+      <button class="botbar__btn" data-route="guild" type="button">
+        <span class="botbar__icon" aria-hidden="true"></span>
+        <span class="botbar__text">Гільдія</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script type="module" defer src="src/ui-shell.js"></script>
+</body>
+</html>

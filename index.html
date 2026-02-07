@@ -1,140 +1,71 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cardastika — Головна</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Вхід • Cardastika</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600;700&family=Forum&display=swap" rel="stylesheet">
-  
-  <link rel="stylesheet" href="./assets/css/ui-shell.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Forum&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles/global.css" />
+  <link rel="stylesheet" href="pages/auth/auth.css" />
 </head>
-<body>
-  <div id="app" class="app">
 
-    <!-- HUD -->
-    <header id="hud" class="hud">
-      <div class="hud__left">
-        <span class="hud__icon">⚔️</span>
-        <span class="hud__value" id="hudPower">180</span>
+<body class="app">
+  <main class="screen auth">
+    <section class="welcome" id="welcomeScreen">
+      <h1 class="welcome__title">Cardastika</h1>
+      <p class="welcome__lead">Збери унікальну колоду магічних карт і кинь виклик стихіям.</p>
+
+      <div class="welcome__actions">
+        <button class="btn primary" id="startNewBtn" type="button">Почати гру</button>
+        <button class="btn secondary" id="startLoginBtn" type="button">Вхід для гравців</button>
+      </div>
+    </section>
+
+    <section class="panel is-hidden" id="authPanel" hidden>
+      <div class="tabs" role="tablist" aria-label="auth tabs">
+        <button class="tab is-active" data-tab="login" role="tab" type="button">Логін</button>
       </div>
 
-      <div class="hud__right">
-        <div class="hud__pill" title="Silver">
-          <img class="hud__icon" src="assets/icons/coin-silver.svg" alt="Silver" />
-          <span class="hud__value" id="hudSilver">300</span>
+      <form class="form" id="authForm" autocomplete="off">
+        <div class="field">
+          <label class="label" for="name">Ім'я</label>
+          <input class="input" id="name" name="name" inputmode="text" maxlength="24" placeholder="Напр. Yarik" />
+          <div class="hint">3-24 символи: літери/цифри/._-</div>
         </div>
-        <div class="hud__pill" title="Diamonds">
-          <img class="hud__icon" src="assets/icons/diamond.svg" alt="Diamonds" />
-          <span class="hud__value" id="hudDiamonds">0</span>
+
+        <div class="field">
+          <label class="label" for="pass">Пароль</label>
+          <input class="input" id="pass" name="pass" type="password" maxlength="64" placeholder="••••••••" />
+          <div class="hint">Мінімум 6 символів</div>
         </div>
-        <div class="hud__pill" title="Gold">
-          <img class="hud__icon" src="assets/icons/coin-gold.svg" alt="Gold" />
-          <span class="hud__value" id="hudGold">12</span>
+
+        <div class="row">
+          <label class="check">
+            <input type="checkbox" id="remember" checked />
+            <span>Запам'ятати мене</span>
+          </label>
+
+          <button type="button" class="ghost" id="togglePass">Показати</button>
         </div>
-      </div>
-    </header>
 
-    <!-- Screen -->
-    <main id="screen" class="screen">
+        <div class="msg" id="msg" aria-live="polite"></div>
 
-      <!-- 2x3 tiles -->
-      <section class="tiles">
-        <a class="tile" href="pages/duel/duel.html">
-          <div class="tile__art"></div>
-          <div class="tile__label">Дуелі: <b>10</b></div>
-        </a>
+        <button class="btn primary" id="submitBtn" type="submit">Увійти</button>
 
-        <a class="tile" href="pages/campaign/campaign.html">
-          <div class="tile__art"></div>
-          <div class="tile__label">Кампанія</div>
-        </a>
+        <div class="sub">
+          <span class="sub__text" id="subText">Реєстрація доступна у профілі через кнопку «Зберегти профіль».</span>
+        </div>
+      </form>
 
-        <a class="tile" href="pages/arena/arena.html">
-          <div class="tile__art"></div>
-          <div class="tile__label">Арена</div>
-        </a>
+      <button class="back" id="backToWelcomeBtn" type="button">Назад</button>
+    </section>
+  </main>
 
-        <a class="tile" href="pages/arena/tournament.html">
-          <div class="tile__art"></div>
-          <div class="tile__label">Турнір</div>
-        </a>
-
-        <a class="tile" href="pages/deck/deck.html">
-          <div class="tile__art"></div>
-          <div class="tile__label">
-            <span id="tileDeckName">Бойова колода</span>
-            <b class="tile__deck-power"><span class="hud__icon hud__icon--swords" aria-hidden="true"></span><span id="tileDeckPower">180</span></b>
-          </div>
-        </a>
-
-        <a class="tile" href="pages/invasion/invasion.html">
-          <div class="tile__art"></div>
-          <div class="tile__label">Нашестя Урфіна</div>
-        </a>
-      </section>
-
-      <!-- list menu -->
-      <section class="menu-list">
-        <a class="menu-item" href="pages/tasks/tasks.html">
-          <span class="menu-item__icon">📌</span>
-          <span class="menu-item__text">Завдання</span>
-        </a>
-
-        <a class="menu-item" href="pages/battlepass/battlepass.html">
-          <span class="menu-item__icon">💎</span>
-          <span class="menu-item__text">Алмазні нагороди</span>
-        </a>
-
-        <a class="menu-item" href="pages/equipment/equipment.html">
-          <span class="menu-item__icon">🧰</span>
-          <span class="menu-item__text">Спорядження</span>
-        </a>
-
-        <a class="menu-item" href="pages/collections/collections.html">
-          <span class="menu-item__icon">📚</span>
-          <span class="menu-item__text">Колекції</span>
-        </a>
-
-        <a class="menu-item" href="pages/shop/shop.html">
-          <span class="menu-item__icon">🛒</span>
-          <span class="menu-item__text">Крамниця</span>
-        </a>
-
-        <a class="menu-item menu-item--gold" href="pages/shop/buy-gold.html">
-          <img class="menu-item__icon" src="assets/icons/coin-gold.svg" alt="Gold" />
-          <span class="menu-item__text">Купити золото</span>
-        </a>
-      </section>
-
-    </main>
-
-    <div id="toastHost" class="toast-host" aria-live="polite"></div>
-    <div id="modalHost" class="modal-host" aria-hidden="true"></div>
-
-    <!-- Botbar (3 кнопки) -->
-    <nav id="botbar" class="botbar botbar--3" aria-label="Bottom navigation">
-      <button class="botbar__btn" data-route="home" type="button">
-        <span class="botbar__icon" aria-hidden="true"></span>
-        <span class="botbar__text">Головна</span>
-      </button>
-
-      <button class="botbar__btn" data-route="profile" type="button">
-        <span class="botbar__icon" aria-hidden="true"></span>
-        <span class="botbar__text">Профіль</span>
-      </button>
-
-      <button class="botbar__btn" data-route="guild" type="button">
-        <span class="botbar__icon" aria-hidden="true"></span>
-        <span class="botbar__text">Гільдія</span>
-      </button>
-    </nav>
-
-  </div>
-
-  <script type="module" defer src="src/ui-shell.js"></script>
+  <script type="module" src="pages/auth/auth.js"></script>
 </body>
 </html>
 
