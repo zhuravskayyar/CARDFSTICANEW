@@ -6,21 +6,21 @@ const STORAGE = {
 const SHOP_POOL_ROTATION_VERSION = "2026-02-07-v2";
 
 const QUALITY_LABEL = {
-  uncommon: "необычные",
-  rare: "редкие",
-  epic: "эпические",
-  legendary: "легендарные",
-  mythic: "мифические",
+  uncommon: "незвичайні",
+  rare: "рідкісні",
+  epic: "епічні",
+  legendary: "легендарні",
+  mythic: "міфічні",
 };
 
 const OFFER_VIEW = {
   silver_500: {
     title: "Карта за 500",
-    priceLabel: "Купить за 500",
+    priceLabel: "Купити за 500",
     offerBuyParam: "silver_500",
     oddsRows: [
-      { id: "epic", quality: "epic", label: "шанс получить эпическую карту", initialChance: 16 },
-      { id: "rare", quality: "rare", label: "шанс получить редкую карту", initialChance: 5 },
+      { id: "epic", quality: "epic", label: "шанс отримати епічну карту", initialChance: 16 },
+      { id: "rare", quality: "rare", label: "шанс отримати рідкісну карту", initialChance: 5 },
     ],
     pools: [
       { quality: "epic", count: 8 },
@@ -30,11 +30,11 @@ const OFFER_VIEW = {
   },
   gold_50: {
     title: "Карта за 50",
-    priceLabel: "Купить за 50",
+    priceLabel: "Купити за 50",
     offerBuyParam: "gold_50",
     oddsRows: [
-      { id: "mythic", quality: "mythic", label: "шанс получить мифическую карту", initialChance: 30 },
-      { id: "legendary", quality: "legendary", label: "шанс получить легендарную карту", initialChance: 40 },
+      { id: "mythic", quality: "mythic", label: "шанс отримати міфічну карту", initialChance: 30 },
+      { id: "legendary", quality: "legendary", label: "шанс отримати легендарну карту", initialChance: 40 },
     ],
     pools: [
       { quality: "mythic", count: 8 },
@@ -44,10 +44,10 @@ const OFFER_VIEW = {
   },
   gold_150: {
     title: "Карта за 150",
-    priceLabel: "Купить за 150",
+    priceLabel: "Купити за 150",
     offerBuyParam: "gold_150",
     oddsRows: [
-      { id: "mythic", quality: "mythic", label: "шанс получить мифическую карту", initialChance: 40 },
+      { id: "mythic", quality: "mythic", label: "шанс отримати міфічну карту", initialChance: 40 },
     ],
     pools: [
       { quality: "mythic", count: 21 },
@@ -383,7 +383,7 @@ function setupCardModal(detailIndex) {
 
     const byId = String(detailIndex?.bioById?.get(id) || "").trim();
     const byTitle = String(detailIndex?.bioByTitle?.get(title.toLowerCase()) || "").trim();
-    const fallbackBio = `Карта стихии ${element || "earth"}: ${title}. Источник зависит от коллекции карты.`;
+    const fallbackBio = `Карта стихії ${element || "earth"}: ${title}. Джерело залежить від колекції карти.`;
     const bio = byId || byTitle || fallbackBio;
     bioEl.textContent = bio;
 
@@ -391,7 +391,7 @@ function setupCardModal(detailIndex) {
     const rows = Array.isArray(detailIndex?.collectionsByCardId?.get(id)) ? detailIndex.collectionsByCardId.get(id) : [];
     if (!rows.length) {
       const li = document.createElement("li");
-      li.textContent = "Коллекция не указана.";
+      li.textContent = "Колекція не вказана.";
       colsEl.appendChild(li);
     } else {
       const seen = new Set();

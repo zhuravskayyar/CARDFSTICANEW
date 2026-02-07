@@ -42,23 +42,23 @@ function qualityRank(q) {
 
 function qualityLabel(q) {
   const s = String(q || "").toLowerCase().trim();
-  if (s === "common") return "обычную";
-  if (s === "uncommon") return "необычную";
-  if (s === "rare") return "редкую";
-  if (s === "epic") return "эпическую";
-  if (s === "legendary") return "легендарную";
-  if (s === "mythic") return "мифическую";
+  if (s === "common") return "звичайну";
+  if (s === "uncommon") return "незвичайну";
+  if (s === "rare") return "рідкісну";
+  if (s === "epic") return "епічну";
+  if (s === "legendary") return "легендарну";
+  if (s === "mythic") return "міфічну";
   return s || "карту";
 }
 
 function qualityName(q) {
   const s = String(q || "").toLowerCase().trim();
-  if (s === "common") return "Обычная";
-  if (s === "uncommon") return "Необычная";
-  if (s === "rare") return "Редкая";
-  if (s === "epic") return "Эпическая";
-  if (s === "legendary") return "Легендарная";
-  if (s === "mythic") return "Мифическая";
+  if (s === "common") return "Звичайна";
+  if (s === "uncommon") return "Незвичайна";
+  if (s === "rare") return "Рідкісна";
+  if (s === "epic") return "Епічна";
+  if (s === "legendary") return "Легендарна";
+  if (s === "mythic") return "Міфічна";
   return String(q || "Шанс");
 }
 
@@ -98,9 +98,9 @@ const OFFERS = {
 };
 
 const READY_BUNDLES = [
-  { id: "bundle_elementals", title: "Коллекция элементалей", priceGold: 20, kind: "collection", collectionId: "elementals" },
-  { id: "bundle_veteran", title: "Набор ветерана", priceGold: 60, kind: "random", quality: "epic", count: 3, levelRange: [20, 34] },
-  { id: "bundle_world_legends", title: "Легенды мира", priceGold: 120, kind: "random", quality: "legendary", count: 2, levelRange: [35, 59] },
+  { id: "bundle_elementals", title: "Колекція елементалів", priceGold: 20, kind: "collection", collectionId: "elementals" },
+  { id: "bundle_veteran", title: "Набір ветерана", priceGold: 60, kind: "random", quality: "epic", count: 3, levelRange: [20, 34] },
+  { id: "bundle_world_legends", title: "Легенди світу", priceGold: 120, kind: "random", quality: "legendary", count: 2, levelRange: [35, 59] },
 ];
 
 function getPath(path) {
@@ -760,13 +760,13 @@ function renderReadyBundles({ state, now }) {
   card.dataset.bundleId = bundle.id;
 
   card.innerHTML =
-    `<div class="shop-card__art"><img src="../../assets/cards/demo/fire_01.jpg" alt="Набор" /></div>` +
+    `<div class="shop-card__art"><img src="../../assets/cards/demo/fire_01.jpg" alt="Набір" /></div>` +
     `<div class="shop-card__info">` +
       `<h4 class="shop-card__name">${bundle.title}</h4>` +
-      `<p class="shop-card__desc">После покупки баннер набора исчезнет на 24 часа.</p>` +
+      `<p class="shop-card__desc">Після покупки банер набору зникне на 24 години.</p>` +
     `</div>` +
     `<button class="shop-card__btn" type="button">` +
-      `<span class="shop-card__btn-label">Купить за</span> ` +
+      `<span class="shop-card__btn-label">Купити за</span> ` +
       `<img class="shop-card__btn-coin" data-btn-currency-icon src="../../assets/icons/coin-gold.svg" alt=""> ` +
       `<span class="shop-card__btn-price" data-btn-price>${bundle.priceGold}</span>` +
     `</button>`;
@@ -833,13 +833,13 @@ async function main() {
         const balances = readBalances();
         spendRes = computeSpend({ balances, currency: payCurrency, price: payPrice });
         if (!spendRes.ok) {
-          if (spendRes.reason === "not_enough_gold") showToast("Недостаточно золота.");
+          if (spendRes.reason === "not_enough_gold") showToast("Недостатньо золота.");
           return;
         }
         if (spendRes.note) showToast(spendRes.note);
       } else {
         localStorage.setItem(freeKey, todayKeyLocal());
-        showToast("Бесплатная покупка (коллекция «Солдаты Урфина»).");
+        showToast("Безкоштовна покупка (колекція «Солдати Урфіна»).");
       }
 
       const beforeEff = computeEffectiveChances(offerId, offer);
@@ -854,10 +854,10 @@ async function main() {
       try { emitCampaignEvent("shop_purchase", { count: 1 }); } catch { /* ignore */ }
 
       const q = String(tier.quality || offer.base.quality || "common");
-      showToast(`Получено: ${card.title} • ${q} • ур. ${card.level} • сила ${card.power}`);
+      showToast(`Отримано: ${card.title} • ${q} • рів. ${card.level} • сила ${card.power}`);
       if (equipRes?.equipped) {
         const replacedTitle = equipRes.replaced?.title || equipRes.replaced?.name || "";
-        showToast(replacedTitle ? `Карта автоматически добавлена в колоду (заменила: ${replacedTitle}).` : "Карта автоматически добавлена в колоду.");
+        showToast(replacedTitle ? `Карта автоматично додана до колоди (замінила: ${replacedTitle}).` : "Карта автоматично додана до колоди.");
       }
 
       rerender();
@@ -871,11 +871,11 @@ async function main() {
       const gotQ = String(tier.quality || baseQ);
       const upgraded = qualityRank(gotQ) > qualityRank(baseQ);
       const upgradeMessage = upgraded
-        ? `Вам повезло! Поздравляем!`
-        : `Покупка успешна!`;
+        ? `Вам пощастило! Вітаємо!`
+        : `Покупка успішна!`;
       const subtitle = upgraded
-        ? `Вместо ${qualityLabel(baseQ)} — ${qualityLabel(gotQ)} карта!`
-        : `Получена ${qualityLabel(gotQ)} карта.`;
+        ? `Замість ${qualityLabel(baseQ)} — ${qualityLabel(gotQ)} карта!`
+        : `Отримано ${qualityLabel(gotQ)} карту.`;
 
       const tiers = listTiersForOffer(offer);
       const betterShown = tiers
@@ -940,7 +940,7 @@ async function main() {
       const col = (collectionsRich || []).find((c) => c && String(c.id) === String(bundle.collectionId)) || null;
       const cards = Array.isArray(col?.cards) ? col.cards : [];
       if (!cards.length) {
-        showToast("Набор недоступен (нет данных коллекции).");
+        showToast("Набір недоступний (немає даних колекції).");
         return;
       }
 
@@ -969,7 +969,7 @@ async function main() {
         first = false;
       }
 
-      showToast(`Получено: ${cards.length} карт • ${bundle.title}`);
+      showToast(`Отримано: ${cards.length} карт • ${bundle.title}`);
       try { emitCampaignEvent("shop_purchase", { count: cards.length }); } catch { /* ignore */ }
 
       try {
@@ -980,8 +980,8 @@ async function main() {
           kind: "bundle",
           bundleId: bundle.id,
           bundleTitle: bundle.title,
-          upgradeMessage: "Поздравляем с покупкой!",
-          subtitle: `Вы получили набор: ${bundle.title}`,
+          upgradeMessage: "Вітаємо з покупкою!",
+          subtitle: `Ви отримали набір: ${bundle.title}`,
           cards: obtained,
           chances: { tiers: [] },
         }));
@@ -1017,8 +1017,8 @@ async function main() {
           kind: "bundle",
           bundleId: bundle.id,
           bundleTitle: bundle.title,
-          upgradeMessage: "Поздравляем с покупкой!",
-          subtitle: `Вы получили набор: ${bundle.title}`,
+          upgradeMessage: "Вітаємо з покупкою!",
+          subtitle: `Ви отримали набір: ${bundle.title}`,
           cards: obtained,
           chances: { tiers: [] },
         }));
@@ -1053,7 +1053,7 @@ async function main() {
 document.addEventListener("DOMContentLoaded", () => {
   main().catch((err) => {
     console.warn("[shop] init failed", err);
-    showToast("Ошибка загрузки магазина.");
+    showToast("Помилка завантаження крамниці.");
   });
 });
 

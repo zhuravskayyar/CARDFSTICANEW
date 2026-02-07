@@ -196,6 +196,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.warn("[ui-shell] failed to load game data (fetch). Navigation/HUD will still work.", err);
   }
 
+  // Показувати головну сторінку при першому відкритті сайту
+  try {
+    const FIRST_KEY = "cardastika:firstRunShown";
+    if (!localStorage.getItem(FIRST_KEY)) {
+      localStorage.setItem(FIRST_KEY, "1");
+      const ROUTES = getRoutes();
+      const cur = guessRouteFromPath();
+      if (cur !== "home" && ROUTES?.home) {
+        // Перенаправляємо на домашню сторінку при першому візиті
+        location.href = ROUTES.home;
+        return;
+      }
+    }
+  } catch (e) {
+    // ignore
+  }
+
   const route = guessRouteFromPath();
   setActiveRoute(route);
   const diamondsPill = document.getElementById("hudDiamonds")?.closest?.(".hud__pill");

@@ -129,7 +129,7 @@ function readLastResult() {
 document.addEventListener("DOMContentLoaded", () => {
   const res = readLastResult();
   if (!res || typeof res !== "object") {
-    showToast("Нет данных покупки.");
+    showToast("Немає даних покупки.");
     location.href = "./shop.html";
     return;
   }
@@ -140,19 +140,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const cards = Array.isArray(res.cards) && res.cards.length ? res.cards : res.card ? [res.card] : [];
   if (!cards.length) {
-    showToast("Нет данных карты.");
+    showToast("Немає даних карти.");
     location.href = "./shop.html";
     return;
   }
 
   const titleEl = $("resultTitle");
   const subtitleEl = $("resultSubtitle");
-  if (titleEl) titleEl.textContent = String(res.upgradeMessage || (isBundle ? "Поздравляем с покупкой!" : "Покупка"));
+  if (titleEl) titleEl.textContent = String(res.upgradeMessage || (isBundle ? "Вітаємо з покупкою!" : "Покупка"));
   if (subtitleEl) subtitleEl.textContent = String(res.subtitle || "");
 
   if (isBundle && !$("resultBanners")?.childElementCount) {
     renderBanners($("resultBanners"), [
-      { kind: "blue", text: "Поздравляем с покупкой!\nВы получили комплект карт!" },
+      { kind: "blue", text: "Вітаємо з покупкою!\nВи отримали комплект карт!" },
     ]);
   } else {
     renderBanners($("resultBanners"), res.banners || null);

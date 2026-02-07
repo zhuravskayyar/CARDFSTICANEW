@@ -5,7 +5,7 @@
 class ArenaScreen {
   constructor() {
     this.minRating = 2000;
-    this.userRating = 0; // будет загружено из данных игрока
+    this.userRating = 0; // буде завантажено з даних гравця
     this.init();
   }
 

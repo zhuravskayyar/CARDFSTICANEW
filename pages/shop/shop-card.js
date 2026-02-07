@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const bioByCard = String(safeCard.bio || "").trim();
   const bioById = String(bios?.[safeCard.id] || "").trim();
   const bioByTitle = String(titleBioMap.get(normTitle(safeCard.title)) || "").trim();
-  const bio = bioByCard || bioById || bioByTitle || "Описание карты пока недоступно.";
+  const bio = bioByCard || bioById || bioByTitle || "Опис карти поки недоступний.";
   if (bioEl) bioEl.textContent = bio;
 
   const collectionsByTitle = safeCard.collections.map((t) => cMap.byTitle.get(t)).filter(Boolean);

@@ -237,7 +237,7 @@ async function render() {
 
   if (hint) {
     const n = weak.length;
-    hint.innerHTML = `У вас есть <b>${n}</b> слабых карт, которые можно потратить для улучшения карт в <b>Боевой колоде</b>.`;
+    hint.innerHTML = `У вас є <b>${n}</b> слабких карт, які можна витратити для покращення карт у <b>Бойовій колоді</b>.`;
   }
 
   grid.innerHTML = "";

@@ -349,7 +349,7 @@
       const c = drawCard(side);
       if (c) side.hand[i] = c;
     }
-    // добиваем пропуски, если вдруг попались "пустые" записи
+    // додаємо пропуски, якщо раптом зустрілися "пусті" записи
     for (let i = 0; i < count; i++) {
       if (!side.hand[i]) side.hand[i] = drawCard(side);
     }
@@ -763,7 +763,7 @@
       btn.addEventListener("click", ()=> performTurnWithAnimation(idx));
     });
 
-    // клик по карте врага теперь зеркальный — слот i атакует слот i
+    // клік по карті ворога тепер дзеркальний — слот i атакує слот i
     els.enemyBtns.forEach((btn, idx)=>{
       btn.addEventListener("click", ()=> performTurnWithAnimation(idx));
     });
@@ -857,7 +857,7 @@
       console.warn('[battle] failed to override duel HP', e);
     }
 
-    // Диагностика: выведем значения, чтобы убедиться в соответствии
+    // Діагностика: виведемо значення, щоб перевірити відповідність
     try {
       console.log('[battle:init] ENEMY_PROF from storage:', ENEMY_PROF);
       console.log('[battle:init] playerHp (calculated):', playerHp, 'enemyHp (from storage/fallback):', enemyHp);

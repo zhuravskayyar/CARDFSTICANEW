@@ -82,7 +82,7 @@
 
     const line1 = document.createElement("div");
     line1.className = "confirm-modal__line";
-    line1.appendChild(document.createTextNode("Поднять уровень за "));
+    line1.appendChild(document.createTextNode("Підвищити рівень за "));
     const coin = document.createElement("img");
     coin.className = "confirm-modal__coin";
     coin.src = getPath("assets/icons/coin-gold.svg");
@@ -93,7 +93,7 @@
 
     const line2 = document.createElement("div");
     line2.className = "confirm-modal__line";
-    line2.textContent = `Сила вырастет на ${Math.max(0, Math.round(asNum(gainPower, 0)))}`;
+    line2.textContent = `Сила зросте на ${Math.max(0, Math.round(asNum(gainPower, 0)))}`;
 
     body.appendChild(line1);
     body.appendChild(line2);
@@ -610,10 +610,10 @@
 
   function elementGenitiveRu(raw) {
     const el = String(raw || "").toLowerCase().trim();
-    if (el === "fire") return "огня";
-    if (el === "water") return "воды";
-    if (el === "air") return "воздуха";
-    if (el === "earth") return "земли";
+    if (el === "fire") return "вогню";
+    if (el === "water") return "води";
+    if (el === "air") return "повітря";
+    if (el === "earth") return "землі";
     return "";
   }
 
@@ -641,14 +641,14 @@
     if (costEl) costEl.textContent = String(Math.max(0, Math.round(asNum(upgrade.costNow, 0))));
 
     actionBtn.disabled = !upgrade.canLevel;
-    if (actionText) actionText.textContent = "Поднять уровень";
+    if (actionText) actionText.textContent = "Підвищити рівень";
 
     const hasWeak = Array.isArray(candidates) && candidates.length > 0;
     if (note) {
       note.style.display = hasWeak ? "none" : "";
       if (!hasWeak) {
         const gen = elementGenitiveRu(target.element);
-        note.textContent = gen ? `У вас нет слабых карт стихии ${gen}.` : "У вас нет слабых карт этой стихии.";
+        note.textContent = gen ? `У вас немає слабких карт стихії ${gen}.` : "У вас немає слабких карт цієї стихії.";
       }
     }
   }
@@ -1080,8 +1080,8 @@
         if (!target) return;
 
         const u = computeUpgrade(levelsData, target, stNow.gold);
-        if (!u) return showToast("Максимальный уровень.");
-        if (!u.canLevel) return showToast("Не хватает золота.");
+        if (!u) return showToast("Максимальний рівень.");
+        if (!u.canLevel) return showToast("Не вистачає золота.");
 
         confirmUpgrade({
           costGold: u.costNow,
@@ -1093,8 +1093,8 @@
             if (!target2) return;
 
             const u2 = computeUpgrade(levelsData, target2, stNow2.gold);
-            if (!u2) return showToast("Максимальный уровень.");
-            if (!u2.canLevel) return showToast("Не хватает золота.");
+            if (!u2) return showToast("Максимальний рівень.");
+            if (!u2.canLevel) return showToast("Не вистачає золота.");
 
             const applyUpgrade = (t, goldContainer, upgrade) => {
               const curRow = levelsData.byLevel.get(upgrade.level) || null;
@@ -1144,7 +1144,7 @@
               // ignore
             }
 
-            showToast(`Уровень повышен до ${u2.nextLevel}.`);
+            showToast(`Рівень підвищено до ${u2.nextLevel}.`);
             try { document.dispatchEvent(new Event("card-open:rerender")); } catch { /* ignore */ }
           },
         });
