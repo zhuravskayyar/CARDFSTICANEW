@@ -1,4 +1,4 @@
-{
+﻿{
   "collections": [
     {
       "id": "sea-masters",
@@ -9,7 +9,7 @@
       "total": 9,
       "source": "Крамниця",
       "sourceLink": "../shop/shop.html",
-      "mainArt": "../../assets/cards/demo/water_01.jpg",
+      "mainArt": "../../assets/cards/arts/water_001.webp",
       "cards": [
         { "id": "sea_01", "title": "Посейдон", "found": false, "element": "water", "rarity": "rarity-5", "basePower": 85, "level": 1 },
         { "id": "sea_02", "title": "Адмірал", "found": false, "element": "water", "rarity": "rarity-4", "basePower": 70, "level": 1 },
@@ -31,7 +31,7 @@
       "total": 9,
       "source": "Кампанія",
       "sourceLink": "../campaign/campaign.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "horde_01", "title": "Вождь", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 88, "level": 1 },
         { "id": "horde_02", "title": "Шаман", "found": false, "element": "fire", "rarity": "rarity-4", "basePower": 65, "level": 1 },
@@ -53,7 +53,7 @@
       "total": 9,
       "source": "Арена",
       "sourceLink": "../arena/arena.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "sky_01", "title": "Архангел", "found": false, "element": "air", "rarity": "rarity-6", "basePower": 92, "level": 1 },
         { "id": "sky_02", "title": "Грифон", "found": false, "element": "air", "rarity": "rarity-5", "basePower": 78, "level": 1 },
@@ -75,7 +75,7 @@
       "total": 9,
       "source": "Кампанія",
       "sourceLink": "../campaign/campaign.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "forest_01", "title": "Лісовик", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 85, "level": 1 },
         { "id": "forest_02", "title": "Дріада", "found": false, "element": "earth", "rarity": "rarity-4", "basePower": 70, "level": 1 },
@@ -97,7 +97,7 @@
       "total": 4,
       "source": "Крамниця",
       "sourceLink": "../shop/shop.html",
-      "mainArt": "../../assets/cards/demo/fire.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "elem_01", "title": "Іфрит", "found": false, "element": "fire", "rarity": "rarity-4", "basePower": 75, "level": 1 },
         { "id": "elem_02", "title": "Ундін", "found": false, "element": "water", "rarity": "rarity-4", "basePower": 70, "level": 1 },
@@ -114,7 +114,7 @@
       "total": 4,
       "source": "Арена",
       "sourceLink": "../arena/arena.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "battle_elem_01", "title": "Бойовий Іфрит", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 85, "level": 1 },
         { "id": "battle_elem_02", "title": "Бойовий Ундін", "found": false, "element": "water", "rarity": "rarity-5", "basePower": 80, "level": 1 },
@@ -131,7 +131,7 @@
       "total": 15,
       "source": "Святкова подія",
       "sourceLink": "../events/events.html",
-      "mainArt": "../../assets/cards/demo/water_01.jpg",
+      "mainArt": "../../assets/cards/arts/water_001.webp",
       "cards": [
         { "id": "march8_01", "title": "Флора", "found": false, "element": "earth", "rarity": "rarity-6", "basePower": 90, "level": 1 },
         { "id": "march8_02", "title": "Деметра", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 82, "level": 1 },
@@ -159,7 +159,7 @@
       "total": 9,
       "source": "Святкова подія",
       "sourceLink": "../events/events.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "feb23_01", "title": "Захисник", "found": false, "element": "earth", "rarity": "rarity-6", "basePower": 95, "level": 1 },
         { "id": "feb23_02", "title": "Полководець", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 85, "level": 1 },
@@ -181,7 +181,7 @@
       "total": 3,
       "source": "Рейдові боси",
       "sourceLink": "../raids/raids.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "ancient_dragon_01", "title": "Алдуїн", "found": false, "element": "fire", "rarity": "rarity-6", "basePower": 120, "level": 1 },
         { "id": "ancient_dragon_02", "title": "Ніддгег", "found": false, "element": "water", "rarity": "rarity-6", "basePower": 115, "level": 1 },
@@ -197,7 +197,7 @@
       "total": 4,
       "source": "Крамниця, Рейди",
       "sourceLink": "../shop/shop.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "rare_dragon_01", "title": "Вермітракс", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 95, "level": 1 },
         { "id": "rare_dragon_02", "title": "Сапфіра", "found": false, "element": "water", "rarity": "rarity-5", "basePower": 92, "level": 1 },
@@ -214,7 +214,7 @@
       "total": 4,
       "source": "Подія",
       "sourceLink": "../events/events.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "myth_01", "title": "Сфінкс", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 88, "level": 1 },
         { "id": "myth_02", "title": "Мінотавр", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 92, "level": 1 },
@@ -231,7 +231,7 @@
       "total": 4,
       "source": "Турнір",
       "sourceLink": "../tournament/tournament.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "mage_01", "title": "Піроманс", "found": false, "element": "fire", "rarity": "rarity-6", "basePower": 98, "level": 1 },
         { "id": "mage_02", "title": "Гідроманс", "found": false, "element": "water", "rarity": "rarity-6", "basePower": 95, "level": 1 },
@@ -248,7 +248,7 @@
       "total": 4,
       "source": "Кампанія Урфін",
       "sourceLink": "../campaign/urfin.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "urfin_mut_01", "title": "Покидьок", "found": false, "element": "earth", "rarity": "rarity-4", "basePower": 78, "level": 1 },
         { "id": "urfin_mut_02", "title": "Виродок", "found": false, "element": "earth", "rarity": "rarity-4", "basePower": 75, "level": 1 },
@@ -265,7 +265,7 @@
       "total": 4,
       "source": "Кампанія Урфін",
       "sourceLink": "../campaign/urfin.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "urfin_giant_01", "title": "Колос", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 90, "level": 1 },
         { "id": "urfin_giant_02", "title": "Голем", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 92, "level": 1 },
@@ -282,7 +282,7 @@
       "total": 4,
       "source": "Кампанія Урфін",
       "sourceLink": "../campaign/urfin.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "urfin_fav_01", "title": "Наместник", "found": false, "element": "earth", "rarity": "rarity-6", "basePower": 105, "level": 1 },
         { "id": "urfin_fav_02", "title": "Гладіатор", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 95, "level": 1 },
@@ -299,7 +299,7 @@
       "total": 8,
       "source": "Кампанія Урфін",
       "sourceLink": "../campaign/urfin.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "urfin_sold_01", "title": "П'яхур", "found": false, "element": "earth", "rarity": "rarity-2", "basePower": 45, "level": 1 },
         { "id": "urfin_sold_02", "title": "Арбалетник", "found": false, "element": "earth", "rarity": "rarity-2", "basePower": 42, "level": 1 },
@@ -320,7 +320,7 @@
       "total": 4,
       "source": "Кампанія Урфін",
       "sourceLink": "../campaign/urfin.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "urfin_gen_01", "title": "Борей", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 88, "level": 1 },
         { "id": "urfin_gen_02", "title": "Нотус", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 90, "level": 1 },
@@ -337,7 +337,7 @@
       "total": 4,
       "source": "Крамниця",
       "sourceLink": "../shop/shop.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "mech_01", "title": "Інженер", "found": false, "element": "earth", "rarity": "rarity-4", "basePower": 75, "level": 1 },
         { "id": "mech_02", "title": "Годинникар", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 85, "level": 1 },
@@ -354,7 +354,7 @@
       "total": 4,
       "source": "Подія",
       "sourceLink": "../events/events.html",
-      "mainArt": "../../assets/cards/demo/water_01.jpg",
+      "mainArt": "../../assets/cards/arts/water_001.webp",
       "cards": [
         { "id": "sorc_01", "title": "Селена", "found": false, "element": "water", "rarity": "rarity-5", "basePower": 82, "level": 1 },
         { "id": "sorc_02", "title": "Астра", "found": false, "element": "air", "rarity": "rarity-5", "basePower": 85, "level": 1 },
@@ -371,7 +371,7 @@
       "total": 7,
       "source": "Зимова подія",
       "sourceLink": "../events/winter.html",
-      "mainArt": "../../assets/cards/demo/water_01.jpg",
+      "mainArt": "../../assets/cards/arts/water_001.webp",
       "cards": [
         { "id": "winter_01", "title": "Снігуронька", "found": false, "element": "water", "rarity": "rarity-6", "basePower": 100, "level": 1 },
         { "id": "winter_02", "title": "Морозко", "found": false, "element": "water", "rarity": "rarity-5", "basePower": 88, "level": 1 },
@@ -391,7 +391,7 @@
       "total": 4,
       "source": "Кампанія",
       "sourceLink": "../campaign/campaign.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "peace_dwarf_01", "title": "Коваль", "found": false, "element": "earth", "rarity": "rarity-3", "basePower": 55, "level": 1 },
         { "id": "peace_dwarf_02", "title": "Гірник", "found": false, "element": "earth", "rarity": "rarity-2", "basePower": 48, "level": 1 },
@@ -408,7 +408,7 @@
       "total": 4,
       "source": "Арена",
       "sourceLink": "../arena/arena.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "battle_dwarf_01", "title": "Воїн", "found": false, "element": "earth", "rarity": "rarity-4", "basePower": 72, "level": 1 },
         { "id": "battle_dwarf_02", "title": "Лютогнів", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 85, "level": 1 },
@@ -425,7 +425,7 @@
       "total": 4,
       "source": "Арена",
       "sourceLink": "../arena/arena.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "berserk_01", "title": "Полумняний", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 90, "level": 1 },
         { "id": "berserk_02", "title": "Кровожер", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 92, "level": 1 },
@@ -442,7 +442,7 @@
       "total": 4,
       "source": "Подія",
       "sourceLink": "../events/events.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "hunter_01", "title": "Археолог", "found": false, "element": "earth", "rarity": "rarity-4", "basePower": 70, "level": 1 },
         { "id": "hunter_02", "title": "Гробошукач", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 82, "level": 1 },
@@ -459,7 +459,7 @@
       "total": 4,
       "source": "Рейди",
       "sourceLink": "../raids/raids.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "tamer_01", "title": "Учениця", "found": false, "element": "fire", "rarity": "rarity-4", "basePower": 72, "level": 1 },
         { "id": "tamer_02", "title": "Вершниця", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 85, "level": 1 },
@@ -476,7 +476,7 @@
       "total": 4,
       "source": "Крамниця",
       "sourceLink": "../shop/shop.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "lover_01", "title": "Друг", "found": false, "element": "fire", "rarity": "rarity-3", "basePower": 60, "level": 1 },
         { "id": "lover_02", "title": "Шепотун", "found": false, "element": "fire", "rarity": "rarity-4", "basePower": 75, "level": 1 },
@@ -493,7 +493,7 @@
       "total": 6,
       "source": "Турнір",
       "sourceLink": "../tournament/tournament.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "order_01", "title": "Послушник", "found": false, "element": "air", "rarity": "rarity-3", "basePower": 58, "level": 1 },
         { "id": "order_02", "title": "Адепт", "found": false, "element": "air", "rarity": "rarity-4", "basePower": 70, "level": 1 },
@@ -512,7 +512,7 @@
       "total": 4,
       "source": "Подія",
       "sourceLink": "../events/events.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "diamond_01", "title": "Брат", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 85, "level": 1 },
         { "id": "diamond_02", "title": "Рицар", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 88, "level": 1 },
@@ -529,7 +529,7 @@
       "total": 3,
       "source": "Подія Зодіак",
       "sourceLink": "../events/zodiac.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "air_zod_01", "title": "Близнюки", "found": false, "element": "air", "rarity": "rarity-5", "basePower": 80, "level": 1 },
         { "id": "air_zod_02", "title": "Терези", "found": false, "element": "air", "rarity": "rarity-5", "basePower": 82, "level": 1 },
@@ -545,7 +545,7 @@
       "total": 3,
       "source": "Подія Зодіак",
       "sourceLink": "../events/zodiac.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "earth_zod_01", "title": "Телець", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 88, "level": 1 },
         { "id": "earth_zod_02", "title": "Діва", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 80, "level": 1 },
@@ -561,7 +561,7 @@
       "total": 3,
       "source": "Подія Зодіак",
       "sourceLink": "../events/zodiac.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "fire_zod_01", "title": "Овен", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 90, "level": 1 },
         { "id": "fire_zod_02", "title": "Лев", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 92, "level": 1 },
@@ -577,7 +577,7 @@
       "total": 3,
       "source": "Подія Зодіак",
       "sourceLink": "../events/zodiac.html",
-      "mainArt": "../../assets/cards/demo/water_01.jpg",
+      "mainArt": "../../assets/cards/arts/water_001.webp",
       "cards": [
         { "id": "water_zod_01", "title": "Рак", "found": false, "element": "water", "rarity": "rarity-5", "basePower": 78, "level": 1 },
         { "id": "water_zod_02", "title": "Скорпіон", "found": false, "element": "water", "rarity": "rarity-5", "basePower": 85, "level": 1 },
@@ -593,7 +593,7 @@
       "total": 4,
       "source": "Темна подія",
       "sourceLink": "../events/dark.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "voodoo_01", "title": "Шаман", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 85, "level": 1 },
         { "id": "voodoo_02", "title": "Жриця", "found": false, "element": "water", "rarity": "rarity-5", "basePower": 88, "level": 1 },
@@ -610,7 +610,7 @@
       "total": 4,
       "source": "Кампанія",
       "sourceLink": "../campaign/campaign.html",
-      "mainArt": "../../assets/cards/demo/water_01.jpg",
+      "mainArt": "../../assets/cards/arts/water_001.webp",
       "cards": [
         { "id": "shore_01", "title": "Страж", "found": false, "element": "water", "rarity": "rarity-4", "basePower": 70, "level": 1 },
         { "id": "shore_02", "title": "Жриця", "found": false, "element": "water", "rarity": "rarity-5", "basePower": 82, "level": 1 },
@@ -627,7 +627,7 @@
       "total": 4,
       "source": "Кампанія",
       "sourceLink": "../campaign/campaign.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "path_01", "title": "Мандрівник", "found": false, "element": "earth", "rarity": "rarity-4", "basePower": 68, "level": 1 },
         { "id": "path_02", "title": "Провідник", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 80, "level": 1 },
@@ -644,7 +644,7 @@
       "total": 4,
       "source": "Подія",
       "sourceLink": "../events/events.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "kingdom_01", "title": "Іван-Царевич", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 88, "level": 1 },
         { "id": "kingdom_02", "title": "Василіса", "found": false, "element": "air", "rarity": "rarity-5", "basePower": 85, "level": 1 },
@@ -661,7 +661,7 @@
       "total": 4,
       "source": "Кампанія",
       "sourceLink": "../campaign/campaign.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "waste_01", "title": "Бедуїн", "found": false, "element": "earth", "rarity": "rarity-3", "basePower": 60, "level": 1 },
         { "id": "waste_02", "title": "Шейх", "found": false, "element": "earth", "rarity": "rarity-4", "basePower": 75, "level": 1 },
@@ -678,7 +678,7 @@
       "total": 4,
       "source": "Подія",
       "sourceLink": "../events/events.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "cat_01", "title": "Чешир", "found": false, "element": "air", "rarity": "rarity-5", "basePower": 78, "level": 1 },
         { "id": "cat_02", "title": "Перро", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 85, "level": 1 },
@@ -695,7 +695,7 @@
       "total": 4,
       "source": "Турнір Стихій",
       "sourceLink": "../tournament/elements.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "air_choice_01", "title": "Еол", "found": false, "element": "air", "rarity": "rarity-5", "basePower": 85, "level": 1 },
         { "id": "air_choice_02", "title": "Борей", "found": false, "element": "air", "rarity": "rarity-5", "basePower": 88, "level": 1 },
@@ -712,7 +712,7 @@
       "total": 4,
       "source": "Турнір Стихій",
       "sourceLink": "../tournament/elements.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "earth_choice_01", "title": "Гея", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 90, "level": 1 },
         { "id": "earth_choice_02", "title": "Атлант", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 88, "level": 1 },
@@ -729,7 +729,7 @@
       "total": 4,
       "source": "Турнір Стихій",
       "sourceLink": "../tournament/elements.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "fire_choice_01", "title": "Прометей", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 92, "level": 1 },
         { "id": "fire_choice_02", "title": "Гефест", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 90, "level": 1 },
@@ -746,7 +746,7 @@
       "total": 4,
       "source": "Турнір Стихій",
       "sourceLink": "../tournament/elements.html",
-      "mainArt": "../../assets/cards/demo/water_01.jpg",
+      "mainArt": "../../assets/cards/arts/water_001.webp",
       "cards": [
         { "id": "water_choice_01", "title": "Океан", "found": false, "element": "water", "rarity": "rarity-5", "basePower": 85, "level": 1 },
         { "id": "water_choice_02", "title": "Нептун", "found": false, "element": "water", "rarity": "rarity-5", "basePower": 88, "level": 1 },
@@ -763,7 +763,7 @@
       "total": 4,
       "source": "Арена",
       "sourceLink": "../arena/arena.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "flame_01", "title": "Легіонер", "found": false, "element": "fire", "rarity": "rarity-4", "basePower": 75, "level": 1 },
         { "id": "flame_02", "title": "Паладин", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 85, "level": 1 },
@@ -780,7 +780,7 @@
       "total": 4,
       "source": "Арена",
       "sourceLink": "../arena/arena.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "storm_01", "title": "Борей", "found": false, "element": "air", "rarity": "rarity-4", "basePower": 72, "level": 1 },
         { "id": "storm_02", "title": "Зевс", "found": false, "element": "air", "rarity": "rarity-5", "basePower": 82, "level": 1 },
@@ -797,7 +797,7 @@
       "total": 4,
       "source": "Рейди",
       "sourceLink": "../raids/raids.html",
-      "mainArt": "../../assets/cards/demo/water_01.jpg",
+      "mainArt": "../../assets/cards/arts/water_001.webp",
       "cards": [
         { "id": "deep_01", "title": "Наутілус", "found": false, "element": "water", "rarity": "rarity-5", "basePower": 85, "level": 1 },
         { "id": "deep_02", "title": "Мехакракен", "found": false, "element": "water", "rarity": "rarity-5", "basePower": 88, "level": 1 },
@@ -814,7 +814,7 @@
       "total": 4,
       "source": "Кампанія",
       "sourceLink": "../campaign/campaign.html",
-      "mainArt": "../../assets/cards/demo/earth_01.jpg",
+      "mainArt": "../../assets/cards/arts/earth_001.webp",
       "cards": [
         { "id": "forge_01", "title": "Бронтес", "found": false, "element": "earth", "rarity": "rarity-5", "basePower": 90, "level": 1 },
         { "id": "forge_02", "title": "Гефест", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 85, "level": 1 },
@@ -831,7 +831,7 @@
       "total": 4,
       "source": "Крамниця",
       "sourceLink": "../shop/shop.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "drag_magic_01", "title": "Неофіт", "found": false, "element": "fire", "rarity": "rarity-3", "basePower": 62, "level": 1 },
         { "id": "drag_magic_02", "title": "Адепт", "found": false, "element": "fire", "rarity": "rarity-4", "basePower": 75, "level": 1 },
@@ -848,7 +848,7 @@
       "total": 4,
       "source": "Подія",
       "sourceLink": "../events/events.html",
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
         { "id": "heal_drag_01", "title": "Асклепій", "found": false, "element": "fire", "rarity": "rarity-3", "basePower": 60, "level": 1 },
         { "id": "heal_drag_02", "title": "Гігея", "found": false, "element": "fire", "rarity": "rarity-4", "basePower": 72, "level": 1 },
@@ -865,7 +865,7 @@
       "total": 5,
       "source": "Кампанія (Боси)",
       "sourceLink": "../campaign/campaign.html?boss=1",
-      "mainArt": "../../assets/cards/demo/boss_01.jpg",
+      "mainArt": "../../assets/cards/arts/boss_001.webp",
       "cards": [
         {
           "id": "trophy_tax_collector",

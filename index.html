@@ -22,49 +22,69 @@
       <!-- HUD -->
       <header id="hud" class="hud">
         <div class="hud__left">
-          <span class="hud__icon">⚔️</span>
-          <span class="hud__value" id="hudPower">180</span>
+          <div class="hud__avatar">
+            <img id="hudAvatar" alt="Avatar" src="">
+          </div>
+          <span class="hud__icon hud__icon--swords" id="hudSword" aria-hidden="true"></span>
+          <span class="hud__value" id="hudPower">-</span>
         </div>
 
         <div class="hud__right">
-          <div class="hud__pill" title="Silver">
-            <img class="hud__icon" src="assets/icons/coin-silver.svg" alt="Silver" />
-            <span class="hud__value" id="hudSilver">300</span>
+          <div class="hud__pill hud__pill--silver" title="Silver">
+            <span class="hud__value" id="hudSilver">-</span>
+            <img class="hud__currency-icon" src="assets/icons/coin-silver.svg" alt="">
           </div>
-          <div class="hud__pill" title="Diamonds">
-            <img class="hud__icon" src="assets/icons/diamond.svg" alt="Diamonds" />
-            <span class="hud__value" id="hudDiamonds">0</span>
+          <div class="hud__pill hud__pill--diamonds" title="Diamonds" style="display:none">
+            <span class="hud__value" id="hudDiamonds">-</span>
+            <img class="hud__currency-icon" src="assets/icons/diamond.svg" alt="">
           </div>
-          <div class="hud__pill" title="Gold">
-            <img class="hud__icon" src="assets/icons/coin-gold.svg" alt="Gold" />
-            <span class="hud__value" id="hudGold">12</span>
+          <div class="hud__pill hud__pill--gold" title="Gold">
+            <span class="hud__value" id="hudGold">-</span>
+            <img class="hud__currency-icon" src="assets/icons/coin-gold.svg" alt="">
           </div>
         </div>
       </header>
+      <script>
+        // Встановити аватар з localStorage одразу (до завантаження ui-shell.js)
+        (function() {
+          var img = document.getElementById("hudAvatar");
+          var saved = localStorage.getItem("cardastika:avatarUrl");
+          if (img && saved && saved.startsWith("assets/")) {
+            img.src = saved;
+          } else if (img) {
+            img.src = "assets/cards/arts/fire_001.webp";
+          }
+        })();
+      </script>
 
       <!-- 2x3 tiles -->
       <section class="tiles">
-        <a class="tile" href="pages/duel/duel.html">
+        <a class="tile tile--duel" href="pages/duel/duel.html">
+          <span class="tile__rune rune rune--sword rune--glow"></span>
           <div class="tile__art"></div>
           <div class="tile__label">Дуелі: <b>10</b></div>
         </a>
 
-        <a class="tile" href="pages/campaign/campaign.html">
+        <a class="tile tile--campaign" href="pages/campaign/campaign.html">
+          <span class="tile__rune rune rune--raidho rune--glow"></span>
           <div class="tile__art"></div>
           <div class="tile__label">Кампанія</div>
         </a>
 
-        <a class="tile" href="pages/arena/arena.html">
+        <a class="tile tile--arena" href="pages/arena/arena.html">
+          <span class="tile__rune rune rune--shield rune--glow"></span>
           <div class="tile__art"></div>
           <div class="tile__label">Арена</div>
         </a>
 
-        <a class="tile" href="pages/arena/tournament.html">
+        <a class="tile tile--tournament" href="pages/arena/tournament.html">
+          <span class="tile__rune rune rune--crown rune--glow"></span>
           <div class="tile__art"></div>
           <div class="tile__label">Турнір</div>
         </a>
 
-        <a class="tile" href="pages/deck/deck.html">
+        <a class="tile tile--deck" href="pages/deck/deck.html">
+          <span class="tile__rune rune rune--algiz rune--glow"></span>
           <div class="tile__art"></div>
           <div class="tile__label">
             <span id="tileDeckName">Бойова колода</span>
@@ -72,7 +92,8 @@
           </div>
         </a>
 
-        <a class="tile" href="pages/invasion/invasion.html">
+        <a class="tile tile--invasion" href="pages/invasion/invasion.html">
+          <span class="tile__rune rune rune--flame rune--glow rune--red"></span>
           <div class="tile__art"></div>
           <div class="tile__label">Нашестя Урфіна</div>
         </a>

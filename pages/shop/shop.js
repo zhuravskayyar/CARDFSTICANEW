@@ -618,6 +618,7 @@ function buildCard({ cover, tier, levelsData, offer }) {
     inDeck: false,
     protected: false,
     art: "",
+    artFile: cover.artFile || null,
     source: `shop:${offer.id}`,
   }, CARD_BELONGS_TO.shop);
 }

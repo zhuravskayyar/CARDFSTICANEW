@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Canon Arena Battle (6 FFA) — канонна арена
  * - 6 учасників: гравець + 5 ботів (без мережі)
  * - Цикл 9 секунд
@@ -33,10 +33,10 @@ const BOT_NAMES = [
 ];
 
 const BOT_AVATARS = [
-  "../../assets/cards/demo/fire_01.jpg",
-  "../../assets/cards/demo/water_01.jpg",
-  "../../assets/cards/demo/air_01.jpg",
-  "../../assets/cards/demo/earth_01.jpg",
+  "../../assets/cards/arts/fire_001.webp",
+  "../../assets/cards/arts/water_001.webp",
+  "../../assets/cards/arts/air_001.webp",
+  "../../assets/cards/arts/earth_001.webp",
   "../../assets/cards/demo/fire_02.jpg",
 ];
 
@@ -86,10 +86,18 @@ function initArena() {
   const power = deckPower || acc?.duel?.power || acc?.power || 180;
 
   // player
+  let savedAvatar = String(localStorage.getItem("cardastika:avatarUrl") || "").trim();
+  // Валідація
+  if (savedAvatar && !savedAvatar.startsWith("assets/")) {
+    savedAvatar = "";
+  }
+  const playerAvatar = savedAvatar 
+    ? "../../" + savedAvatar
+    : "../../assets/cards/arts/fire_001.webp";
   const player = makeMage({
     id: 0,
     name: acc?.name ?? "Гравець",
-    avatar: acc?.avatar ?? "../../assets/cards/demo/fire_01.jpg",
+    avatar: playerAvatar,
     power,
     isBot: false,
     deck: arena.playerDeck

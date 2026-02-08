@@ -100,6 +100,30 @@
   // НОРМАЛІЗАЦІЯ КАРТ
   // ==========================================
 
+  // Кеш artFile по id картки з cards.json
+  let artFileCache = null;
+  
+  async function loadArtFileCache() {
+    if (artFileCache) return artFileCache;
+    try {
+      const r = await fetch("../../data/cards.json", { cache: "default" });
+      if (!r.ok) return {};
+      const json = await r.json();
+      const cards = Array.isArray(json?.cards) ? json.cards : [];
+      const cache = {};
+      for (const c of cards) {
+        if (c && c.id && c.artFile) {
+          cache[String(c.id)] = String(c.artFile);
+        }
+      }
+      artFileCache = cache;
+      return cache;
+    } catch {
+      artFileCache = {};
+      return {};
+    }
+  }
+
   function normalizeCardForDuel(raw, fallbackId) {
     if (!raw || typeof raw !== "object") return null;
 
@@ -113,13 +137,27 @@
     const rarityRaw = Number(raw.rarity ?? raw.quality ?? 1);
     const rarity = Number.isFinite(rarityRaw) ? clamp(Math.round(rarityRaw), 1, 6) : 1;
 
+    // Підтримка artFile (з cards.json) та art/image
+    let art = raw.art || raw.image || raw.img || raw.cover || null;
+    let artFile = raw.artFile || null;
+    
+    // Якщо немає artFile, шукаємо в кеші по id
+    if (!artFile && raw.id && artFileCache) {
+      artFile = artFileCache[String(raw.id)] || null;
+    }
+    
+    if (!art && artFile) {
+      art = `../../assets/cards/arts/${artFile}`;
+    }
+
     return {
       uid: String(raw.uid || raw.id || fallbackId || Date.now()),
       id: raw.id ?? raw.cardId ?? raw.card_id ?? null,
       element,
       power,
       rarity,
-      name: String(raw.name || raw.title || element)
+      name: String(raw.name || raw.title || element),
+      art: art ? String(art) : null
     };
   }
 
@@ -138,7 +176,19 @@
     if (!element) return null;
 
     const rarity = Number(raw.rarity ?? raw.quality ?? 1);
-    const art = raw.art || raw.image || raw.img || raw.cover || null;
+    
+    // Підтримка artFile (з cards.json) та art/image
+    let art = raw.art || raw.image || raw.img || raw.cover || null;
+    let artFile = raw.artFile || null;
+    
+    // Якщо немає artFile, шукаємо в кеші по id
+    if (!artFile && raw.id && artFileCache) {
+      artFile = artFileCache[String(raw.id)] || null;
+    }
+    
+    if (!art && artFile) {
+      art = `../../assets/cards/arts/${artFile}`;
+    }
 
     return {
       uid: String(raw.uid || raw.id || fallbackId || Date.now()),
@@ -504,7 +554,15 @@
 
     const artEl = btn.querySelector(".ref-card__art");
     if (artEl) {
-      artEl.style.backgroundImage = `linear-gradient(135deg, var(--color-${card.element}), var(--color-${card.element}-light))`;
+      if (card.art) {
+        // Показуємо арт картки
+        artEl.style.backgroundImage = `url('${card.art.replace(/'/g, "\\'")}')`;
+        artEl.style.backgroundSize = "cover";
+        artEl.style.backgroundPosition = "center";
+      } else {
+        // Фолбек на градієнт елементу
+        artEl.style.backgroundImage = `linear-gradient(135deg, var(--color-${card.element}), var(--color-${card.element}-light))`;
+      }
     }
 
     btn.dataset.uid = card.uid;
@@ -773,7 +831,10 @@
   // ІНІЦІАЛІЗАЦІЯ
   // ==========================================
 
-  function init(){
+  async function init(){
+    // Завантажити кеш артів перед стартом
+    await loadArtFileCache();
+
     try {
       const screenEl = document.getElementById("screen");
       if (screenEl && IS_BOSS_BATTLE) screenEl.classList.add("is-boss");
@@ -884,11 +945,28 @@
       setLeagueBadge(document.querySelector(".battle-player--self"), leagueId);
       setLeagueBadge(document.querySelector(".battle-player--enemy"), leagueId);
 
+      // Аватар гравця - зі збереженого в localStorage (той самий що в HUD)
       const pAva = document.querySelector(".battle-player--self .battle-player__avatar img");
-      if (pAva) pAva.src = String(localStorage.getItem("cardastika:avatarUrl") || "").trim() || "../../assets/cards/demo/fire_01.jpg";
+      if (pAva) {
+        let savedAvatar = String(localStorage.getItem("cardastika:avatarUrl") || "").trim();
+        // Валідація
+        if (savedAvatar && !savedAvatar.startsWith("assets/")) {
+          savedAvatar = "";
+        }
+        // Додаємо prefix для шляху з pages/duel/
+        const avatarUrl = savedAvatar 
+          ? "../../" + savedAvatar
+          : "../../assets/cards/arts/fire_001.webp";
+        pAva.src = avatarUrl;
+      }
 
+      // Аватар ворога - випадковий арт з його колоди
       const eAva = document.querySelector(".battle-player--enemy .battle-player__avatar img");
-      if (eAva) eAva.src = "../../assets/cards/demo/earth_01.jpg";
+      if (eAva) {
+        const enemyCardsWithArt = (CURRENT_DUEL?.enemy?.allCards || []).filter(c => c?.art);
+        const eRandomArt = enemyCardsWithArt.length ? pick(enemyCardsWithArt).art : null;
+        eAva.src = eRandomArt || "../../assets/cards/demo/earth_01.jpg";
+      }
     } catch (e) {
       console.warn("[battle] league/avatar update failed", e);
     }

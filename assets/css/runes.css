@@ -1,0 +1,165 @@
+/* ==========================================
+   CARDASTIKA — RUNIC SVG LIBRARY
+   Elder Futhark + Fantasy Runes as CSS classes
+   ==========================================
+   
+   Використання:
+   1. Як background: <div class="rune rune--fehu"></div>
+   2. Як ::before/::after: .element { @extend .rune--fehu-bg; }
+   3. Inline SVG: копіюй з коментарів
+   ========================================== */
+
+:root {
+  /* SVG Rune Data URIs - Gold (#b89446) */
+  --svg-fehu: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 10 L30 90 M30 10 L70 30 M30 40 L60 55" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-uruz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M25 10 L25 90 M25 10 L75 40 L75 90" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-thurisaz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 10 L30 90 M30 25 L70 40 L30 60" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-ansuz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 90 L50 10 L70 90 M35 60 L50 45 M65 60 L50 45" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-raidho: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 10 L30 90 M30 10 L70 10 L70 45 L30 45 M30 45 L70 90" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-kenaz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M70 10 L30 50 L70 90" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-gebo: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20 20 L80 80 M80 20 L20 80" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-wunjo: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 10 L30 50 L70 10 L70 90" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-hagalaz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M25 10 L25 90 M75 10 L75 90 M25 50 L75 50" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-nauthiz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 L50 90 M30 30 L70 70" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-isa: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 L50 90" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-jera: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M70 10 L30 40 L30 50 M30 90 L70 60 L70 50" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-eihwaz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 L50 90 M50 30 L70 10 M50 70 L30 90" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-perthro: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 10 L30 90 M30 10 L70 30 L30 50 L70 70" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-algiz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 90 L50 10 M50 30 L25 10 M50 30 L75 10" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-sowilo: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M70 10 L30 40 L70 60 L30 90" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-tiwaz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 L50 90 M20 10 L50 30 L80 10" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-berkano: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 10 L30 90 M30 10 L65 25 L30 50 L65 70 L30 90" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-ehwaz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 10 L30 90 M70 10 L70 90 M30 50 L70 50" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-mannaz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20 90 L20 10 L50 40 L80 10 L80 90 M20 50 L80 50" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-laguz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 10 L30 90 M30 10 L70 50" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-ingwaz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 L80 50 L50 90 L20 50 Z" stroke="%23b89446" stroke-width="8" fill="none"/></svg>');
+  --svg-dagaz: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20 10 L20 90 M80 10 L80 90 M20 10 L80 90 M20 90 L80 10" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  --svg-othala: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 90 L30 50 L50 10 L70 50 L70 90 M30 50 L70 50" stroke="%23b89446" stroke-width="8" stroke-linecap="round" fill="none"/></svg>');
+  
+  /* Fantasy/Magic Runes */
+  --svg-magic: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="35" stroke="%23b89446" stroke-width="4" fill="none"/><path d="M50 15 L50 85 M15 50 L85 50 M25 25 L75 75 M75 25 L25 75" stroke="%23b89446" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="50" r="12" fill="%238b1e1e" opacity="0.6"/></svg>');
+  --svg-shield: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 L85 25 L85 55 Q85 80 50 95 Q15 80 15 55 L15 25 Z" stroke="%23b89446" stroke-width="6" fill="none"/><path d="M50 30 L50 70 M35 50 L65 50" stroke="%238b1e1e" stroke-width="5" stroke-linecap="round"/></svg>');
+  --svg-sword: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 5 L50 70 M35 70 L65 70 M50 70 L50 85 M40 85 L60 85 M45 85 L45 95 M55 85 L55 95" stroke="%23b89446" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M45 15 L55 15" stroke="%238b1e1e" stroke-width="3"/></svg>');
+  --svg-flame: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 10 Q30 40 35 60 Q38 75 50 90 Q62 75 65 60 Q70 40 50 10 M50 30 Q42 50 45 65 Q47 75 50 80 Q53 75 55 65 Q58 50 50 30" stroke="%238b1e1e" stroke-width="4" fill="none"/></svg>');
+  --svg-crown: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M15 70 L15 40 L30 55 L50 25 L70 55 L85 40 L85 70 Z" stroke="%23b89446" stroke-width="5" fill="none"/><circle cx="50" cy="25" r="5" fill="%238b1e1e"/><path d="M20 75 L80 75" stroke="%23b89446" stroke-width="6" stroke-linecap="round"/></svg>');
+}
+
+/* ===== Base Rune Class ===== */
+.rune {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 0 4px rgba(184, 148, 70, 0.4));
+  transition: all 0.2s ease;
+}
+
+.rune:hover {
+  filter: drop-shadow(0 0 8px rgba(184, 148, 70, 0.7));
+  transform: scale(1.1);
+}
+
+/* Size variants */
+.rune--sm { width: 16px; height: 16px; }
+.rune--md { width: 24px; height: 24px; }
+.rune--lg { width: 32px; height: 32px; }
+.rune--xl { width: 48px; height: 48px; }
+
+/* ===== Individual Rune Classes ===== */
+/* Freyr's Aett */
+.rune--fehu { background-image: var(--svg-fehu); }
+.rune--uruz { background-image: var(--svg-uruz); }
+.rune--thurisaz { background-image: var(--svg-thurisaz); }
+.rune--ansuz { background-image: var(--svg-ansuz); }
+.rune--raidho { background-image: var(--svg-raidho); }
+.rune--kenaz { background-image: var(--svg-kenaz); }
+.rune--gebo { background-image: var(--svg-gebo); }
+.rune--wunjo { background-image: var(--svg-wunjo); }
+
+/* Hagal's Aett */
+.rune--hagalaz { background-image: var(--svg-hagalaz); }
+.rune--nauthiz { background-image: var(--svg-nauthiz); }
+.rune--isa { background-image: var(--svg-isa); }
+.rune--jera { background-image: var(--svg-jera); }
+.rune--eihwaz { background-image: var(--svg-eihwaz); }
+.rune--perthro { background-image: var(--svg-perthro); }
+.rune--algiz { background-image: var(--svg-algiz); }
+.rune--sowilo { background-image: var(--svg-sowilo); }
+
+/* Tyr's Aett */
+.rune--tiwaz { background-image: var(--svg-tiwaz); }
+.rune--berkano { background-image: var(--svg-berkano); }
+.rune--ehwaz { background-image: var(--svg-ehwaz); }
+.rune--mannaz { background-image: var(--svg-mannaz); }
+.rune--laguz { background-image: var(--svg-laguz); }
+.rune--ingwaz { background-image: var(--svg-ingwaz); }
+.rune--dagaz { background-image: var(--svg-dagaz); }
+.rune--othala { background-image: var(--svg-othala); }
+
+/* Fantasy Runes */
+.rune--magic { background-image: var(--svg-magic); }
+.rune--shield { background-image: var(--svg-shield); }
+.rune--sword { background-image: var(--svg-sword); }
+.rune--flame { background-image: var(--svg-flame); }
+.rune--crown { background-image: var(--svg-crown); }
+
+/* ===== Animated Runes ===== */
+.rune--glow {
+  animation: runeGlowAnim 2s ease-in-out infinite alternate;
+}
+
+@keyframes runeGlowAnim {
+  0% { 
+    filter: drop-shadow(0 0 4px rgba(184, 148, 70, 0.3));
+    opacity: 0.7;
+  }
+  100% { 
+    filter: drop-shadow(0 0 12px rgba(184, 148, 70, 0.8));
+    opacity: 1;
+  }
+}
+
+.rune--pulse {
+  animation: runePulseAnim 1.5s ease-in-out infinite;
+}
+
+@keyframes runePulseAnim {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.rune--spin {
+  animation: runeSpinAnim 8s linear infinite;
+}
+
+@keyframes runeSpinAnim {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ===== Color Variants ===== */
+/* Red (Blood/Fire) */
+.rune--red {
+  filter: drop-shadow(0 0 4px rgba(139, 30, 30, 0.5)) 
+          hue-rotate(-30deg) saturate(1.5);
+}
+
+/* Blue (Ice/Water) */
+.rune--blue {
+  filter: drop-shadow(0 0 4px rgba(42, 79, 110, 0.5)) 
+          hue-rotate(180deg) saturate(0.8);
+}
+
+/* Green (Nature/Earth) */
+.rune--green {
+  filter: drop-shadow(0 0 4px rgba(58, 92, 58, 0.5)) 
+          hue-rotate(90deg) saturate(0.9);
+}
+
+/* Purple (Magic/Legendary) */
+.rune--purple {
+  filter: drop-shadow(0 0 4px rgba(90, 58, 110, 0.5)) 
+          hue-rotate(260deg) saturate(1.2);
+}

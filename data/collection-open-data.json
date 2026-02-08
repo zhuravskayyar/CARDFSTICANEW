@@ -1,4 +1,4 @@
-{
+﻿{
   "collections": {
     "sea-masters": {
       "id": "sea-masters",
@@ -8,17 +8,17 @@
       "bonusIcon": "⚔",
       "total": 9,
       "cards": [
-        { "id": "sea_01", "found": false, "art": "../../assets/cards/demo/water_01.jpg" },
-        { "id": "sea_02", "found": true, "art": "../../assets/cards/demo/water_01.jpg" },
-        { "id": "sea_03", "found": false, "art": "../../assets/cards/demo/water_01.jpg" },
-        { "id": "sea_04", "found": false, "art": "../../assets/cards/demo/water_01.jpg" },
-        { "id": "sea_05", "found": false, "art": "../../assets/cards/demo/water_01.jpg" },
-        { "id": "sea_06", "found": false, "art": "../../assets/cards/demo/water_01.jpg" },
-        { "id": "sea_07", "found": false, "art": "../../assets/cards/demo/water_01.jpg" },
-        { "id": "sea_08", "found": false, "art": "../../assets/cards/demo/water_01.jpg" },
-        { "id": "sea_09", "found": false, "art": "../../assets/cards/demo/water_01.jpg" }
+        { "id": "sea_01", "found": false, "art": "../../assets/cards/arts/water_001.webp" },
+        { "id": "sea_02", "found": true, "art": "../../assets/cards/arts/water_001.webp" },
+        { "id": "sea_03", "found": false, "art": "../../assets/cards/arts/water_001.webp" },
+        { "id": "sea_04", "found": false, "art": "../../assets/cards/arts/water_001.webp" },
+        { "id": "sea_05", "found": false, "art": "../../assets/cards/arts/water_001.webp" },
+        { "id": "sea_06", "found": false, "art": "../../assets/cards/arts/water_001.webp" },
+        { "id": "sea_07", "found": false, "art": "../../assets/cards/arts/water_001.webp" },
+        { "id": "sea_08", "found": false, "art": "../../assets/cards/arts/water_001.webp" },
+        { "id": "sea_09", "found": false, "art": "../../assets/cards/arts/water_001.webp" }
       ],
-      "mainArt": "../../assets/cards/demo/water_01.jpg",
+      "mainArt": "../../assets/cards/arts/water_001.webp",
       "source": "Крамниця",
       "sourceLink": "../shop/shop.html"
     },
@@ -30,17 +30,17 @@
       "bonusIcon": "⚔",
       "total": 9,
       "cards": [
-        { "id": "horde_01", "found": false, "art": "../../assets/cards/demo/fire_01.jpg" },
-        { "id": "horde_02", "found": false, "art": "../../assets/cards/demo/fire_01.jpg" },
-        { "id": "horde_03", "found": false, "art": "../../assets/cards/demo/fire_01.jpg" },
-        { "id": "horde_04", "found": false, "art": "../../assets/cards/demo/fire_01.jpg" },
-        { "id": "horde_05", "found": false, "art": "../../assets/cards/demo/fire_01.jpg" },
-        { "id": "horde_06", "found": false, "art": "../../assets/cards/demo/fire_01.jpg" },
-        { "id": "horde_07", "found": false, "art": "../../assets/cards/demo/fire_01.jpg" },
-        { "id": "horde_08", "found": false, "art": "../../assets/cards/demo/fire_01.jpg" },
-        { "id": "horde_09", "found": false, "art": "../../assets/cards/demo/fire_01.jpg" }
+        { "id": "horde_01", "found": false, "art": "../../assets/cards/arts/fire_001.webp" },
+        { "id": "horde_02", "found": false, "art": "../../assets/cards/arts/fire_001.webp" },
+        { "id": "horde_03", "found": false, "art": "../../assets/cards/arts/fire_001.webp" },
+        { "id": "horde_04", "found": false, "art": "../../assets/cards/arts/fire_001.webp" },
+        { "id": "horde_05", "found": false, "art": "../../assets/cards/arts/fire_001.webp" },
+        { "id": "horde_06", "found": false, "art": "../../assets/cards/arts/fire_001.webp" },
+        { "id": "horde_07", "found": false, "art": "../../assets/cards/arts/fire_001.webp" },
+        { "id": "horde_08", "found": false, "art": "../../assets/cards/arts/fire_001.webp" },
+        { "id": "horde_09", "found": false, "art": "../../assets/cards/arts/fire_001.webp" }
       ],
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "source": "Кампанія",
       "sourceLink": "../campaign/campaign.html"
     },
@@ -52,17 +52,17 @@
       "bonusIcon": "⚔",
       "total": 9,
       "cards": [
-        { "id": "sky_01", "found": true, "art": "../../assets/cards/demo/fire_01.jpg" },
-        { "id": "sky_02", "found": false, "art": "../../assets/cards/demo/water_01.jpg" },
-        { "id": "sky_03", "found": false, "art": "../../assets/cards/demo/earth_01.jpg" },
-        { "id": "sky_04", "found": false, "art": "../../assets/cards/demo/fire_01.jpg" },
-        { "id": "sky_05", "found": false, "art": "../../assets/cards/demo/water_01.jpg" },
-        { "id": "sky_06", "found": false, "art": "../../assets/cards/demo/earth_01.jpg" },
-        { "id": "sky_07", "found": false, "art": "../../assets/cards/demo/fire_01.jpg" },
-        { "id": "sky_08", "found": false, "art": "../../assets/cards/demo/water_01.jpg" },
-        { "id": "sky_09", "found": false, "art": "../../assets/cards/demo/earth_01.jpg" }
+        { "id": "sky_01", "found": true, "art": "../../assets/cards/arts/fire_001.webp" },
+        { "id": "sky_02", "found": false, "art": "../../assets/cards/arts/water_001.webp" },
+        { "id": "sky_03", "found": false, "art": "../../assets/cards/arts/earth_001.webp" },
+        { "id": "sky_04", "found": false, "art": "../../assets/cards/arts/fire_001.webp" },
+        { "id": "sky_05", "found": false, "art": "../../assets/cards/arts/water_001.webp" },
+        { "id": "sky_06", "found": false, "art": "../../assets/cards/arts/earth_001.webp" },
+        { "id": "sky_07", "found": false, "art": "../../assets/cards/arts/fire_001.webp" },
+        { "id": "sky_08", "found": false, "art": "../../assets/cards/arts/water_001.webp" },
+        { "id": "sky_09", "found": false, "art": "../../assets/cards/arts/earth_001.webp" }
       ],
-      "mainArt": "../../assets/cards/demo/fire_01.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "source": "Арена",
       "sourceLink": "../arena/arena.html"
     },
@@ -74,12 +74,12 @@
       "bonusIcon": "⚔",
       "total": 4,
       "cards": [
-        { "id": "elem_01", "found": false, "art": "../../assets/cards/demo/fire_01.jpg" },
-        { "id": "elem_02", "found": false, "art": "../../assets/cards/demo/water_01.jpg" },
-        { "id": "elem_03", "found": false, "art": "../../assets/cards/demo/earth_01.jpg" },
-        { "id": "elem_04", "found": false, "art": "../../assets/cards/demo/fire_01.jpg" }
+        { "id": "elem_01", "found": false, "art": "../../assets/cards/arts/fire_001.webp" },
+        { "id": "elem_02", "found": false, "art": "../../assets/cards/arts/water_001.webp" },
+        { "id": "elem_03", "found": false, "art": "../../assets/cards/arts/earth_001.webp" },
+        { "id": "elem_04", "found": false, "art": "../../assets/cards/arts/fire_001.webp" }
       ],
-      "mainArt": "../../assets/cards/demo/fire.jpg",
+      "mainArt": "../../assets/cards/arts/fire_001.webp",
       "source": "Крамниця",
       "sourceLink": "../shop/shop.html"
     }

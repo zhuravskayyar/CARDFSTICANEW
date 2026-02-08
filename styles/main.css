@@ -1,0 +1,170 @@
+/* ==========================================
+   CARDASTIKA — MASTER STYLESHEET
+   Dark Fantasy UI System
+   ==========================================
+   
+   Цей файл об'єднує всі стилі проєкту в єдину систему.
+   Підключи його в index.html замість окремих CSS файлів:
+   <link rel="stylesheet" href="styles/main.css">
+   
+   Порядок імпорту важливий:
+   1. ui-shell.css — базова палітра, змінні, кнопки, картки
+   2. global.css — reset та глобальні стилі
+   3. Компонентні стилі — auth, arena, collection-card
+   ========================================== */
+
+/* =========== БАЗА =========== */
+@import url("../assets/css/ui-shell.css");  /* Палітра, змінні, базові компоненти */
+
+/* =========== КОМПОНЕНТИ СТОРІНОК =========== */
+@import url("../assets/css/arena.css");           /* Арена */
+@import url("../assets/css/collection-card.css"); /* Картки колекції */
+@import url("../pages/auth/auth.css");            /* Авторизація */
+
+/* ==========================================
+   UTILITY CLASSES — допоміжні класи
+   ========================================== */
+
+/* Flex utilities */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.flex-center { align-items: center; justify-content: center; }
+.flex-between { justify-content: space-between; }
+.gap-sm { gap: 0.5rem; }
+.gap-md { gap: 1rem; }
+.gap-lg { gap: 1.5rem; }
+
+/* Text utilities */
+.text-center { text-align: center; }
+.text-gold { color: var(--heraldic-gold); }
+.text-red { color: var(--heraldic-red); }
+.text-blue { color: var(--heraldic-blue); }
+.text-muted { color: var(--ink-muted); }
+
+/* Font utilities */
+.font-title { font-family: "UnifrakturMaguntia", serif; }
+.font-body { font-family: "EB Garamond", serif; }
+.font-rune { font-family: "Junicode", serif; }
+
+/* Shadow utilities */
+.shadow { box-shadow: 0 4px 12px var(--shadow); }
+.shadow-deep { box-shadow: 0 14px 30px var(--shadow-deep); }
+.shadow-glow-gold { box-shadow: 0 0 20px var(--glow-gold); }
+.shadow-glow-red { box-shadow: 0 0 20px var(--glow-red); }
+
+/* Spacing utilities */
+.p-sm { padding: 0.5rem; }
+.p-md { padding: 1rem; }
+.p-lg { padding: 1.5rem; }
+.m-0 { margin: 0; }
+.mt-sm { margin-top: 0.5rem; }
+.mt-md { margin-top: 1rem; }
+.mb-sm { margin-bottom: 0.5rem; }
+.mb-md { margin-bottom: 1rem; }
+
+/* Visual utilities */
+.rounded { border-radius: var(--r); }
+.rounded-sm { border-radius: var(--r-small); }
+.rounded-card { border-radius: var(--r-card); }
+.border-gold { border: 1px solid var(--heraldic-gold); }
+.border-line { border: 1px solid var(--line); }
+
+/* Background utilities */
+.bg-dark { background: var(--bg0); }
+.bg-panel { background: var(--bg1); }
+.bg-raised { background: var(--bg2); }
+
+/* Visibility utilities */
+.hidden { display: none !important; }
+.invisible { visibility: hidden; }
+.opacity-0 { opacity: 0; }
+.opacity-50 { opacity: 0.5; }
+
+/* ==========================================
+   FX CLASSES — ефекти з ui-shell
+   ========================================== */
+
+/* Glow effects */
+.fx-glow-gold {
+  box-shadow: 0 0 20px var(--glow-gold);
+  transition: box-shadow 0.3s ease;
+}
+
+.fx-glow-gold:hover {
+  box-shadow: 0 0 30px var(--glow-gold);
+}
+
+.fx-glow-red {
+  box-shadow: 0 0 16px var(--glow-red);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Press effect */
+.fx-press:active {
+  transform: translateY(2px);
+  filter: brightness(0.9);
+}
+
+/* Pulse animation */
+.fx-pulse {
+  animation: gothicPulse 2s infinite alternate;
+}
+
+@keyframes gothicPulse {
+  0% { 
+    box-shadow: 0 14px 30px var(--shadow-deep), 0 0 20px var(--glow-gold); 
+  }
+  100% { 
+    box-shadow: 0 14px 30px var(--shadow-deep), 0 0 40px var(--glow-gold); 
+  }
+}
+
+/* Dust overlay effect */
+.fx-dust::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--parchment-noise);
+  pointer-events: none;
+  opacity: 0.05;
+}
+
+/* Thorn corners decorative effect */
+.fx-thorn-corners {
+  position: relative;
+}
+
+.fx-thorn-corners::before,
+.fx-thorn-corners::after {
+  content: var(--rune-thorn);
+  font-family: "Junicode", serif;
+  position: absolute;
+  font-size: 1rem;
+  color: var(--heraldic-gold);
+  opacity: 0.4;
+}
+
+.fx-thorn-corners::before { top: 6px; left: 10px; }
+.fx-thorn-corners::after { bottom: 6px; right: 10px; transform: rotate(180deg); }
+
+/* Rune decoration before element */
+.fx-rune-fire::before { content: var(--rune-fire); font-family: "Junicode", serif; margin-right: 6px; opacity: 0.6; }
+.fx-rune-water::before { content: var(--rune-water); font-family: "Junicode", serif; margin-right: 6px; opacity: 0.6; }
+.fx-rune-earth::before { content: var(--rune-earth); font-family: "Junicode", serif; margin-right: 6px; opacity: 0.6; }
+.fx-rune-air::before { content: var(--rune-air); font-family: "Junicode", serif; margin-right: 6px; opacity: 0.6; }
+.fx-rune-power::before { content: var(--rune-power); font-family: "Junicode", serif; margin-right: 6px; opacity: 0.6; }
+.fx-rune-magic::before { content: var(--rune-magic); font-family: "Junicode", serif; margin-right: 6px; opacity: 0.6; }
+
+/* ==========================================
+   PANEL UTILITY CLASS
+   ========================================== */
+
+.panel-unified {
+  border-radius: var(--r);
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(21, 16, 10, 0.95), rgba(11, 7, 4, 0.95)),
+    radial-gradient(circle at 20% 10%, var(--glow-gold), transparent 45%);
+  box-shadow: 0 14px 30px var(--shadow-deep);
+  overflow: hidden;
+}

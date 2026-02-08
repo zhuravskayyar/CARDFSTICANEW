@@ -110,7 +110,7 @@ function ensureHud() {
     hud.innerHTML = `
       <div class="hud__left">
         <div class="hud__avatar">
-          <img id="hudAvatar" alt="Avatar" src="${assetPrefix()}assets/cards/demo/fire_01.jpg">
+          <img id="hudAvatar" alt="Avatar" src="${assetPrefix()}assets/cards/arts/fire_001.webp">
         </div>
         <span class="hud__icon hud__icon--swords" id="hudSword" aria-hidden="true"></span>
         <span class="hud__value" id="hudPower">-</span>
@@ -134,7 +134,7 @@ function ensureHud() {
   if (!hud.querySelector(".hud__avatar")) {
     const avatar = document.createElement("div");
     avatar.className = "hud__avatar";
-    avatar.innerHTML = `<img id="hudAvatar" alt="Avatar" src="${assetPrefix()}assets/cards/demo/fire_01.jpg">`;
+    avatar.innerHTML = `<img id="hudAvatar" alt="Avatar" src="${assetPrefix()}assets/cards/arts/fire_001.webp">`;
     left.prepend(avatar);
   }
 
@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       if (hudAvatar) {
         const fromStorage = String(localStorage.getItem("cardastika:avatarUrl") || "").trim();
-        hudAvatar.src = fromStorage || `${assetPrefix()}assets/cards/demo/fire_01.jpg`;
+        hudAvatar.src = fromStorage || `${assetPrefix()}assets/cards/arts/fire_001.webp`;
       }
 
       if (hudXpFill) {
