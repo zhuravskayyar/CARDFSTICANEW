@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cardastika — Результат турніру</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Forum&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../assets/css/ui-shell.css">
+</head>
+<body>
+  <div id="app" class="app">
+
+    <!-- HUD -->
+    <header id="hud" class="hud">
+      <div class="hud__left">
+        <span class="hud__icon">🏆</span>
+        <span class="hud__value" id="hudPower">—</span>
+      </div>
+
+      <div class="hud__right">
+        <div class="hud__pill" title="Silver">
+          <img class="hud__icon" src="../../assets/icons/coin-silver.svg" alt="Silver" />
+          <span class="hud__value" id="hudSilver">—</span>
+        </div>
+        <div class="hud__pill" title="Diamonds">
+          <img class="hud__icon" src="../../assets/icons/diamond.svg" alt="Diamonds" />
+          <span class="hud__value" id="hudDiamonds">—</span>
+        </div>
+        <div class="hud__pill" title="Gold">
+          <img class="hud__icon" src="../../assets/icons/coin-gold.svg" alt="Gold" />
+          <span class="hud__value" id="hudGold">—</span>
+        </div>
+      </div>
+    </header>
+
+    <main id="screen" class="screen tournament-result-screen">
+      
+      <!-- Результат -->
+      <section class="tournament-result-card" id="resultCard">
+        <div class="tournament-result-icon" id="resultIcon">
+          <img src="../../assets/icons/trophy.svg" alt="" id="resultIconImg">
+        </div>
+        <div class="tournament-result-title" id="resultTitle">—</div>
+        <div class="tournament-result-subtitle" id="resultSubtitle">—</div>
+        
+        <!-- Статистика бою -->
+        <div class="tournament-result-stats">
+          <div class="tournament-result-stat">
+            <span class="tournament-result-stat__label">Ваше HP</span>
+            <span class="tournament-result-stat__value" id="playerHpResult">—</span>
+          </div>
+          <div class="tournament-result-stat">
+            <span class="tournament-result-stat__label">HP ворога</span>
+            <span class="tournament-result-stat__value" id="enemyHpResult">—</span>
+          </div>
+          <div class="tournament-result-stat">
+            <span class="tournament-result-stat__label">Ходів</span>
+            <span class="tournament-result-stat__value" id="turnsResult">—</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Нагороди (при перемозі) -->
+      <section class="tournament-result-rewards panel" id="rewardsPanel" hidden>
+        <h2 class="panel__title">Нагороди за раунд</h2>
+        <div class="tournament-result-rewards__grid">
+          <div class="tournament-reward" id="rewardSilverWrap">
+            <img src="../../assets/icons/coin-silver.svg" alt="Silver">
+            <span id="rewardSilver">+0</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Приз за вибування (при поразці) -->
+      <section class="tournament-result-elimination panel" id="eliminationPanel" hidden>
+        <h2 class="panel__title">Ваш результат</h2>
+        <div class="tournament-elimination-prize">
+          <div class="tournament-elimination-prize__icon" id="eliminationIcon">
+            <img src="../../assets/icons/medal.svg" alt="">
+          </div>
+          <div class="tournament-elimination-prize__info">
+            <div class="tournament-elimination-prize__title" id="eliminationTitle">—</div>
+            <div class="tournament-elimination-prize__desc" id="eliminationDesc">—</div>
+          </div>
+        </div>
+        <div class="tournament-elimination-rewards">
+          <div class="tournament-reward">
+            <img src="../../assets/icons/diamond.svg" alt="Diamonds">
+            <span id="eliminationDiamonds">+0</span>
+          </div>
+          <div class="tournament-reward">
+            <img src="../../assets/icons/coin-silver.svg" alt="Silver">
+            <span id="eliminationSilver">+0</span>
+          </div>
+        </div>
+        <div class="tournament-source-info" id="eliminationSourceInfo" hidden></div>
+      </section>
+
+      <!-- Фінальний приз (для топ-4) -->
+      <section class="tournament-result-trophy panel" id="trophyPanel" hidden>
+        <h2 class="panel__title">🏆 Фінальний приз</h2>
+        <div class="tournament-trophy-display">
+          <img class="tournament-trophy-img" id="trophyImg" src="../../assets/icons/trophy.svg" alt="">
+          <div class="tournament-trophy-name" id="trophyName">—</div>
+        </div>
+        <div class="tournament-trophy-card">
+          <div class="tournament-trophy-card__label">Призова карта</div>
+          <div class="tournament-trophy-card__info" id="prizeCardInfo">—</div>
+        </div>
+      </section>
+
+      <!-- Журнал бою -->
+      <section class="panel tournament-result-log" id="logPanel">
+        <h2 class="panel__title">Підсумки бою</h2>
+        <div class="tournament-result-log__entries" id="battleLog"></div>
+      </section>
+
+      <!-- Кнопки -->
+      <div class="tournament-result-actions">
+        <button class="btn-ui btn-ui--wood" id="lobbyBtn" type="button"><span class="label">До лобі турніру</span></button>
+        <button class="btn-ui btn-ui--gold" id="continueBtn" type="button" hidden>Наступний бій</button>
+      </div>
+
+    </main>
+
+    <!-- Toasts / Modals host -->
+    <div id="toastHost" class="toast-host" aria-live="polite"></div>
+    <div id="modalHost" class="modal-host" aria-hidden="true"></div>
+
+    <!-- Bottom navigation -->
+    <nav id="botbar" class="botbar botbar--3" aria-label="Bottom navigation">
+      <button class="botbar__btn" data-route="home" type="button">
+        <span class="botbar__icon" aria-hidden="true"></span>
+        <span class="botbar__text">Головна</span>
+      </button>
+
+      <button class="botbar__btn" data-route="profile" type="button">
+        <span class="botbar__icon" aria-hidden="true"></span>
+        <span class="botbar__text">Профіль</span>
+      </button>
+
+      <button class="botbar__btn" data-route="guild" type="button">
+        <span class="botbar__icon" aria-hidden="true"></span>
+        <span class="botbar__text">Гільдія</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script type="module" defer src="./tournament-result.js"></script>
+  <script type="module" defer src="../../src/ui-shell.js"></script>
+</body>
+</html>

@@ -2,6 +2,7 @@
 import "../../src/progression-system.js";
 import { getDuelLeagueIconPath } from "../../src/core/leagues.js";
 import { isBossDefeated, loadCampaignState, saveCampaignState, setBossDefeated } from "../../src/campaign/campaign-state.js";
+import { tryDropArenaSource, saveSourceToInventory, formatSourceCardInfo } from "../../src/core/source-cards.js";
 
 // Helper to update task progress in localStorage
 function updateTaskProgress(taskId, increment = 1) {
@@ -307,6 +308,25 @@ document.addEventListener("DOMContentLoaded", () => {
   if (goldWrap) goldWrap.hidden = gold === 0;
   if (silverWrap) silverWrap.hidden = silver === 0;
   if (xpWrap) xpWrap.hidden = xp === 0;
+
+  // Випадання карти-джерела з арени (15% шанс при перемозі, не бос)
+  if (!isBossBattle && res === "win") {
+    const sourceCard = tryDropArenaSource();
+    if (sourceCard) {
+      saveSourceToInventory(sourceCard);
+      
+      // Показуємо інформацію про випалу карту
+      const sourceWrap = document.getElementById("rewardSourceWrap");
+      const sourceText = document.getElementById("rewardSource");
+      if (sourceWrap && sourceText) {
+        sourceText.textContent = formatSourceCardInfo(sourceCard);
+        sourceWrap.hidden = false;
+      } else {
+        // Fallback - показуємо toast якщо є
+        console.log("[arena] Випала карта-джерело:", sourceCard.title, "рівень", sourceCard.level);
+      }
+    }
+  }
 
   // Duel wins (prefer summary; fallback to ProgressionSystem state)
   let wins = asInt(data?.duel?.wins);

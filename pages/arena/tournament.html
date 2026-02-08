@@ -52,18 +52,55 @@
         <img class="tournament-trophy tournament-trophy--bronze" src="../../assets/icons/trophy.svg" alt="Бронзовий кубок">
       </div>
 
-      <!-- Description Block -->
-      <section class="arena-info-block">
+      <!-- Description Block - Locked -->
+      <section class="arena-info-block" id="lockedBlock">
         <div class="tournament-access">
           <p class="tournament-access-text">Турнір доступний для магів</p>
           <div class="tournament-league-req">
-            <span class="tournament-league-icon"></span>
+            <img class="tournament-league-req-icon" id="reqLeagueIcon" src="../../assets/icons/leagues/league-purple-3.svg" alt="">
             <span class="tournament-league-text">епічної ліги і вище!</span>
           </div>
-          <p class="tournament-locked-text">Ви поки що не можете взяти участь.</p>
+          <p class="tournament-locked-text" id="lockedText">Ви поки що не можете взяти участь.</p>
+          <div class="tournament-progress-bar" id="progressBar">
+            <div class="tournament-progress-bar__fill" id="progressFill" style="width: 0%"></div>
+          </div>
+          <p class="tournament-progress-text" id="progressText">Рейтинг: 0 / 2000</p>
         </div>
 
         <a class="arena-rules-link" href="tournament-rules.html">» Правила турніру «</a>
+      </section>
+
+      <!-- Description Block - Unlocked -->
+      <section class="arena-info-block" id="unlockedBlock" hidden>
+        <div class="tournament-access tournament-access--unlocked">
+          <p class="tournament-access-text tournament-access-text--success">✓ Турнір доступний!</p>
+          <div class="tournament-league-badge" id="playerLeagueBadge">
+            <img class="tournament-league-badge-icon" id="playerLeagueIcon" src="../../assets/icons/trophy.svg" alt="">
+            <span class="tournament-league-badge-name" id="playerLeagueName">—</span>
+          </div>
+        </div>
+
+        <button class="btn-attack tournament-enter-btn" id="enterTournamentBtn" type="button">
+          Увійти до турніру
+        </button>
+
+        <a class="arena-rules-link" href="tournament-rules.html">» Правила турніру «</a>
+      </section>
+
+      <!-- Current Tournament Status -->
+      <section class="tournament-current panel" id="currentTournamentPanel" hidden>
+        <h2 class="panel__title">Поточний турнір</h2>
+        <div class="tournament-current__status">
+          <span class="tournament-current__label">Статус:</span>
+          <span class="tournament-current__value" id="currentStatus">—</span>
+        </div>
+        <div class="tournament-current__status">
+          <span class="tournament-current__label">Раунд:</span>
+          <span class="tournament-current__value" id="currentRound">—</span>
+        </div>
+        <button class="btn-wood" id="continueTournamentBtn" type="button">
+          <span class="label">Продовжити турнір</span>
+        </button>
       </section>
 
     </main>
@@ -92,6 +129,7 @@
 
   </div>
 
+  <script type="module" defer src="./tournament.js"></script>
   <script type="module" defer src="../../src/ui-shell.js"></script>
 </body>
 </html>

@@ -60,14 +60,10 @@ function saveArenaState(state) {
 // ==========================================
 
 function updateHUD() {
-  const acc = window.AccountSystem?.getActive?.();
-  if (!acc) return;
-
-  const power = acc.duel?.power ?? acc.power ?? 0;
-  q('#hudPower').textContent = fmtNum(power);
-  q('#hudSilver').textContent = fmtNum(acc.currency?.silver ?? 0);
-  q('#hudDiamonds').textContent = fmtNum(acc.currency?.diamonds ?? 0);
-  q('#hudGold').textContent = fmtNum(acc.currency?.gold ?? 0);
+  // Використовуємо глобальну функцію з ui-shell.js
+  if (typeof window.updateGlobalHUD === "function") {
+    window.updateGlobalHUD();
+  }
 }
 
 function updateArenaUI() {

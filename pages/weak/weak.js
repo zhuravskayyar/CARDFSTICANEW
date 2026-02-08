@@ -154,7 +154,8 @@ function normalizeCard(raw, idx) {
   const rarity = normalizeRarity(raw.rarity ?? raw.quality ?? raw.rarityClass ?? 1);
   const art = String(raw.art || raw.image || raw.img || raw.cover || "").trim();
   const protectedFlag = !!(raw.protected ?? raw.isProtected ?? raw.locked ?? false);
-  return { uid, id, title, element, power, level, rarity, protected: protectedFlag, art };
+  const isSource = !!(raw.isSource);
+  return { uid, id, title, element, power, level, rarity, protected: protectedFlag, art, isSource };
 }
 
 function cardFp(c) {
@@ -164,7 +165,7 @@ function cardFp(c) {
 function renderRefCardButton(card, inDeck) {
   const btn = document.createElement("button");
   btn.type = "button";
-  btn.className = `ref-card elem-${card.element} rarity-${card.rarity}`;
+  btn.className = `ref-card elem-${card.element} rarity-${card.rarity}${card.isSource ? " ref-card--source" : ""}`;
   btn.dataset.cardUid = String(card.uid || "");
   btn.dataset.cardId = String(card.id || "");
   btn.dataset.cardTitle = String(card.title || "");
@@ -174,6 +175,7 @@ function renderRefCardButton(card, inDeck) {
   btn.dataset.cardInDeck = inDeck ? "1" : "0";
   btn.dataset.cardProtected = card.protected ? "1" : "0";
   btn.dataset.cardArt = String(card.art || "");
+  btn.dataset.cardIsSource = card.isSource ? "1" : "0";
   btn.setAttribute("aria-label", card.title);
 
   btn.innerHTML = `

@@ -15,63 +15,81 @@
       "title": "Мечник",
       "element": "fire",
       "basePower": 12,
-      "rarity": "common"
+      "rarity": "common",
+      "artNum": 1,
+      "artFile": "fire_001.webp"
     },
     {
       "id": "starter_fire_acolyte",
       "title": "Аколіт",
       "element": "fire",
       "basePower": 12,
-      "rarity": "common"
+      "rarity": "common",
+      "artNum": 2,
+      "artFile": "fire_002.webp"
     },
     {
       "id": "starter_fire_scout",
       "title": "Розвідник",
       "element": "fire",
       "basePower": 12,
-      "rarity": "common"
+      "rarity": "common",
+      "artNum": 3,
+      "artFile": "fire_003.webp"
     },
     {
       "id": "starter_water_sailor",
       "title": "Моряк",
       "element": "water",
       "basePower": 12,
-      "rarity": "common"
+      "rarity": "common",
+      "artNum": 1,
+      "artFile": "water_001.webp"
     },
     {
       "id": "starter_water_healer",
       "title": "Цілитель",
       "element": "water",
       "basePower": 12,
-      "rarity": "common"
+      "rarity": "common",
+      "artNum": 2,
+      "artFile": "water_002.webp"
     },
     {
       "id": "starter_air_messenger",
       "title": "Вісник",
       "element": "air",
       "basePower": 12,
-      "rarity": "common"
+      "rarity": "common",
+      "artNum": 1,
+      "artFile": "air_001.webp"
     },
     {
       "id": "starter_air_fencer",
       "title": "Фехтувальник",
       "element": "air",
       "basePower": 12,
-      "rarity": "common"
+      "rarity": "common",
+      "artNum": 2,
+      "artFile": "air_002.webp"
     },
     {
       "id": "starter_earth_guard",
       "title": "Вартівник",
       "element": "earth",
       "basePower": 12,
-      "rarity": "common"
+      "rarity": "common",
+      "artNum": 1,
+      "artFile": "earth_001.webp"
     },
     {
       "id": "starter_earth_miner",
       "title": "Шахтар",
       "element": "earth",
       "basePower": 12,
-      "rarity": "common"
+      "rarity": "common",
+      "artNum": 2,
+      "artFile": "earth_002.webp"
     },
     {
       "id": "sea_lord_triton",
@@ -81,7 +99,9 @@
       "rarity": "rare",
       "collections": [
         "Господарі морів"
-      ]
+      ],
+      "artNum": 3,
+      "artFile": "water_003.webp"
     },
     {
       "id": "storm_corsair",
@@ -91,7 +111,9 @@
       "rarity": "uncommon",
       "collections": [
         "Господарі морів"
-      ]
+      ],
+      "artNum": 3,
+      "artFile": "air_003.webp"
     },
     {
       "id": "reef_sentinel",
@@ -101,7 +123,9 @@
       "rarity": "uncommon",
       "collections": [
         "Господарі морів"
-      ]
+      ],
+      "artNum": 3,
+      "artFile": "earth_003.webp"
     },
     {
       "id": "siren_choir",
@@ -111,7 +135,9 @@
       "rarity": "uncommon",
       "collections": [
         "Господарі морів"
-      ]
+      ],
+      "artNum": 4,
+      "artFile": "water_004.webp"
     },
     {
       "id": "depth_harpooner",
@@ -121,7 +147,9 @@
       "rarity": "common",
       "collections": [
         "Господарі морів"
-      ]
+      ],
+      "artNum": 5,
+      "artFile": "water_005.webp"
     },
     {
       "id": "salt_mage",
@@ -131,7 +159,9 @@
       "rarity": "common",
       "collections": [
         "Господарі морів"
-      ]
+      ],
+      "artNum": 6,
+      "artFile": "water_006.webp"
     },
     {
       "id": "gale_sailmaster",
@@ -141,7 +171,9 @@
       "rarity": "common",
       "collections": [
         "Господарі морів"
-      ]
+      ],
+      "artNum": 4,
+      "artFile": "air_004.webp"
     },
     {
       "id": "black_keel_captain",
@@ -151,7 +183,9 @@
       "rarity": "rare",
       "collections": [
         "Господарі морів"
-      ]
+      ],
+      "artNum": 4,
+      "artFile": "fire_004.webp"
     },
     {
       "id": "leviathan_whelp",
@@ -161,7 +195,9 @@
       "rarity": "epic",
       "collections": [
         "Господарі морів"
-      ]
+      ],
+      "artNum": 7,
+      "artFile": "water_007.webp"
     },
     {
       "id": "horde_warlord",
@@ -171,7 +207,9 @@
       "rarity": "rare",
       "collections": [
         "Сила орди"
-      ]
+      ],
+      "artNum": 5,
+      "artFile": "fire_005.webp"
     },
     {
       "id": "ash_berserker",
@@ -181,7 +219,9 @@
       "rarity": "uncommon",
       "collections": [
         "Сила орди"
-      ]
+      ],
+      "artNum": 6,
+      "artFile": "fire_006.webp"
     },
     {
       "id": "steppe_raider",
@@ -191,7 +231,9 @@
       "rarity": "common",
       "collections": [
         "Сила орди"
-      ]
+      ],
+      "artNum": 5,
+      "artFile": "air_005.webp"
     },
     {
       "id": "iron_shaman",
@@ -201,7 +243,9 @@
       "rarity": "common",
       "collections": [
         "Сила орди"
-      ]
+      ],
+      "artNum": 4,
+      "artFile": "earth_004.webp"
     },
     {
       "id": "war_drums",
@@ -211,7 +255,9 @@
       "rarity": "common",
       "collections": [
         "Сила орди"
-      ]
+      ],
+      "artNum": 7,
+      "artFile": "fire_007.webp"
     },
     {
       "id": "boar_rider",
@@ -221,7 +267,9 @@
       "rarity": "uncommon",
       "collections": [
         "Сила орди"
-      ]
+      ],
+      "artNum": 5,
+      "artFile": "earth_005.webp"
     },
     {
       "id": "wind_scavenger",
@@ -231,7 +279,9 @@
       "rarity": "common",
       "collections": [
         "Сила орди"
-      ]
+      ],
+      "artNum": 6,
+      "artFile": "air_006.webp"
     },
     {
       "id": "blood_banner",
@@ -241,7 +291,9 @@
       "rarity": "rare",
       "collections": [
         "Сила орди"
-      ]
+      ],
+      "artNum": 8,
+      "artFile": "fire_008.webp"
     },
     {
       "id": "great_khan",
@@ -251,7 +303,9 @@
       "rarity": "epic",
       "collections": [
         "Сила орди"
-      ]
+      ],
+      "artNum": 6,
+      "artFile": "earth_006.webp"
     },
     {
       "id": "sky_paladin",
@@ -261,7 +315,9 @@
       "rarity": "rare",
       "collections": [
         "Небесні герої"
-      ]
+      ],
+      "artNum": 7,
+      "artFile": "air_007.webp"
     },
     {
       "id": "sun_lancer",
@@ -271,7 +327,9 @@
       "rarity": "uncommon",
       "collections": [
         "Небесні герої"
-      ]
+      ],
+      "artNum": 9,
+      "artFile": "fire_009.webp"
     },
     {
       "id": "cloud_archer",
@@ -281,7 +339,9 @@
       "rarity": "common",
       "collections": [
         "Небесні герої"
-      ]
+      ],
+      "artNum": 8,
+      "artFile": "air_008.webp"
     },
     {
       "id": "aerie_guard",
@@ -291,7 +351,9 @@
       "rarity": "common",
       "collections": [
         "Небесні герої"
-      ]
+      ],
+      "artNum": 9,
+      "artFile": "air_009.webp"
     },
     {
       "id": "zephyr_duelist",
@@ -301,7 +363,9 @@
       "rarity": "uncommon",
       "collections": [
         "Небесні герої"
-      ]
+      ],
+      "artNum": 10,
+      "artFile": "air_010.webp"
     },
     {
       "id": "ember_seraph",
@@ -311,7 +375,9 @@
       "rarity": "rare",
       "collections": [
         "Небесні герої"
-      ]
+      ],
+      "artNum": 10,
+      "artFile": "fire_010.webp"
     },
     {
       "id": "storm_harbinger",
@@ -321,7 +387,9 @@
       "rarity": "rare",
       "collections": [
         "Небесні герої"
-      ]
+      ],
+      "artNum": 11,
+      "artFile": "air_011.webp"
     },
     {
       "id": "sky_healer",
@@ -331,7 +399,9 @@
       "rarity": "common",
       "collections": [
         "Небесні герої"
-      ]
+      ],
+      "artNum": 8,
+      "artFile": "water_008.webp"
     },
     {
       "id": "celestial_commander",
@@ -341,7 +411,9 @@
       "rarity": "epic",
       "collections": [
         "Небесні герої"
-      ]
+      ],
+      "artNum": 12,
+      "artFile": "air_012.webp"
     },
     {
       "id": "forest_druid",
@@ -351,7 +423,9 @@
       "rarity": "common",
       "collections": [
         "Мешканці лісу"
-      ]
+      ],
+      "artNum": 7,
+      "artFile": "earth_007.webp"
     },
     {
       "id": "moss_knight",
@@ -361,7 +435,9 @@
       "rarity": "uncommon",
       "collections": [
         "Мешканці лісу"
-      ]
+      ],
+      "artNum": 8,
+      "artFile": "earth_008.webp"
     },
     {
       "id": "thorn_huntress",
@@ -371,7 +447,9 @@
       "rarity": "uncommon",
       "collections": [
         "Мешканці лісу"
-      ]
+      ],
+      "artNum": 9,
+      "artFile": "earth_009.webp"
     },
     {
       "id": "brook_sprite",
@@ -381,7 +459,9 @@
       "rarity": "common",
       "collections": [
         "Мешканці лісу"
-      ]
+      ],
+      "artNum": 9,
+      "artFile": "water_009.webp"
     },
     {
       "id": "owl_scout",
@@ -391,7 +471,9 @@
       "rarity": "common",
       "collections": [
         "Мешканці лісу"
-      ]
+      ],
+      "artNum": 13,
+      "artFile": "air_013.webp"
     },
     {
       "id": "sap_guardian",
@@ -401,7 +483,9 @@
       "rarity": "rare",
       "collections": [
         "Мешканці лісу"
-      ]
+      ],
+      "artNum": 10,
+      "artFile": "earth_010.webp"
     },
     {
       "id": "wildfire_fox",
@@ -411,7 +495,9 @@
       "rarity": "common",
       "collections": [
         "Мешканці лісу"
-      ]
+      ],
+      "artNum": 11,
+      "artFile": "fire_011.webp"
     },
     {
       "id": "ancient_ent",
@@ -421,7 +507,9 @@
       "rarity": "epic",
       "collections": [
         "Мешканці лісу"
-      ]
+      ],
+      "artNum": 11,
+      "artFile": "earth_011.webp"
     },
     {
       "id": "leaf_blade",
@@ -431,7 +519,9 @@
       "rarity": "common",
       "collections": [
         "Мешканці лісу"
-      ]
+      ],
+      "artNum": 14,
+      "artFile": "air_014.webp"
     },
     {
       "id": "elem_flame_spark",
@@ -441,7 +531,9 @@
       "rarity": "common",
       "collections": [
         "Елементалі"
-      ]
+      ],
+      "artNum": 12,
+      "artFile": "fire_012.webp"
     },
     {
       "id": "elem_tide_drop",
@@ -451,7 +543,9 @@
       "rarity": "common",
       "collections": [
         "Елементалі"
-      ]
+      ],
+      "artNum": 10,
+      "artFile": "water_010.webp"
     },
     {
       "id": "elem_gale_wisp",
@@ -461,7 +555,9 @@
       "rarity": "common",
       "collections": [
         "Елементалі"
-      ]
+      ],
+      "artNum": 15,
+      "artFile": "air_015.webp"
     },
     {
       "id": "elem_stone_seed",
@@ -471,7 +567,9 @@
       "rarity": "common",
       "collections": [
         "Елементалі"
-      ]
+      ],
+      "artNum": 12,
+      "artFile": "earth_012.webp"
     },
     {
       "id": "war_elem_flamebrand",
@@ -481,7 +579,9 @@
       "rarity": "rare",
       "collections": [
         "Бойові елементалі"
-      ]
+      ],
+      "artNum": 13,
+      "artFile": "fire_013.webp"
     },
     {
       "id": "war_elem_tidehammer",
@@ -491,7 +591,9 @@
       "rarity": "rare",
       "collections": [
         "Бойові елементалі"
-      ]
+      ],
+      "artNum": 11,
+      "artFile": "water_011.webp"
     },
     {
       "id": "war_elem_stormclaw",
@@ -501,7 +603,9 @@
       "rarity": "rare",
       "collections": [
         "Бойові елементалі"
-      ]
+      ],
+      "artNum": 16,
+      "artFile": "air_016.webp"
     },
     {
       "id": "war_elem_rockfist",
@@ -511,7 +615,9 @@
       "rarity": "rare",
       "collections": [
         "Бойові елементалі"
-      ]
+      ],
+      "artNum": 13,
+      "artFile": "earth_013.webp"
     },
     {
       "id": "march8_queen_of_spring",
@@ -521,7 +627,9 @@
       "rarity": "uncommon",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 17,
+      "artFile": "air_017.webp"
     },
     {
       "id": "march8_flower_enchantress",
@@ -531,7 +639,9 @@
       "rarity": "common",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 12,
+      "artFile": "water_012.webp"
     },
     {
       "id": "march8_ribbon_duchess",
@@ -541,7 +651,9 @@
       "rarity": "common",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 18,
+      "artFile": "air_018.webp"
     },
     {
       "id": "march8_lilac_guard",
@@ -551,7 +663,9 @@
       "rarity": "common",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 14,
+      "artFile": "earth_014.webp"
     },
     {
       "id": "march8_rose_blade",
@@ -561,7 +675,9 @@
       "rarity": "uncommon",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 14,
+      "artFile": "fire_014.webp"
     },
     {
       "id": "march8_pearl_healer",
@@ -571,7 +687,9 @@
       "rarity": "uncommon",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 13,
+      "artFile": "water_013.webp"
     },
     {
       "id": "march8_silk_sorceress",
@@ -581,7 +699,9 @@
       "rarity": "common",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 19,
+      "artFile": "air_019.webp"
     },
     {
       "id": "march8_garden_warden",
@@ -591,7 +711,9 @@
       "rarity": "rare",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 15,
+      "artFile": "earth_015.webp"
     },
     {
       "id": "march8_sun_priestess",
@@ -601,7 +723,9 @@
       "rarity": "rare",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 15,
+      "artFile": "fire_015.webp"
     },
     {
       "id": "march8_moon_priestess",
@@ -611,7 +735,9 @@
       "rarity": "rare",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 14,
+      "artFile": "water_014.webp"
     },
     {
       "id": "march8_lark_messenger",
@@ -621,7 +747,9 @@
       "rarity": "common",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 20,
+      "artFile": "air_020.webp"
     },
     {
       "id": "march8_honey_alchemist",
@@ -631,7 +759,9 @@
       "rarity": "common",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 16,
+      "artFile": "earth_016.webp"
     },
     {
       "id": "march8_crown_of_blossom",
@@ -641,7 +771,9 @@
       "rarity": "epic",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 21,
+      "artFile": "air_021.webp"
     },
     {
       "id": "march8_flame_of_heart",
@@ -651,7 +783,9 @@
       "rarity": "epic",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 16,
+      "artFile": "fire_016.webp"
     },
     {
       "id": "march8_lady_of_banners",
@@ -661,7 +795,9 @@
       "rarity": "epic",
       "collections": [
         "8 березня"
-      ]
+      ],
+      "artNum": 17,
+      "artFile": "earth_017.webp"
     },
     {
       "id": "feb23_frontline_captain",
@@ -671,7 +807,9 @@
       "rarity": "rare",
       "collections": [
         "23 лютого"
-      ]
+      ],
+      "artNum": 18,
+      "artFile": "earth_018.webp"
     },
     {
       "id": "feb23_shield_brother",
@@ -681,7 +819,9 @@
       "rarity": "common",
       "collections": [
         "23 лютого"
-      ]
+      ],
+      "artNum": 19,
+      "artFile": "earth_019.webp"
     },
     {
       "id": "feb23_siege_master",
@@ -691,7 +831,9 @@
       "rarity": "uncommon",
       "collections": [
         "23 лютого"
-      ]
+      ],
+      "artNum": 17,
+      "artFile": "fire_017.webp"
     },
     {
       "id": "feb23_field_medic",
@@ -701,7 +843,9 @@
       "rarity": "common",
       "collections": [
         "23 лютого"
-      ]
+      ],
+      "artNum": 15,
+      "artFile": "water_015.webp"
     },
     {
       "id": "feb23_banner_bearer",
@@ -711,7 +855,9 @@
       "rarity": "common",
       "collections": [
         "23 лютого"
-      ]
+      ],
+      "artNum": 22,
+      "artFile": "air_022.webp"
     },
     {
       "id": "feb23_steel_sergeant",
@@ -721,7 +867,9 @@
       "rarity": "uncommon",
       "collections": [
         "23 лютого"
-      ]
+      ],
+      "artNum": 20,
+      "artFile": "earth_020.webp"
     },
     {
       "id": "feb23_fire_volley",
@@ -731,7 +879,9 @@
       "rarity": "common",
       "collections": [
         "23 лютого"
-      ]
+      ],
+      "artNum": 18,
+      "artFile": "fire_018.webp"
     },
     {
       "id": "feb23_trench_guard",
@@ -741,7 +891,9 @@
       "rarity": "rare",
       "collections": [
         "23 лютого"
-      ]
+      ],
+      "artNum": 21,
+      "artFile": "earth_021.webp"
     },
     {
       "id": "feb23_veteran_commander",
@@ -751,7 +903,9 @@
       "rarity": "epic",
       "collections": [
         "23 лютого"
-      ]
+      ],
+      "artNum": 22,
+      "artFile": "earth_022.webp"
     },
     {
       "id": "anc_dragon_pyroarch",
@@ -761,7 +915,9 @@
       "rarity": "legendary",
       "collections": [
         "Древні дракони"
-      ]
+      ],
+      "artNum": 19,
+      "artFile": "fire_019.webp"
     },
     {
       "id": "anc_dragon_abysswyrm",
@@ -771,7 +927,9 @@
       "rarity": "legendary",
       "collections": [
         "Древні дракони"
-      ]
+      ],
+      "artNum": 16,
+      "artFile": "water_016.webp"
     },
     {
       "id": "anc_dragon_terralith",
@@ -781,7 +939,9 @@
       "rarity": "legendary",
       "collections": [
         "Древні дракони"
-      ]
+      ],
+      "artNum": 23,
+      "artFile": "earth_023.webp"
     },
     {
       "id": "rare_dragon_cinderwing",
@@ -791,7 +951,9 @@
       "rarity": "epic",
       "collections": [
         "Рідкісні дракони"
-      ]
+      ],
+      "artNum": 20,
+      "artFile": "fire_020.webp"
     },
     {
       "id": "rare_dragon_frostfin",
@@ -801,7 +963,9 @@
       "rarity": "epic",
       "collections": [
         "Рідкісні дракони"
-      ]
+      ],
+      "artNum": 17,
+      "artFile": "water_017.webp"
     },
     {
       "id": "rare_dragon_thunderquill",
@@ -811,7 +975,9 @@
       "rarity": "epic",
       "collections": [
         "Рідкісні дракони"
-      ]
+      ],
+      "artNum": 23,
+      "artFile": "air_023.webp"
     },
     {
       "id": "rare_dragon_stonemaw",
@@ -821,7 +987,9 @@
       "rarity": "epic",
       "collections": [
         "Рідкісні дракони"
-      ]
+      ],
+      "artNum": 24,
+      "artFile": "earth_024.webp"
     },
     {
       "id": "myth_griffin_king",
@@ -831,7 +999,9 @@
       "rarity": "epic",
       "collections": [
         "Міфічні створіння"
-      ]
+      ],
+      "artNum": 24,
+      "artFile": "air_024.webp"
     },
     {
       "id": "myth_kraken_spawn",
@@ -841,7 +1011,9 @@
       "rarity": "epic",
       "collections": [
         "Міфічні створіння"
-      ]
+      ],
+      "artNum": 18,
+      "artFile": "water_018.webp"
     },
     {
       "id": "myth_basilisk",
@@ -851,7 +1023,9 @@
       "rarity": "epic",
       "collections": [
         "Міфічні створіння"
-      ]
+      ],
+      "artNum": 25,
+      "artFile": "earth_025.webp"
     },
     {
       "id": "myth_salamander_prime",
@@ -861,7 +1035,9 @@
       "rarity": "epic",
       "collections": [
         "Міфічні створіння"
-      ]
+      ],
+      "artNum": 21,
+      "artFile": "fire_021.webp"
     },
     {
       "id": "archmage_ember",
@@ -871,7 +1047,9 @@
       "rarity": "rare",
       "collections": [
         "Вищі маги"
-      ]
+      ],
+      "artNum": 22,
+      "artFile": "fire_022.webp"
     },
     {
       "id": "archmage_tide",
@@ -881,7 +1059,9 @@
       "rarity": "rare",
       "collections": [
         "Вищі маги"
-      ]
+      ],
+      "artNum": 19,
+      "artFile": "water_019.webp"
     },
     {
       "id": "archmage_gale",
@@ -891,7 +1071,9 @@
       "rarity": "rare",
       "collections": [
         "Вищі маги"
-      ]
+      ],
+      "artNum": 25,
+      "artFile": "air_025.webp"
     },
     {
       "id": "archmage_stone",
@@ -901,7 +1083,9 @@
       "rarity": "rare",
       "collections": [
         "Вищі маги"
-      ]
+      ],
+      "artNum": 26,
+      "artFile": "earth_026.webp"
     },
     {
       "id": "urfin_mutant_fumetail",
@@ -911,7 +1095,9 @@
       "rarity": "rare",
       "collections": [
         "Мутанти Урфіна"
-      ]
+      ],
+      "artNum": 23,
+      "artFile": "fire_023.webp"
     },
     {
       "id": "urfin_mutant_brinehide",
@@ -921,7 +1107,9 @@
       "rarity": "rare",
       "collections": [
         "Мутанти Урфіна"
-      ]
+      ],
+      "artNum": 20,
+      "artFile": "water_020.webp"
     },
     {
       "id": "urfin_mutant_whirlclaw",
@@ -931,7 +1119,9 @@
       "rarity": "rare",
       "collections": [
         "Мутанти Урфіна"
-      ]
+      ],
+      "artNum": 26,
+      "artFile": "air_026.webp"
     },
     {
       "id": "urfin_mutant_bonegranite",
@@ -941,7 +1131,9 @@
       "rarity": "rare",
       "collections": [
         "Мутанти Урфіна"
-      ]
+      ],
+      "artNum": 27,
+      "artFile": "earth_027.webp"
     },
     {
       "id": "urfin_giant_forge",
@@ -951,7 +1143,9 @@
       "rarity": "epic",
       "collections": [
         "Гіганти Урфіна"
-      ]
+      ],
+      "artNum": 24,
+      "artFile": "fire_024.webp"
     },
     {
       "id": "urfin_giant_flood",
@@ -961,7 +1155,9 @@
       "rarity": "epic",
       "collections": [
         "Гіганти Урфіна"
-      ]
+      ],
+      "artNum": 21,
+      "artFile": "water_021.webp"
     },
     {
       "id": "urfin_giant_tempest",
@@ -971,7 +1167,9 @@
       "rarity": "epic",
       "collections": [
         "Гіганти Урфіна"
-      ]
+      ],
+      "artNum": 27,
+      "artFile": "air_027.webp"
     },
     {
       "id": "urfin_giant_mountain",
@@ -981,7 +1179,9 @@
       "rarity": "epic",
       "collections": [
         "Гіганти Урфіна"
-      ]
+      ],
+      "artNum": 28,
+      "artFile": "earth_028.webp"
     },
     {
       "id": "urfin_fav_redhound",
@@ -991,7 +1191,9 @@
       "rarity": "uncommon",
       "collections": [
         "Фаворити Урфіна"
-      ]
+      ],
+      "artNum": 25,
+      "artFile": "fire_025.webp"
     },
     {
       "id": "urfin_fav_rivercat",
@@ -1001,7 +1203,9 @@
       "rarity": "uncommon",
       "collections": [
         "Фаворити Урфіна"
-      ]
+      ],
+      "artNum": 22,
+      "artFile": "water_022.webp"
     },
     {
       "id": "urfin_fav_skyfalcon",
@@ -1011,7 +1215,9 @@
       "rarity": "uncommon",
       "collections": [
         "Фаворити Урфіна"
-      ]
+      ],
+      "artNum": 28,
+      "artFile": "air_028.webp"
     },
     {
       "id": "urfin_fav_stoneboar",
@@ -1021,7 +1227,9 @@
       "rarity": "uncommon",
       "collections": [
         "Фаворити Урфіна"
-      ]
+      ],
+      "artNum": 29,
+      "artFile": "earth_029.webp"
     },
     {
       "id": "urfin_soldier_cinder",
@@ -1031,7 +1239,9 @@
       "rarity": "common",
       "collections": [
         "Солдати Урфіна"
-      ]
+      ],
+      "artNum": 26,
+      "artFile": "fire_026.webp"
     },
     {
       "id": "urfin_soldier_brine",
@@ -1041,7 +1251,9 @@
       "rarity": "common",
       "collections": [
         "Солдати Урфіна"
-      ]
+      ],
+      "artNum": 23,
+      "artFile": "water_023.webp"
     },
     {
       "id": "urfin_soldier_gust",
@@ -1051,7 +1263,9 @@
       "rarity": "common",
       "collections": [
         "Солдати Урфіна"
-      ]
+      ],
+      "artNum": 29,
+      "artFile": "air_029.webp"
     },
     {
       "id": "urfin_soldier_mud",
@@ -1061,7 +1275,9 @@
       "rarity": "common",
       "collections": [
         "Солдати Урфіна"
-      ]
+      ],
+      "artNum": 30,
+      "artFile": "earth_030.webp"
     },
     {
       "id": "urfin_soldier_flamebow",
@@ -1071,7 +1287,9 @@
       "rarity": "common",
       "collections": [
         "Солдати Урфіна"
-      ]
+      ],
+      "artNum": 27,
+      "artFile": "fire_027.webp"
     },
     {
       "id": "urfin_soldier_riverbow",
@@ -1081,7 +1299,9 @@
       "rarity": "common",
       "collections": [
         "Солдати Урфіна"
-      ]
+      ],
+      "artNum": 24,
+      "artFile": "water_024.webp"
     },
     {
       "id": "urfin_soldier_skybow",
@@ -1091,7 +1311,9 @@
       "rarity": "common",
       "collections": [
         "Солдати Урфіна"
-      ]
+      ],
+      "artNum": 30,
+      "artFile": "air_030.webp"
     },
     {
       "id": "urfin_soldier_stonebow",
@@ -1101,7 +1323,9 @@
       "rarity": "common",
       "collections": [
         "Солдати Урфіна"
-      ]
+      ],
+      "artNum": 31,
+      "artFile": "earth_031.webp"
     },
     {
       "id": "urfin_general_pyrestaff",
@@ -1111,7 +1335,9 @@
       "rarity": "epic",
       "collections": [
         "Генерали Урфіна"
-      ]
+      ],
+      "artNum": 28,
+      "artFile": "fire_028.webp"
     },
     {
       "id": "urfin_general_tidehelm",
@@ -1121,7 +1347,9 @@
       "rarity": "epic",
       "collections": [
         "Генерали Урфіна"
-      ]
+      ],
+      "artNum": 25,
+      "artFile": "water_025.webp"
     },
     {
       "id": "urfin_general_galeblade",
@@ -1131,7 +1359,9 @@
       "rarity": "epic",
       "collections": [
         "Генерали Урфіна"
-      ]
+      ],
+      "artNum": 31,
+      "artFile": "air_031.webp"
     },
     {
       "id": "urfin_general_stonecrown",
@@ -1141,7 +1371,9 @@
       "rarity": "epic",
       "collections": [
         "Генерали Урфіна"
-      ]
+      ],
+      "artNum": 32,
+      "artFile": "earth_032.webp"
     },
     {
       "id": "mech_gear_savant",
@@ -1151,7 +1383,9 @@
       "rarity": "uncommon",
       "collections": [
         "Механісти"
-      ]
+      ],
+      "artNum": 33,
+      "artFile": "earth_033.webp"
     },
     {
       "id": "mech_boiler_knight",
@@ -1161,7 +1395,9 @@
       "rarity": "rare",
       "collections": [
         "Механісти"
-      ]
+      ],
+      "artNum": 29,
+      "artFile": "fire_029.webp"
     },
     {
       "id": "mech_hydraulic_smith",
@@ -1171,7 +1407,9 @@
       "rarity": "uncommon",
       "collections": [
         "Механісти"
-      ]
+      ],
+      "artNum": 26,
+      "artFile": "water_026.webp"
     },
     {
       "id": "mech_aero_glider",
@@ -1181,7 +1419,9 @@
       "rarity": "uncommon",
       "collections": [
         "Механісти"
-      ]
+      ],
+      "artNum": 32,
+      "artFile": "air_032.webp"
     },
     {
       "id": "witch_cinder_hex",
@@ -1191,7 +1431,9 @@
       "rarity": "uncommon",
       "collections": [
         "Чарівниці"
-      ]
+      ],
+      "artNum": 30,
+      "artFile": "fire_030.webp"
     },
     {
       "id": "witch_rain_blessing",
@@ -1201,7 +1443,9 @@
       "rarity": "uncommon",
       "collections": [
         "Чарівниці"
-      ]
+      ],
+      "artNum": 27,
+      "artFile": "water_027.webp"
     },
     {
       "id": "witch_whirl_charm",
@@ -1211,7 +1455,9 @@
       "rarity": "uncommon",
       "collections": [
         "Чарівниці"
-      ]
+      ],
+      "artNum": 33,
+      "artFile": "air_033.webp"
     },
     {
       "id": "witch_root_bind",
@@ -1221,7 +1467,9 @@
       "rarity": "uncommon",
       "collections": [
         "Чарівниці"
-      ]
+      ],
+      "artNum": 34,
+      "artFile": "earth_034.webp"
     },
     {
       "id": "winter_frost_oath",
@@ -1231,7 +1479,9 @@
       "rarity": "common",
       "collections": [
         "Зимове підсилення"
-      ]
+      ],
+      "artNum": 28,
+      "artFile": "water_028.webp"
     },
     {
       "id": "winter_ice_ward",
@@ -1241,7 +1491,9 @@
       "rarity": "uncommon",
       "collections": [
         "Зимове підсилення"
-      ]
+      ],
+      "artNum": 29,
+      "artFile": "water_029.webp"
     },
     {
       "id": "winter_snow_hawk",
@@ -1251,7 +1503,9 @@
       "rarity": "common",
       "collections": [
         "Зимове підсилення"
-      ]
+      ],
+      "artNum": 34,
+      "artFile": "air_034.webp"
     },
     {
       "id": "winter_hearth_flame",
@@ -1261,7 +1515,9 @@
       "rarity": "common",
       "collections": [
         "Зимове підсилення"
-      ]
+      ],
+      "artNum": 31,
+      "artFile": "fire_031.webp"
     },
     {
       "id": "winter_frozen_earth",
@@ -1271,7 +1527,9 @@
       "rarity": "uncommon",
       "collections": [
         "Зимове підсилення"
-      ]
+      ],
+      "artNum": 35,
+      "artFile": "earth_035.webp"
     },
     {
       "id": "winter_blizzard_call",
@@ -1281,7 +1539,9 @@
       "rarity": "rare",
       "collections": [
         "Зимове підсилення"
-      ]
+      ],
+      "artNum": 35,
+      "artFile": "air_035.webp"
     },
     {
       "id": "winter_ice_titan",
@@ -1291,7 +1551,9 @@
       "rarity": "epic",
       "collections": [
         "Зимове підсилення"
-      ]
+      ],
+      "artNum": 30,
+      "artFile": "water_030.webp"
     },
     {
       "id": "gnome_baker",
@@ -1301,7 +1563,9 @@
       "rarity": "common",
       "collections": [
         "Мирні гноми"
-      ]
+      ],
+      "artNum": 36,
+      "artFile": "earth_036.webp"
     },
     {
       "id": "gnome_brewer",
@@ -1311,7 +1575,9 @@
       "rarity": "common",
       "collections": [
         "Мирні гноми"
-      ]
+      ],
+      "artNum": 31,
+      "artFile": "water_031.webp"
     },
     {
       "id": "gnome_tinkerer",
@@ -1321,7 +1587,9 @@
       "rarity": "common",
       "collections": [
         "Мирні гноми"
-      ]
+      ],
+      "artNum": 36,
+      "artFile": "air_036.webp"
     },
     {
       "id": "gnome_lanternkeeper",
@@ -1331,7 +1599,9 @@
       "rarity": "common",
       "collections": [
         "Мирні гноми"
-      ]
+      ],
+      "artNum": 32,
+      "artFile": "fire_032.webp"
     },
     {
       "id": "war_gnome_axeman",
@@ -1341,7 +1611,9 @@
       "rarity": "uncommon",
       "collections": [
         "Бойові гноми"
-      ]
+      ],
+      "artNum": 37,
+      "artFile": "earth_037.webp"
     },
     {
       "id": "war_gnome_bombard",
@@ -1351,7 +1623,9 @@
       "rarity": "uncommon",
       "collections": [
         "Бойові гноми"
-      ]
+      ],
+      "artNum": 33,
+      "artFile": "fire_033.webp"
     },
     {
       "id": "war_gnome_rune_slinger",
@@ -1361,7 +1635,9 @@
       "rarity": "uncommon",
       "collections": [
         "Бойові гноми"
-      ]
+      ],
+      "artNum": 37,
+      "artFile": "air_037.webp"
     },
     {
       "id": "war_gnome_shieldbearer",
@@ -1371,7 +1647,9 @@
       "rarity": "uncommon",
       "collections": [
         "Бойові гноми"
-      ]
+      ],
+      "artNum": 32,
+      "artFile": "water_032.webp"
     },
     {
       "id": "berserk_cinderfang",
@@ -1381,7 +1659,9 @@
       "rarity": "rare",
       "collections": [
         "Люті Берсерки"
-      ]
+      ],
+      "artNum": 34,
+      "artFile": "fire_034.webp"
     },
     {
       "id": "berserk_riptide",
@@ -1391,7 +1671,9 @@
       "rarity": "rare",
       "collections": [
         "Люті Берсерки"
-      ]
+      ],
+      "artNum": 33,
+      "artFile": "water_033.webp"
     },
     {
       "id": "berserk_galehowl",
@@ -1401,7 +1683,9 @@
       "rarity": "rare",
       "collections": [
         "Люті Берсерки"
-      ]
+      ],
+      "artNum": 38,
+      "artFile": "air_038.webp"
     },
     {
       "id": "berserk_stonewrath",
@@ -1411,7 +1695,9 @@
       "rarity": "rare",
       "collections": [
         "Люті Берсерки"
-      ]
+      ],
+      "artNum": 38,
+      "artFile": "earth_038.webp"
     },
     {
       "id": "treasure_mapkeeper",
@@ -1421,7 +1707,9 @@
       "rarity": "common",
       "collections": [
         "Мисливці за скарбами"
-      ]
+      ],
+      "artNum": 39,
+      "artFile": "air_039.webp"
     },
     {
       "id": "gold_digger",
@@ -1431,7 +1719,9 @@
       "rarity": "common",
       "collections": [
         "Мисливці за скарбами"
-      ]
+      ],
+      "artNum": 39,
+      "artFile": "earth_039.webp"
     },
     {
       "id": "relic_diver",
@@ -1441,7 +1731,9 @@
       "rarity": "uncommon",
       "collections": [
         "Мисливці за скарбами"
-      ]
+      ],
+      "artNum": 34,
+      "artFile": "water_034.webp"
     },
     {
       "id": "vault_breaker",
@@ -1451,7 +1743,9 @@
       "rarity": "rare",
       "collections": [
         "Мисливці за скарбами"
-      ]
+      ],
+      "artNum": 35,
+      "artFile": "fire_035.webp"
     },
     {
       "id": "dragon_tamer_ember",
@@ -1461,7 +1755,9 @@
       "rarity": "rare",
       "collections": [
         "Укротительки драконів"
-      ]
+      ],
+      "artNum": 36,
+      "artFile": "fire_036.webp"
     },
     {
       "id": "dragon_tamer_mist",
@@ -1471,7 +1767,9 @@
       "rarity": "rare",
       "collections": [
         "Укротительки драконів"
-      ]
+      ],
+      "artNum": 35,
+      "artFile": "water_035.webp"
     },
     {
       "id": "dragon_tamer_zephyr",
@@ -1481,7 +1779,9 @@
       "rarity": "rare",
       "collections": [
         "Укротительки драконів"
-      ]
+      ],
+      "artNum": 40,
+      "artFile": "air_040.webp"
     },
     {
       "id": "dragon_tamer_rock",
@@ -1491,7 +1791,9 @@
       "rarity": "rare",
       "collections": [
         "Укротительки драконів"
-      ]
+      ],
+      "artNum": 40,
+      "artFile": "earth_040.webp"
     },
     {
       "id": "dragon_fan_storyteller",
@@ -1501,7 +1803,9 @@
       "rarity": "common",
       "collections": [
         "Любителі драконів"
-      ]
+      ],
+      "artNum": 41,
+      "artFile": "air_041.webp"
     },
     {
       "id": "dragon_fan_scale_polisher",
@@ -1511,7 +1815,9 @@
       "rarity": "common",
       "collections": [
         "Любителі драконів"
-      ]
+      ],
+      "artNum": 41,
+      "artFile": "earth_041.webp"
     },
     {
       "id": "dragon_fan_fireworks",
@@ -1521,7 +1827,9 @@
       "rarity": "common",
       "collections": [
         "Любителі драконів"
-      ]
+      ],
+      "artNum": 37,
+      "artFile": "fire_037.webp"
     },
     {
       "id": "dragon_fan_lake_watcher",
@@ -1531,7 +1839,9 @@
       "rarity": "common",
       "collections": [
         "Любителі драконів"
-      ]
+      ],
+      "artNum": 36,
+      "artFile": "water_036.webp"
     },
     {
       "id": "anc_order_prior",
@@ -1541,7 +1851,9 @@
       "rarity": "rare",
       "collections": [
         "Древній Орден"
-      ]
+      ],
+      "artNum": 42,
+      "artFile": "earth_042.webp"
     },
     {
       "id": "anc_order_torchbearer",
@@ -1551,7 +1863,9 @@
       "rarity": "common",
       "collections": [
         "Древній Орден"
-      ]
+      ],
+      "artNum": 38,
+      "artFile": "fire_038.webp"
     },
     {
       "id": "anc_order_vigilant",
@@ -1561,7 +1875,9 @@
       "rarity": "common",
       "collections": [
         "Древній Орден"
-      ]
+      ],
+      "artNum": 42,
+      "artFile": "air_042.webp"
     },
     {
       "id": "anc_order_sanctifier",
@@ -1571,7 +1887,9 @@
       "rarity": "uncommon",
       "collections": [
         "Древній Орден"
-      ]
+      ],
+      "artNum": 37,
+      "artFile": "water_037.webp"
     },
     {
       "id": "anc_order_reliquary_guard",
@@ -1581,7 +1899,9 @@
       "rarity": "uncommon",
       "collections": [
         "Древній Орден"
-      ]
+      ],
+      "artNum": 43,
+      "artFile": "earth_043.webp"
     },
     {
       "id": "anc_order_high_inquisitor",
@@ -1591,7 +1911,9 @@
       "rarity": "epic",
       "collections": [
         "Древній Орден"
-      ]
+      ],
+      "artNum": 39,
+      "artFile": "fire_039.webp"
     },
     {
       "id": "diamond_brotherhood_master",
@@ -1601,7 +1923,9 @@
       "rarity": "epic",
       "collections": [
         "Алмазне братство"
-      ]
+      ],
+      "artNum": 44,
+      "artFile": "earth_044.webp"
     },
     {
       "id": "diamond_brotherhood_blade",
@@ -1611,7 +1935,9 @@
       "rarity": "rare",
       "collections": [
         "Алмазне братство"
-      ]
+      ],
+      "artNum": 43,
+      "artFile": "air_043.webp"
     },
     {
       "id": "diamond_brotherhood_bulwark",
@@ -1621,7 +1947,9 @@
       "rarity": "rare",
       "collections": [
         "Алмазне братство"
-      ]
+      ],
+      "artNum": 45,
+      "artFile": "earth_045.webp"
     },
     {
       "id": "diamond_brotherhood_oathflame",
@@ -1631,7 +1959,9 @@
       "rarity": "rare",
       "collections": [
         "Алмазне братство"
-      ]
+      ],
+      "artNum": 40,
+      "artFile": "fire_040.webp"
     },
     {
       "id": "z_air_gemini",
@@ -1641,7 +1971,9 @@
       "rarity": "uncommon",
       "collections": [
         "Повітряні знаки зодіаку"
-      ]
+      ],
+      "artNum": 44,
+      "artFile": "air_044.webp"
     },
     {
       "id": "z_air_libra",
@@ -1651,7 +1983,9 @@
       "rarity": "uncommon",
       "collections": [
         "Повітряні знаки зодіаку"
-      ]
+      ],
+      "artNum": 45,
+      "artFile": "air_045.webp"
     },
     {
       "id": "z_air_aquarius",
@@ -1661,7 +1995,9 @@
       "rarity": "uncommon",
       "collections": [
         "Повітряні знаки зодіаку"
-      ]
+      ],
+      "artNum": 46,
+      "artFile": "air_046.webp"
     },
     {
       "id": "z_earth_taurus",
@@ -1671,7 +2007,9 @@
       "rarity": "uncommon",
       "collections": [
         "Земні знаки зодіаку"
-      ]
+      ],
+      "artNum": 46,
+      "artFile": "earth_046.webp"
     },
     {
       "id": "z_earth_virgo",
@@ -1681,7 +2019,9 @@
       "rarity": "uncommon",
       "collections": [
         "Земні знаки зодіаку"
-      ]
+      ],
+      "artNum": 47,
+      "artFile": "earth_047.webp"
     },
     {
       "id": "z_earth_capricorn",
@@ -1691,7 +2031,9 @@
       "rarity": "uncommon",
       "collections": [
         "Земні знаки зодіаку"
-      ]
+      ],
+      "artNum": 48,
+      "artFile": "earth_048.webp"
     },
     {
       "id": "z_fire_aries",
@@ -1701,7 +2043,9 @@
       "rarity": "uncommon",
       "collections": [
         "Вогняні знаки зодіаку"
-      ]
+      ],
+      "artNum": 41,
+      "artFile": "fire_041.webp"
     },
     {
       "id": "z_fire_leo",
@@ -1711,7 +2055,9 @@
       "rarity": "uncommon",
       "collections": [
         "Вогняні знаки зодіаку"
-      ]
+      ],
+      "artNum": 42,
+      "artFile": "fire_042.webp"
     },
     {
       "id": "z_fire_sagittarius",
@@ -1721,7 +2067,9 @@
       "rarity": "uncommon",
       "collections": [
         "Вогняні знаки зодіаку"
-      ]
+      ],
+      "artNum": 43,
+      "artFile": "fire_043.webp"
     },
     {
       "id": "z_water_cancer",
@@ -1731,7 +2079,9 @@
       "rarity": "uncommon",
       "collections": [
         "Водні знаки зодіаку"
-      ]
+      ],
+      "artNum": 38,
+      "artFile": "water_038.webp"
     },
     {
       "id": "z_water_scorpio",
@@ -1741,7 +2091,9 @@
       "rarity": "uncommon",
       "collections": [
         "Водні знаки зодіаку"
-      ]
+      ],
+      "artNum": 39,
+      "artFile": "water_039.webp"
     },
     {
       "id": "z_water_pisces",
@@ -1751,7 +2103,9 @@
       "rarity": "uncommon",
       "collections": [
         "Водні знаки зодіаку"
-      ]
+      ],
+      "artNum": 40,
+      "artFile": "water_040.webp"
     },
     {
       "id": "voodoo_bone_priest",
@@ -1761,7 +2115,9 @@
       "rarity": "uncommon",
       "collections": [
         "Культ Вуду"
-      ]
+      ],
+      "artNum": 49,
+      "artFile": "earth_049.webp"
     },
     {
       "id": "voodoo_drum_spirit",
@@ -1771,7 +2127,9 @@
       "rarity": "common",
       "collections": [
         "Культ Вуду"
-      ]
+      ],
+      "artNum": 47,
+      "artFile": "air_047.webp"
     },
     {
       "id": "voodoo_flame_doll",
@@ -1781,7 +2139,9 @@
       "rarity": "uncommon",
       "collections": [
         "Культ Вуду"
-      ]
+      ],
+      "artNum": 44,
+      "artFile": "fire_044.webp"
     },
     {
       "id": "voodoo_tide_charm",
@@ -1791,7 +2151,9 @@
       "rarity": "uncommon",
       "collections": [
         "Культ Вуду"
-      ]
+      ],
+      "artNum": 41,
+      "artFile": "water_041.webp"
     },
     {
       "id": "holy_shore_pilgrim",
@@ -1801,7 +2163,9 @@
       "rarity": "common",
       "collections": [
         "Священні Береги"
-      ]
+      ],
+      "artNum": 42,
+      "artFile": "water_042.webp"
     },
     {
       "id": "holy_shore_tide_monk",
@@ -1811,7 +2175,9 @@
       "rarity": "uncommon",
       "collections": [
         "Священні Береги"
-      ]
+      ],
+      "artNum": 43,
+      "artFile": "water_043.webp"
     },
     {
       "id": "holy_shore_salt_knight",
@@ -1821,7 +2187,9 @@
       "rarity": "rare",
       "collections": [
         "Священні Береги"
-      ]
+      ],
+      "artNum": 50,
+      "artFile": "earth_050.webp"
     },
     {
       "id": "holy_shore_lighthouse_flame",
@@ -1831,7 +2199,9 @@
       "rarity": "uncommon",
       "collections": [
         "Священні Береги"
-      ]
+      ],
+      "artNum": 45,
+      "artFile": "fire_045.webp"
     },
     {
       "id": "great_road_caravan_guard",
@@ -1841,7 +2211,9 @@
       "rarity": "common",
       "collections": [
         "Великий Шлях"
-      ]
+      ],
+      "artNum": 51,
+      "artFile": "earth_051.webp"
     },
     {
       "id": "great_road_wayfinder",
@@ -1851,7 +2223,9 @@
       "rarity": "common",
       "collections": [
         "Великий Шлях"
-      ]
+      ],
+      "artNum": 48,
+      "artFile": "air_048.webp"
     },
     {
       "id": "great_road_innkeeper",
@@ -1861,7 +2235,9 @@
       "rarity": "common",
       "collections": [
         "Великий Шлях"
-      ]
+      ],
+      "artNum": 46,
+      "artFile": "fire_046.webp"
     },
     {
       "id": "great_road_river_ferryman",
@@ -1871,7 +2247,9 @@
       "rarity": "common",
       "collections": [
         "Великий Шлях"
-      ]
+      ],
+      "artNum": 44,
+      "artFile": "water_044.webp"
     },
     {
       "id": "tsarstvo_bogatyr",
@@ -1881,7 +2259,9 @@
       "rarity": "rare",
       "collections": [
         "Тридесяте Царство"
-      ]
+      ],
+      "artNum": 52,
+      "artFile": "earth_052.webp"
     },
     {
       "id": "tsarstvo_firebird",
@@ -1891,7 +2271,9 @@
       "rarity": "epic",
       "collections": [
         "Тридесяте Царство"
-      ]
+      ],
+      "artNum": 47,
+      "artFile": "fire_047.webp"
     },
     {
       "id": "tsarstvo_rusalka",
@@ -1901,7 +2283,9 @@
       "rarity": "rare",
       "collections": [
         "Тридесяте Царство"
-      ]
+      ],
+      "artNum": 45,
+      "artFile": "water_045.webp"
     },
     {
       "id": "tsarstvo_whirl_herald",
@@ -1911,7 +2295,9 @@
       "rarity": "rare",
       "collections": [
         "Тридесяте Царство"
-      ]
+      ],
+      "artNum": 49,
+      "artFile": "air_049.webp"
     },
     {
       "id": "west_mischief_jester",
@@ -1921,7 +2307,9 @@
       "rarity": "common",
       "collections": [
         "Західні Пустощі"
-      ]
+      ],
+      "artNum": 50,
+      "artFile": "air_050.webp"
     },
     {
       "id": "west_mischief_scamp",
@@ -1931,7 +2319,9 @@
       "rarity": "common",
       "collections": [
         "Західні Пустощі"
-      ]
+      ],
+      "artNum": 48,
+      "artFile": "fire_048.webp"
     },
     {
       "id": "west_mischief_dune_runner",
@@ -1941,7 +2331,9 @@
       "rarity": "common",
       "collections": [
         "Західні Пустощі"
-      ]
+      ],
+      "artNum": 53,
+      "artFile": "earth_053.webp"
     },
     {
       "id": "west_mischief_oasis_thief",
@@ -1951,7 +2343,9 @@
       "rarity": "common",
       "collections": [
         "Західні Пустощі"
-      ]
+      ],
+      "artNum": 46,
+      "artFile": "water_046.webp"
     },
     {
       "id": "cat_ember_purr",
@@ -1961,7 +2355,9 @@
       "rarity": "common",
       "collections": [
         "Чудові Коти"
-      ]
+      ],
+      "artNum": 49,
+      "artFile": "fire_049.webp"
     },
     {
       "id": "cat_river_whisker",
@@ -1971,7 +2367,9 @@
       "rarity": "common",
       "collections": [
         "Чудові Коти"
-      ]
+      ],
+      "artNum": 47,
+      "artFile": "water_047.webp"
     },
     {
       "id": "cat_sky_slink",
@@ -1981,7 +2379,9 @@
       "rarity": "common",
       "collections": [
         "Чудові Коти"
-      ]
+      ],
+      "artNum": 51,
+      "artFile": "air_051.webp"
     },
     {
       "id": "cat_stone_paw",
@@ -1991,7 +2391,9 @@
       "rarity": "common",
       "collections": [
         "Чудові Коти"
-      ]
+      ],
+      "artNum": 54,
+      "artFile": "earth_054.webp"
     },
     {
       "id": "choice_air_omen",
@@ -2001,7 +2403,9 @@
       "rarity": "uncommon",
       "collections": [
         "Вибір Повітря"
-      ]
+      ],
+      "artNum": 52,
+      "artFile": "air_052.webp"
     },
     {
       "id": "choice_air_herald",
@@ -2011,7 +2415,9 @@
       "rarity": "rare",
       "collections": [
         "Вибір Повітря"
-      ]
+      ],
+      "artNum": 53,
+      "artFile": "air_053.webp"
     },
     {
       "id": "choice_air_vow",
@@ -2021,7 +2427,9 @@
       "rarity": "common",
       "collections": [
         "Вибір Повітря"
-      ]
+      ],
+      "artNum": 54,
+      "artFile": "air_054.webp"
     },
     {
       "id": "choice_air_avatar",
@@ -2031,7 +2439,9 @@
       "rarity": "epic",
       "collections": [
         "Вибір Повітря"
-      ]
+      ],
+      "artNum": 55,
+      "artFile": "air_055.webp"
     },
     {
       "id": "choice_earth_omen",
@@ -2041,7 +2451,9 @@
       "rarity": "uncommon",
       "collections": [
         "Вибір Землі"
-      ]
+      ],
+      "artNum": 55,
+      "artFile": "earth_055.webp"
     },
     {
       "id": "choice_earth_herald",
@@ -2051,7 +2463,9 @@
       "rarity": "rare",
       "collections": [
         "Вибір Землі"
-      ]
+      ],
+      "artNum": 56,
+      "artFile": "earth_056.webp"
     },
     {
       "id": "choice_earth_vow",
@@ -2061,7 +2475,9 @@
       "rarity": "common",
       "collections": [
         "Вибір Землі"
-      ]
+      ],
+      "artNum": 57,
+      "artFile": "earth_057.webp"
     },
     {
       "id": "choice_earth_avatar",
@@ -2071,7 +2487,9 @@
       "rarity": "epic",
       "collections": [
         "Вибір Землі"
-      ]
+      ],
+      "artNum": 58,
+      "artFile": "earth_058.webp"
     },
     {
       "id": "choice_fire_omen",
@@ -2081,7 +2499,9 @@
       "rarity": "uncommon",
       "collections": [
         "Вибір Вогню"
-      ]
+      ],
+      "artNum": 50,
+      "artFile": "fire_050.webp"
     },
     {
       "id": "choice_fire_herald",
@@ -2091,7 +2511,9 @@
       "rarity": "rare",
       "collections": [
         "Вибір Вогню"
-      ]
+      ],
+      "artNum": 51,
+      "artFile": "fire_051.webp"
     },
     {
       "id": "choice_fire_vow",
@@ -2101,7 +2523,9 @@
       "rarity": "common",
       "collections": [
         "Вибір Вогню"
-      ]
+      ],
+      "artNum": 52,
+      "artFile": "fire_052.webp"
     },
     {
       "id": "choice_fire_avatar",
@@ -2111,7 +2535,9 @@
       "rarity": "epic",
       "collections": [
         "Вибір Вогню"
-      ]
+      ],
+      "artNum": 53,
+      "artFile": "fire_053.webp"
     },
     {
       "id": "choice_water_omen",
@@ -2121,7 +2547,9 @@
       "rarity": "uncommon",
       "collections": [
         "Вибір Води"
-      ]
+      ],
+      "artNum": 48,
+      "artFile": "water_048.webp"
     },
     {
       "id": "choice_water_herald",
@@ -2131,7 +2559,9 @@
       "rarity": "rare",
       "collections": [
         "Вибір Води"
-      ]
+      ],
+      "artNum": 49,
+      "artFile": "water_049.webp"
     },
     {
       "id": "choice_water_vow",
@@ -2141,7 +2571,9 @@
       "rarity": "common",
       "collections": [
         "Вибір Води"
-      ]
+      ],
+      "artNum": 50,
+      "artFile": "water_050.webp"
     },
     {
       "id": "choice_water_avatar",
@@ -2151,7 +2583,9 @@
       "rarity": "epic",
       "collections": [
         "Вибір Води"
-      ]
+      ],
+      "artNum": 51,
+      "artFile": "water_051.webp"
     },
     {
       "id": "flame_legion_centurion",
@@ -2161,7 +2595,9 @@
       "rarity": "rare",
       "collections": [
         "Легіон Полум'я"
-      ]
+      ],
+      "artNum": 54,
+      "artFile": "fire_054.webp"
     },
     {
       "id": "flame_legion_pyromancer",
@@ -2171,7 +2607,9 @@
       "rarity": "uncommon",
       "collections": [
         "Легіон Полум'я"
-      ]
+      ],
+      "artNum": 55,
+      "artFile": "fire_055.webp"
     },
     {
       "id": "flame_legion_burnguard",
@@ -2181,7 +2619,9 @@
       "rarity": "common",
       "collections": [
         "Легіон Полум'я"
-      ]
+      ],
+      "artNum": 56,
+      "artFile": "fire_056.webp"
     },
     {
       "id": "flame_legion_infernal_standard",
@@ -2191,7 +2631,9 @@
       "rarity": "epic",
       "collections": [
         "Легіон Полум'я"
-      ]
+      ],
+      "artNum": 57,
+      "artFile": "fire_057.webp"
     },
     {
       "id": "storm_breath_rider",
@@ -2201,7 +2643,9 @@
       "rarity": "rare",
       "collections": [
         "Подих Бурі"
-      ]
+      ],
+      "artNum": 56,
+      "artFile": "air_056.webp"
     },
     {
       "id": "storm_breath_spark",
@@ -2211,7 +2655,9 @@
       "rarity": "common",
       "collections": [
         "Подих Бурі"
-      ]
+      ],
+      "artNum": 57,
+      "artFile": "air_057.webp"
     },
     {
       "id": "storm_breath_thunder_caller",
@@ -2221,7 +2667,9 @@
       "rarity": "uncommon",
       "collections": [
         "Подих Бурі"
-      ]
+      ],
+      "artNum": 58,
+      "artFile": "air_058.webp"
     },
     {
       "id": "storm_breath_tempest_lord",
@@ -2231,7 +2679,9 @@
       "rarity": "epic",
       "collections": [
         "Подих Бурі"
-      ]
+      ],
+      "artNum": 59,
+      "artFile": "air_059.webp"
     },
     {
       "id": "deep_machine_diver",
@@ -2241,7 +2691,9 @@
       "rarity": "uncommon",
       "collections": [
         "Глибинні Машини"
-      ]
+      ],
+      "artNum": 52,
+      "artFile": "water_052.webp"
     },
     {
       "id": "deep_machine_anchor",
@@ -2251,7 +2703,9 @@
       "rarity": "rare",
       "collections": [
         "Глибинні Машини"
-      ]
+      ],
+      "artNum": 59,
+      "artFile": "earth_059.webp"
     },
     {
       "id": "deep_machine_boiler",
@@ -2261,7 +2715,9 @@
       "rarity": "rare",
       "collections": [
         "Глибинні Машини"
-      ]
+      ],
+      "artNum": 58,
+      "artFile": "fire_058.webp"
     },
     {
       "id": "deep_machine_pressure_core",
@@ -2271,7 +2727,9 @@
       "rarity": "epic",
       "collections": [
         "Глибинні Машини"
-      ]
+      ],
+      "artNum": 53,
+      "artFile": "water_053.webp"
     },
     {
       "id": "forge_titan_anvil",
@@ -2281,7 +2739,9 @@
       "rarity": "epic",
       "collections": [
         "Титани Ковки"
-      ]
+      ],
+      "artNum": 60,
+      "artFile": "earth_060.webp"
     },
     {
       "id": "forge_titan_bellows",
@@ -2291,7 +2751,9 @@
       "rarity": "rare",
       "collections": [
         "Титани Ковки"
-      ]
+      ],
+      "artNum": 60,
+      "artFile": "air_060.webp"
     },
     {
       "id": "forge_titan_slag",
@@ -2301,7 +2763,9 @@
       "rarity": "epic",
       "collections": [
         "Титани Ковки"
-      ]
+      ],
+      "artNum": 59,
+      "artFile": "fire_059.webp"
     },
     {
       "id": "forge_titan_quench",
@@ -2311,7 +2775,9 @@
       "rarity": "rare",
       "collections": [
         "Титани Ковки"
-      ]
+      ],
+      "artNum": 54,
+      "artFile": "water_054.webp"
     },
     {
       "id": "drm_basics_scale_rune",
@@ -2321,7 +2787,9 @@
       "rarity": "common",
       "collections": [
         "Основи магії драконів"
-      ]
+      ],
+      "artNum": 61,
+      "artFile": "earth_061.webp"
     },
     {
       "id": "drm_basics_breath_focus",
@@ -2331,7 +2799,9 @@
       "rarity": "common",
       "collections": [
         "Основи магії драконів"
-      ]
+      ],
+      "artNum": 61,
+      "artFile": "air_061.webp"
     },
     {
       "id": "drm_basics_ember_script",
@@ -2341,7 +2811,9 @@
       "rarity": "common",
       "collections": [
         "Основи магії драконів"
-      ]
+      ],
+      "artNum": 60,
+      "artFile": "fire_060.webp"
     },
     {
       "id": "drm_basics_tide_sigils",
@@ -2351,7 +2823,9 @@
       "rarity": "common",
       "collections": [
         "Основи магії драконів"
-      ]
+      ],
+      "artNum": 55,
+      "artFile": "water_055.webp"
     },
     {
       "id": "drm_heal_spring_scale",
@@ -2361,7 +2835,9 @@
       "rarity": "common",
       "collections": [
         "Зцілююча магія драконів"
-      ]
+      ],
+      "artNum": 56,
+      "artFile": "water_056.webp"
     },
     {
       "id": "drm_heal_ashen_balm",
@@ -2371,7 +2847,9 @@
       "rarity": "common",
       "collections": [
         "Зцілююча магія драконів"
-      ]
+      ],
+      "artNum": 61,
+      "artFile": "fire_061.webp"
     },
     {
       "id": "drm_heal_wind_salve",
@@ -2381,7 +2859,9 @@
       "rarity": "common",
       "collections": [
         "Зцілююча магія драконів"
-      ]
+      ],
+      "artNum": 62,
+      "artFile": "air_062.webp"
     },
     {
       "id": "drm_heal_stone_ward",
@@ -2391,7 +2871,53 @@
       "rarity": "common",
       "collections": [
         "Зцілююча магія драконів"
-      ]
+      ],
+      "artNum": 62,
+      "artFile": "earth_062.webp"
+    },
+    {
+      "id": "source_fire",
+      "title": "Джерело вогню",
+      "element": "fire",
+      "basePower": 1,
+      "rarity": "source",
+      "isSource": true,
+      "description": "Магічне джерело вогняної стихії. Використовується для прокачки карт.",
+      "artNum": 62,
+      "artFile": "fire_062.webp"
+    },
+    {
+      "id": "source_water",
+      "title": "Джерело води",
+      "element": "water",
+      "basePower": 1,
+      "rarity": "source",
+      "isSource": true,
+      "description": "Магічне джерело водної стихії. Використовується для прокачки карт.",
+      "artNum": 57,
+      "artFile": "water_057.webp"
+    },
+    {
+      "id": "source_air",
+      "title": "Джерело повітря",
+      "element": "air",
+      "basePower": 1,
+      "rarity": "source",
+      "isSource": true,
+      "description": "Магічне джерело повітряної стихії. Використовується для прокачки карт.",
+      "artNum": 63,
+      "artFile": "air_063.webp"
+    },
+    {
+      "id": "source_earth",
+      "title": "Джерело землі",
+      "element": "earth",
+      "basePower": 1,
+      "rarity": "source",
+      "isSource": true,
+      "description": "Магічне джерело земляної стихії. Використовується для прокачки карт.",
+      "artNum": 63,
+      "artFile": "earth_063.webp"
     }
   ]
 }

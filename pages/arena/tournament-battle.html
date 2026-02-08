@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cardastika — Турнірний бій</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Forum&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../assets/css/ui-shell.css">
+</head>
+<body>
+  <div id="app" class="app">
+
+    <!-- HUD -->
+    <header id="hud" class="hud">
+      <div class="hud__left">
+        <span class="hud__icon">⚔️</span>
+        <span class="hud__value" id="hudPower">—</span>
+      </div>
+
+      <div class="hud__right">
+        <div class="hud__pill" title="Silver">
+          <img class="hud__icon" src="../../assets/icons/coin-silver.svg" alt="Silver" />
+          <span class="hud__value" id="hudSilver">—</span>
+        </div>
+        <div class="hud__pill" title="Diamonds">
+          <img class="hud__icon" src="../../assets/icons/diamond.svg" alt="Diamonds" />
+          <span class="hud__value" id="hudDiamonds">—</span>
+        </div>
+        <div class="hud__pill" title="Gold">
+          <img class="hud__icon" src="../../assets/icons/coin-gold.svg" alt="Gold" />
+          <span class="hud__value" id="hudGold">—</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Турнірний банер -->
+    <div class="tournament-battle-banner" id="tournamentBanner">
+      <span class="tournament-battle-banner__round" id="roundName">Раунд 1</span>
+      <span class="tournament-battle-banner__vs">VS</span>
+    </div>
+
+    <!-- Екран бою -->
+    <main id="screen" class="screen battle-screen tournament-battle-screen">
+
+      <!-- Інструкції -->
+      <div class="battle-instructions">
+        Клікни по своїй карті — вона атакує дзеркальну карту ворога.
+      </div>
+
+      <!-- Панель противника (зверху) -->
+      <div class="battle-player battle-player--enemy">
+        <div class="battle-player__avatar">
+          <img src="../../assets/cards/demo/earth_01.jpg" alt="Enemy" id="enemyAvatar">
+        </div>
+        <div class="battle-player__info">
+          <div class="battle-player__name" id="enemyName">
+            <span class="battle-player__rarity"></span>
+            Суперник
+          </div>
+        </div>
+        <div class="battle-player__stats">
+          <span class="battle-player__hp" data-role="enemy-hp">HP <span id="enemyHp">0</span>/<span id="enemyMaxHp">0</span></span>
+          <div id="enemyHpBar" class="hp-bar"></div>
+        </div>
+      </div>
+
+      <!-- Активне підсилення -->
+      <div class="tournament-active-buff" id="activeBuff" hidden>
+        <span class="tournament-active-buff__icon" id="buffIcon"></span>
+        <span class="tournament-active-buff__name" id="buffName">—</span>
+      </div>
+
+      <section class="battle-arena-frame" aria-label="Поле карт">
+        <!-- Карти противника -->
+        <div class="battle-cards battle-cards--enemy">
+          <div class="battle-card-slot">
+            <button class="ref-card elem-fire rarity-3" type="button" id="enemyCard0">
+              <div class="ref-card__top">
+                <span class="ref-card__type"></span>
+                <span class="ref-card__power" id="enemyCard0Power">?</span>
+                <span class="ref-card__name"></span>
+              </div>
+              <div class="ref-card__art"></div>
+              <div class="ref-card__elem"></div>
+            </button>
+          </div>
+
+          <div class="battle-card-slot">
+            <button class="ref-card elem-earth rarity-4" type="button" id="enemyCard1">
+              <div class="ref-card__top">
+                <span class="ref-card__type"></span>
+                <span class="ref-card__power" id="enemyCard1Power">?</span>
+                <span class="ref-card__name"></span>
+              </div>
+              <div class="ref-card__art"></div>
+              <div class="ref-card__elem"></div>
+            </button>
+          </div>
+
+          <div class="battle-card-slot">
+            <button class="ref-card elem-water rarity-2" type="button" id="enemyCard2">
+              <div class="ref-card__top">
+                <span class="ref-card__type"></span>
+                <span class="ref-card__power" id="enemyCard2Power">?</span>
+                <span class="ref-card__name"></span>
+              </div>
+              <div class="ref-card__art"></div>
+              <div class="ref-card__elem"></div>
+            </button>
+          </div>
+        </div>
+
+        <div class="battle-multipliers">
+          <div class="battle-multiplier">
+            <img class="battle-multiplier__icon" src="../../assets/icons/swords-umgewandelt-von-png.svg" alt=""> x1
+          </div>
+          <div class="battle-multiplier">
+            <img class="battle-multiplier__icon" src="../../assets/icons/swords-umgewandelt-von-png.svg" alt=""> x1
+          </div>
+          <div class="battle-multiplier">
+            <img class="battle-multiplier__icon" src="../../assets/icons/swords-umgewandelt-von-png.svg" alt=""> x1
+          </div>
+        </div>
+
+        <!-- Карти гравця -->
+        <div class="battle-cards">
+          <div class="battle-card-slot">
+            <button class="ref-card elem-fire rarity-5" type="button" id="playerCard0">
+              <div class="ref-card__top">
+                <span class="ref-card__type"></span>
+                <span class="ref-card__power" id="playerCard0Power">0</span>
+                <span class="ref-card__name"></span>
+              </div>
+              <div class="ref-card__art"></div>
+              <div class="ref-card__elem"></div>
+              <div class="ref-card__buff-indicator" id="buffIndicator0" hidden>+15%</div>
+            </button>
+          </div>
+
+          <div class="battle-card-slot">
+            <button class="ref-card elem-earth rarity-3" type="button" id="playerCard1">
+              <div class="ref-card__top">
+                <span class="ref-card__type"></span>
+                <span class="ref-card__power" id="playerCard1Power">0</span>
+                <span class="ref-card__name"></span>
+              </div>
+              <div class="ref-card__art"></div>
+              <div class="ref-card__elem"></div>
+              <div class="ref-card__buff-indicator" id="buffIndicator1" hidden>+15%</div>
+            </button>
+          </div>
+
+          <div class="battle-card-slot">
+            <button class="ref-card elem-air rarity-2" type="button" id="playerCard2">
+              <div class="ref-card__top">
+                <span class="ref-card__type"></span>
+                <span class="ref-card__power" id="playerCard2Power">0</span>
+                <span class="ref-card__name"></span>
+              </div>
+              <div class="ref-card__art"></div>
+              <div class="ref-card__elem"></div>
+              <div class="ref-card__buff-indicator" id="buffIndicator2" hidden>+15%</div>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Панель гравця (знизу під картами) -->
+      <div class="battle-player battle-player--self">
+        <div class="battle-player__avatar">
+          <img src="../../assets/cards/demo/fire_01.jpg" alt="Player" id="playerAvatar">
+        </div>
+        <div class="battle-player__info">
+          <div class="battle-player__name" id="playerName">
+            <span class="battle-player__rarity"></span>
+            Гравець
+          </div>
+        </div>
+        <div class="battle-player__stats">
+          <span class="battle-player__hp" data-role="player-hp">HP <span id="playerHp">0</span>/<span id="playerMaxHp">0</span></span>
+          <div id="playerHpBar" class="hp-bar hp-bar--player"></div>
+        </div>
+      </div>
+
+      <!-- Лог бою -->
+      <section class="panel battle-log" aria-label="Журнал бою">
+        <div class="panel__title battle-log__title">Журнал бою</div>
+        <div class="battle-log__entries" id="battleLog"></div>
+      </section>
+
+    </main>
+
+    <!-- Toasts / Modals host -->
+    <div id="toastHost" class="toast-host" aria-live="polite"></div>
+    <div id="modalHost" class="modal-host" aria-hidden="true"></div>
+
+    <!-- Bottom navigation -->
+    <nav id="botbar" class="botbar botbar--3" aria-label="Bottom navigation">
+      <button class="botbar__btn" data-route="home" type="button">
+        <span class="botbar__icon" aria-hidden="true"></span>
+        <span class="botbar__text">Головна</span>
+      </button>
+
+      <button class="botbar__btn" data-route="profile" type="button">
+        <span class="botbar__icon" aria-hidden="true"></span>
+        <span class="botbar__text">Профіль</span>
+      </button>
+
+      <button class="botbar__btn" data-route="guild" type="button">
+        <span class="botbar__icon" aria-hidden="true"></span>
+        <span class="botbar__text">Гільдія</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script type="module" defer src="./tournament-battle.js"></script>
+  <script type="module" defer src="../../src/ui-shell.js"></script>
+</body>
+</html>

@@ -24,7 +24,7 @@ function getRoutes() {
   const isInPages = location.pathname.toLowerCase().includes("/pages/");
   
   if (isInPages) {
-    // РЇРєС‰Рѕ РІ pages/[name]/, С€Р»СЏС…Рё РІС–РґРЅРѕСЃРЅС– РґРѕ РїРѕС‚РѕС‡РЅРѕС— РїР°РїРєРё
+    // Якщо в pages/[name]/, шляхи відносні до поточної папки
     return {
       home:        "../../index.html",
       deck:        "../deck/deck.html",
@@ -33,9 +33,10 @@ function getRoutes() {
       collections: "../collections/collections.html",
       duel:        "../duel/duel.html",
       profile:     "../profile/profile.html",
+      arena:       "../arena/arena.html",
     };
   } else {
-    // РЇРєС‰Рѕ РЅР° РіРѕР»РѕРІРЅС–Р№ СЃС‚РѕСЂС–РЅС†С–, С€Р»СЏС…Рё С–РЅС€С–
+    // Якщо на головній сторінці, шляхи інші
     return {
       home:        "./index.html",
       deck:        "./pages/deck/deck.html",
@@ -44,6 +45,7 @@ function getRoutes() {
       collections: "./pages/collections/collections.html",
       duel:        "./pages/duel/duel.html",
       profile:     "./pages/profile/profile.html",
+      arena:       "./pages/arena/arena.html",
     };
   }
 }
@@ -62,6 +64,7 @@ function guessRouteFromPath() {
   if (p.includes("/collections/")) return "collections";
   if (p.includes("/duel/")) return "duel";
   if (p.includes("/profile/")) return "profile";
+  if (p.includes("/arena/")) return "arena";
   return "home";
 }
 
@@ -225,81 +228,95 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Fallback direct handlers (resilient when delegation is blocked by other scripts)
   botbar?.querySelectorAll("[data-route]")?.forEach(wireBotbarButton);
 
-  // HUD values from active account / storage
-  const hudPower = document.getElementById("hudPower");
-  const hudSilver = document.getElementById("hudSilver");
-  const hudDiamonds = document.getElementById("hudDiamonds");
-  const hudGold = document.getElementById("hudGold");
-  const hudAvatar = document.getElementById("hudAvatar");
-  const hudXpFill = document.getElementById("hudXpFill");
+  // Глобальна функція для оновлення HUD
+  window.updateGlobalHUD = function updateGlobalHUD() {
+    const hudPower = document.getElementById("hudPower");
+    const hudSilver = document.getElementById("hudSilver");
+    const hudDiamonds = document.getElementById("hudDiamonds");
+    const hudGold = document.getElementById("hudGold");
+    const hudAvatar = document.getElementById("hudAvatar");
+    const hudXpFill = document.getElementById("hudXpFill");
 
-  const acc = window.AccountSystem?.getActive?.() || null;
-  const st = window.ProgressionSystem?.getState?.() || null;
+    const acc = window.AccountSystem?.getActive?.() || null;
+    const st = window.ProgressionSystem?.getState?.() || null;
+    const currentRoute = guessRouteFromPath();
 
-  function readNum(key) {
-    const n = Number(localStorage.getItem(key));
-    return Number.isFinite(n) ? n : null;
-  }
+    function readNum(key) {
+      const n = Number(localStorage.getItem(key));
+      return Number.isFinite(n) ? n : null;
+    }
 
-  function deckPower(deck) {
-    if (!Array.isArray(deck)) return null;
-    const sum = deck.reduce((s, c) => s + Number(c?.power ?? c?.basePower ?? 0), 0);
-    return Number.isFinite(sum) && sum > 0 ? Math.round(sum) : null;
-  }
+    function deckPower(deck) {
+      if (!Array.isArray(deck)) return null;
+      const sum = deck.reduce((s, c) => s + Number(c?.power ?? c?.basePower ?? 0), 0);
+      return Number.isFinite(sum) && sum > 0 ? Math.round(sum) : null;
+    }
 
-  const power =
-    deckPower(acc?.deck) ??
-    deckPower((() => {
-      try {
-        return JSON.parse(localStorage.getItem("cardastika:deck") || "null");
-      } catch {
-        return null;
+    // Power - спочатку з аккаунту, потім localStorage
+    const power =
+      deckPower(acc?.deck) ??
+      deckPower((() => {
+        try {
+          return JSON.parse(localStorage.getItem("cardastika:deck") || "null");
+        } catch {
+          return null;
+        }
+      })());
+
+    if (hudPower && power != null) hudPower.textContent = fmtK(power);
+
+    // Avatar
+    try {
+      if (hudAvatar) {
+        const fromStorage = String(localStorage.getItem("cardastika:avatarUrl") || "").trim();
+        hudAvatar.src = fromStorage || `${assetPrefix()}assets/cards/demo/fire_01.jpg`;
       }
-    })());
 
-  if (hudPower && power != null) hudPower.textContent = fmtK(power);
-
-  // HUD avatar + league + XP bar
-  try {
-    if (hudAvatar) {
-      const fromStorage = String(localStorage.getItem("cardastika:avatarUrl") || "").trim();
-      hudAvatar.src = fromStorage || `${assetPrefix()}assets/cards/demo/fire_01.jpg`;
+      if (hudXpFill) {
+        const level = Number.isFinite(Number(st?.level)) ? Math.round(Number(st.level)) : null;
+        const into = Number.isFinite(Number(st?.xpIntoLevel)) ? Math.max(0, Math.round(Number(st.xpIntoLevel))) : 0;
+        const nextReq = st?.xpForNextLevel == null ? null : Math.max(1, Math.round(Number(st.xpForNextLevel)));
+        const pct = nextReq ? Math.max(0, Math.min(100, Math.round((into / nextReq) * 100))) : 100;
+        hudXpFill.style.width = `${pct}%`;
+        hudXpFill.parentElement?.setAttribute("title", level != null ? `LVL ${level} • XP ${into}/${nextReq ?? into}` : `XP ${into}`);
+      }
+    } catch (e) {
+      console.warn("[ui-shell] hud avatar/xp failed", e);
     }
 
-    if (hudXpFill) {
-      const level = Number.isFinite(Number(st?.level)) ? Math.round(Number(st.level)) : null;
-      const into = Number.isFinite(Number(st?.xpIntoLevel)) ? Math.max(0, Math.round(Number(st.xpIntoLevel))) : 0;
-      const nextReq = st?.xpForNextLevel == null ? null : Math.max(1, Math.round(Number(st.xpForNextLevel)));
-      const pct = nextReq ? Math.max(0, Math.min(100, Math.round((into / nextReq) * 100))) : 100;
-      hudXpFill.style.width = `${pct}%`;
-      hudXpFill.parentElement?.setAttribute("title", level != null ? `LVL ${level} • XP ${into}/${nextReq ?? into}` : `XP ${into}`);
-    }
-  } catch (e) {
-    console.warn("[ui-shell] hud avatar/league/xp failed", e);
-  }
-  // РўР°РєР¶Рµ РѕР±РЅРѕРІР»СЏРµРј РєР°СЂС‚РѕС‡РєСѓ РЅР° РіР»Р°РІРЅРѕР№ (tile) РµСЃР»Рё РѕРЅР° РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚
-  const tileDeckPowerEl = document.getElementById("tileDeckPower");
-  const tileDeckNameEl = document.getElementById("tileDeckName");
-  if (tileDeckPowerEl && power != null) tileDeckPowerEl.textContent = fmtK(power);
-  if (tileDeckNameEl) tileDeckNameEl.textContent = "Бойова колода";
+    // Tile deck power (на головній)
+    const tileDeckPowerEl = document.getElementById("tileDeckPower");
+    const tileDeckNameEl = document.getElementById("tileDeckName");
+    if (tileDeckPowerEl && power != null) tileDeckPowerEl.textContent = fmtK(power);
+    if (tileDeckNameEl) tileDeckNameEl.textContent = "Бойова колода";
 
-  const silver =
-    (Number.isFinite(Number(acc?.silver)) ? Number(acc.silver) : null) ??
-    readNum("cardastika:silver") ??
-    readNum("cardastika:gems") ??
-    1500;
-  if (hudSilver) hudSilver.textContent = fmtK(Math.max(0, Math.round(silver)));
+    // Silver - спочатку acc.currency, потім localStorage
+    const silver =
+      (Number.isFinite(Number(acc?.currency?.silver)) ? Number(acc.currency.silver) : null) ??
+      (Number.isFinite(Number(acc?.silver)) ? Number(acc.silver) : null) ??
+      readNum("cardastika:silver") ??
+      readNum("cardastika:gems") ??
+      0;
+    if (hudSilver) hudSilver.textContent = fmtK(Math.max(0, Math.round(silver)));
 
-  const diamonds =
-    (Number.isFinite(Number(acc?.diamonds)) ? Number(acc.diamonds) : null) ??
-    readNum("cardastika:diamonds") ??
-    0;
-  if (hudDiamonds && route === "shop") hudDiamonds.textContent = fmtK(Math.max(0, Math.round(diamonds)));
+    // Diamonds
+    const diamonds =
+      (Number.isFinite(Number(acc?.currency?.diamonds)) ? Number(acc.currency.diamonds) : null) ??
+      (Number.isFinite(Number(acc?.diamonds)) ? Number(acc.diamonds) : null) ??
+      readNum("cardastika:diamonds") ??
+      0;
+    if (hudDiamonds && currentRoute === "shop") hudDiamonds.textContent = fmtK(Math.max(0, Math.round(diamonds)));
 
-  const gold =
-    (Number.isFinite(Number(acc?.gold)) ? Number(acc.gold) : null) ??
-    readNum("cardastika:gold") ??
-    0;
-  if (hudGold) hudGold.textContent = fmtK(Math.max(0, Math.round(gold)));
+    // Gold - спочатку acc.currency.gold, потім localStorage
+    const gold =
+      (Number.isFinite(Number(acc?.currency?.gold)) ? Number(acc.currency.gold) : null) ??
+      (Number.isFinite(Number(acc?.gold)) ? Number(acc.gold) : null) ??
+      readNum("cardastika:gold") ??
+      0;
+    if (hudGold) hudGold.textContent = fmtK(Math.max(0, Math.round(gold)));
+  };
+
+  // Перший виклик
+  window.updateGlobalHUD();
 });
 

@@ -116,15 +116,10 @@ function startBossBattle(act) {
 }
 
 function updateHudFromAccount() {
-  const acc = window.AccountSystem?.getActive?.() || null;
-  const gold = Number.isFinite(Number(acc?.gold)) ? Number(acc.gold) : Number(localStorage.getItem("cardastika:gold") || 0);
-  const diamonds = Number.isFinite(Number(acc?.diamonds)) ? Number(acc.diamonds) : Number(localStorage.getItem("cardastika:diamonds") || 0);
-
-  const hudGold = document.getElementById("hudGold");
-  if (hudGold) hudGold.textContent = fmtK(Math.max(0, Math.round(Number.isFinite(gold) ? gold : 0)));
-
-  const hudDiamonds = document.getElementById("hudDiamonds");
-  if (hudDiamonds) hudDiamonds.textContent = fmtK(Math.max(0, Math.round(Number.isFinite(diamonds) ? diamonds : 0)));
+  // Використовуємо глобальну функцію з ui-shell.js
+  if (typeof window.updateGlobalHUD === "function") {
+    window.updateGlobalHUD();
+  }
 }
 
 function claimReward(q) {
