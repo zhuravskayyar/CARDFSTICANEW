@@ -2,10 +2,8 @@
 
 import "../../src/account.js";
 import "../../src/progression-system.js";
-import { getDuelLeagueByRating, getDuelLeagueIconPath } from "../../src/core/leagues.js";
 import { 
   canAccessTournament, 
-  getGlobalLeague,
   loadTournamentState,
   getRoundName,
   TOURNAMENT_MIN_RATING 
@@ -30,7 +28,9 @@ function fmtNum(v) {
 function getPlayerRating() {
   const progState = window.ProgressionSystem?.getState?.();
   const acc = window.AccountSystem?.getActive?.();
-  return progState?.duel?.rating || acc?.duel?.rating || 0;
+  const rating = progState?.duel?.rating || acc?.duel?.rating || 0;
+  console.log("[tournament] getPlayerRating:", rating, "progState:", progState?.duel?.rating, "acc:", acc?.duel?.rating);
+  return rating;
 }
 
 function getPlayerData() {
@@ -61,39 +61,26 @@ function updateAccessDisplay() {
   const rating = getPlayerRating();
   const hasAccess = canAccessTournament(rating);
   
-  const lockedBlock = q("#lockedBlock");
-  const unlockedBlock = q("#unlockedBlock");
+  console.log("[tournament] rating:", rating, "hasAccess:", hasAccess, "MIN_RATING:", TOURNAMENT_MIN_RATING);
   
   if (hasAccess) {
-    // Турнір доступний
-    lockedBlock.hidden = true;
-    unlockedBlock.hidden = false;
+    // Турнір доступний - одразу переходимо до лобі
+    window.location.href = "tournament-lobby.html";
+    return;
+  }
+  
+  // Турнір недоступний - показуємо блок
+  const lockedBlock = q("#lockedBlock");
+  if (lockedBlock) lockedBlock.hidden = false;
+  
+  // Показуємо прогрес
+  const progress = Math.min(100, (rating / TOURNAMENT_MIN_RATING) * 100);
+  q("#progressFill").style.width = `${progress}%`;
+  q("#progressText").textContent = `Рейтинг: ${fmtNum(rating)} / ${fmtNum(TOURNAMENT_MIN_RATING)}`;
     
-    // Показуємо лігу гравця
-    const globalLeague = getGlobalLeague(rating);
-    const duelLeague = getDuelLeagueByRating(rating);
-    
-    if (globalLeague) {
-      q("#playerLeagueName").textContent = globalLeague.name;
-    } else {
-      q("#playerLeagueName").textContent = duelLeague.name;
-    }
-    q("#playerLeagueIcon").src = getDuelLeagueIconPath(duelLeague.id);
-    
-  } else {
-    // Турнір недоступний
-    lockedBlock.hidden = false;
-    unlockedBlock.hidden = true;
-    
-    // Показуємо прогрес
-    const progress = Math.min(100, (rating / TOURNAMENT_MIN_RATING) * 100);
-    q("#progressFill").style.width = `${progress}%`;
-    q("#progressText").textContent = `Рейтинг: ${fmtNum(rating)} / ${fmtNum(TOURNAMENT_MIN_RATING)}`;
-    
-    if (rating > 0) {
-      const remaining = TOURNAMENT_MIN_RATING - rating;
-      q("#lockedText").textContent = `До відкриття залишилось ${fmtNum(remaining)} рейтингу`;
-    }
+  if (rating > 0) {
+    const remaining = TOURNAMENT_MIN_RATING - rating;
+    q("#lockedText").textContent = `До відкриття залишилось ${fmtNum(remaining)} рейтингу`;
   }
 }
 
