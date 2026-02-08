@@ -152,7 +152,11 @@ function normalizeCard(raw, idx) {
   const power = Math.max(0, Math.round(asNum(raw.power ?? raw.basePower, 0)));
   const level = Math.max(1, Math.round(asNum(raw.level ?? raw.lvl, 1)));
   const rarity = normalizeRarity(raw.rarity ?? raw.quality ?? raw.rarityClass ?? 1);
-  const art = String(raw.art || raw.image || raw.img || raw.cover || "").trim();
+  // Support both 'art' (full URL) and 'artFile' (filename only)
+  let art = String(raw.art || raw.image || raw.img || raw.cover || "").trim();
+  if (!art && raw.artFile) {
+    art = `../../assets/cards/arts/${raw.artFile}`;
+  }
   const protectedFlag = !!(raw.protected ?? raw.isProtected ?? raw.locked ?? false);
   const isSource = !!(raw.isSource);
   return { uid, id, title, element, power, level, rarity, protected: protectedFlag, art, isSource };

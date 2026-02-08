@@ -166,13 +166,19 @@ function normalizeCard(raw) {
   const rarityRaw = Number(raw.rarity ?? raw.quality ?? 1);
   const rarity = Number.isFinite(rarityRaw) ? Math.max(1, Math.min(6, Math.round(rarityRaw))) : 1;
 
+  // Support both 'art' (full URL) and 'artFile' (filename only)
+  let art = raw.art || raw.image || raw.img || null;
+  if (!art && raw.artFile) {
+    art = `../../assets/cards/arts/${raw.artFile}`;
+  }
+
   return {
     uid: String(raw.uid || raw.id || (Date.now() + Math.random())),
     element,
     power: Math.max(1, Math.round(power)),
     rarity,
     name: String(raw.name || raw.title || element),
-    art: raw.art || raw.image || raw.img || null
+    art
   };
 }
 

@@ -219,6 +219,11 @@ async function loadCardFromBase(id) {
     const raw = list.find((c) => c && String(c.id) === String(id));
     if (!raw) return null;
     const power = Number(raw.power ?? raw.basePower ?? 0);
+    // Support both 'art' (full URL) and 'artFile' (filename only)
+    let art = String(raw.art ?? "").trim();
+    if (!art && raw.artFile) {
+      art = getPath(`assets/cards/arts/${raw.artFile}`);
+    }
     return {
       id: String(raw.id ?? ""),
       title: String(raw.name ?? raw.title ?? raw.id ?? "Карта"),
@@ -226,7 +231,7 @@ async function loadCardFromBase(id) {
       level: Number(raw.level ?? 1) || 1,
       element: String(raw.element ?? "earth"),
       rarity: normalizeRarityClass(raw.rarity),
-      art: String(raw.art ?? "").trim(),
+      art,
       bio: String(raw.bio ?? "").trim(),
     };
   } catch {
@@ -239,6 +244,11 @@ async function loadCardFromCatalog(id) {
   const raw = cards.find((c) => c && String(c.id) === String(id));
   if (!raw) return null;
   const power = Number(raw.power ?? raw.basePower ?? 0);
+  // Support both 'art' (full URL) and 'artFile' (filename only)
+  let art = String(raw.art ?? "").trim();
+  if (!art && raw.artFile) {
+    art = getPath(`assets/cards/arts/${raw.artFile}`);
+  }
   return {
     id: String(raw.id ?? ""),
     title: String(raw.title ?? raw.name ?? raw.id ?? "Карта"),
@@ -246,7 +256,7 @@ async function loadCardFromCatalog(id) {
     level: Number(raw.level ?? 1) || 1,
     element: String(raw.element ?? "earth"),
     rarity: normalizeRarityClass(raw.rarity),
-    art: String(raw.art ?? "").trim(),
+    art,
     bio: String(raw.bio ?? "").trim(),
   };
 }
@@ -259,6 +269,11 @@ async function loadCardFromCollectionsRichById(id) {
     const raw = cards.find((c) => c && String(c.id) === want);
     if (!raw) continue;
     const power = Number(raw.power ?? raw.basePower ?? 0);
+    // Support both 'art' (full URL) and 'artFile' (filename only)
+    let art = String(raw.art ?? "").trim();
+    if (!art && raw.artFile) {
+      art = getPath(`assets/cards/arts/${raw.artFile}`);
+    }
     return {
       id: String(raw.id ?? ""),
       title: String(raw.title ?? raw.name ?? raw.id ?? "Карта"),
@@ -266,7 +281,7 @@ async function loadCardFromCollectionsRichById(id) {
       level: Number(raw.level ?? 1) || 1,
       element: String(raw.element ?? "earth"),
       rarity: normalizeRarityClass(raw.rarity),
-      art: String(raw.art ?? "").trim(),
+      art,
       bio: String(raw.bio ?? "").trim(),
     };
   }

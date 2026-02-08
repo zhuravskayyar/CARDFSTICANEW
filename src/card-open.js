@@ -937,7 +937,14 @@
         if (meta?.title) card.title = String(meta.title);
         if (meta?.element) card.element = String(meta.element);
         if (meta?.rarity && !card.rarity) card.rarity = normalizeRarityClass(meta.rarity);
-        if (meta?.art && !card.art) card.art = String(meta.art);
+        // Support both 'art' (full URL) and 'artFile' (filename only)
+        if (!card.art) {
+          if (meta?.art) {
+            card.art = String(meta.art);
+          } else if (meta?.artFile) {
+            card.art = getPath(`assets/cards/arts/${meta.artFile}`);
+          }
+        }
         if (meta?.bio && !card.bio) card.bio = String(meta.bio);
       } catch (error) {
         console.warn("Failed to apply cards.json title:", error);

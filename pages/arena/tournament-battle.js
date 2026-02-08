@@ -90,7 +90,11 @@ function normalizeCard(raw, fallbackId) {
   if (!element) return null;
 
   const rarity = Number(raw.rarity ?? raw.quality ?? 1);
-  const art = raw.art || raw.image || raw.img || raw.cover || null;
+  // Support both 'art' (full URL) and 'artFile' (filename only)
+  let art = raw.art || raw.image || raw.img || raw.cover || null;
+  if (!art && raw.artFile) {
+    art = `../../assets/cards/arts/${raw.artFile}`;
+  }
 
   return {
     uid: String(raw.uid || raw.id || fallbackId || Date.now()),

@@ -57,7 +57,12 @@ function buildMiniRefCard(card) {
 
   const art = document.createElement("div");
   art.className = "ref-card__art";
-  if (card?.art) art.style.backgroundImage = `url('${String(card.art)}')`;
+  // Support both 'art' (full URL) and 'artFile' (filename only)
+  let artUrl = card?.art;
+  if (!artUrl && card?.artFile) {
+    artUrl = `../../assets/cards/arts/${card.artFile}`;
+  }
+  if (artUrl) art.style.backgroundImage = `url('${String(artUrl)}')`;
 
   const elem = document.createElement("div");
   elem.className = "ref-card__elem";
