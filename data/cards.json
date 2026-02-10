@@ -970,7 +970,7 @@
     {
       "id": "rare_dragon_thunderquill",
       "title": "Смарагд",
-      "element": "air",
+      "element": "earth",
       "basePower": 18,
       "rarity": "epic",
       "collections": [
@@ -982,7 +982,7 @@
     {
       "id": "rare_dragon_stonemaw",
       "title": "Астерія",
-      "element": "earth",
+      "element": "air",
       "basePower": 18,
       "rarity": "epic",
       "collections": [
@@ -994,7 +994,7 @@
     {
       "id": "myth_griffin_king",
       "title": "Сфінкс",
-      "element": "air",
+      "element": "fire",
       "basePower": 17,
       "rarity": "epic",
       "collections": [
@@ -1006,7 +1006,7 @@
     {
       "id": "myth_kraken_spawn",
       "title": "Мінотавр",
-      "element": "water",
+      "element": "earth",
       "basePower": 17,
       "rarity": "epic",
       "collections": [
@@ -1018,7 +1018,7 @@
     {
       "id": "myth_basilisk",
       "title": "Медуза",
-      "element": "earth",
+      "element": "water",
       "basePower": 17,
       "rarity": "epic",
       "collections": [
@@ -1030,7 +1030,7 @@
     {
       "id": "myth_salamander_prime",
       "title": "Химера",
-      "element": "fire",
+      "element": "air",
       "basePower": 17,
       "rarity": "epic",
       "collections": [
@@ -1066,7 +1066,7 @@
     {
       "id": "archmage_gale",
       "title": "Геоманс",
-      "element": "air",
+      "element": "earth",
       "basePower": 16,
       "rarity": "rare",
       "collections": [
@@ -1078,7 +1078,7 @@
     {
       "id": "archmage_stone",
       "title": "Аероманс",
-      "element": "earth",
+      "element": "air",
       "basePower": 16,
       "rarity": "rare",
       "collections": [
@@ -1330,7 +1330,7 @@
     {
       "id": "urfin_general_pyrestaff",
       "title": "Борей",
-      "element": "fire",
+      "element": "water",
       "basePower": 17,
       "rarity": "epic",
       "collections": [
@@ -1342,7 +1342,7 @@
     {
       "id": "urfin_general_tidehelm",
       "title": "Нотус",
-      "element": "water",
+      "element": "fire",
       "basePower": 17,
       "rarity": "epic",
       "collections": [
@@ -1365,7 +1365,7 @@
     },
     {
       "id": "urfin_general_stonecrown",
-      "title": "Зефір",
+      "title": "Зенфір",
       "element": "earth",
       "basePower": 17,
       "rarity": "epic",
@@ -1426,7 +1426,7 @@
     {
       "id": "witch_cinder_hex",
       "title": "Селена",
-      "element": "fire",
+      "element": "water",
       "basePower": 14,
       "rarity": "uncommon",
       "collections": [
@@ -1438,7 +1438,7 @@
     {
       "id": "witch_rain_blessing",
       "title": "Астра",
-      "element": "water",
+      "element": "air",
       "basePower": 14,
       "rarity": "uncommon",
       "collections": [
@@ -1450,7 +1450,7 @@
     {
       "id": "witch_whirl_charm",
       "title": "Ігніс",
-      "element": "air",
+      "element": "fire",
       "basePower": 14,
       "rarity": "uncommon",
       "collections": [
@@ -1510,7 +1510,7 @@
     {
       "id": "winter_hearth_flame",
       "title": "Снігур",
-      "element": "fire",
+      "element": "earth",
       "basePower": 12,
       "rarity": "common",
       "collections": [
@@ -1534,7 +1534,7 @@
     {
       "id": "winter_blizzard_call",
       "title": "Льодяничка",
-      "element": "air",
+      "element": "water",
       "basePower": 15,
       "rarity": "rare",
       "collections": [
@@ -1546,7 +1546,7 @@
     {
       "id": "winter_ice_titan",
       "title": "Вовк",
-      "element": "water",
+      "element": "earth",
       "basePower": 18,
       "rarity": "epic",
       "collections": [
@@ -1558,7 +1558,7 @@
     {
       "id": "gnome_baker",
       "title": "Коваль",
-      "element": "earth",
+      "element": "fire",
       "basePower": 10,
       "rarity": "common",
       "collections": [
@@ -1570,7 +1570,7 @@
     {
       "id": "gnome_brewer",
       "title": "Гірник",
-      "element": "water",
+      "element": "earth",
       "basePower": 10,
       "rarity": "common",
       "collections": [
@@ -1594,7 +1594,7 @@
     {
       "id": "gnome_lanternkeeper",
       "title": "Старійшина",
-      "element": "fire",
+      "element": "water",
       "basePower": 10,
       "rarity": "common",
       "collections": [
@@ -1750,7 +1750,7 @@
     {
       "id": "dragon_tamer_ember",
       "title": "Учениця",
-      "element": "fire",
+      "element": "earth",
       "basePower": 15,
       "rarity": "rare",
       "collections": [
@@ -1762,7 +1762,7 @@
     {
       "id": "dragon_tamer_mist",
       "title": "Вершниця",
-      "element": "water",
+      "element": "air",
       "basePower": 15,
       "rarity": "rare",
       "collections": [
@@ -1774,7 +1774,7 @@
     {
       "id": "dragon_tamer_zephyr",
       "title": "Повелителька",
-      "element": "air",
+      "element": "water",
       "basePower": 15,
       "rarity": "rare",
       "collections": [
@@ -1786,7 +1786,7 @@
     {
       "id": "dragon_tamer_rock",
       "title": "Даенеріс",
-      "element": "earth",
+      "element": "fire",
       "basePower": 15,
       "rarity": "rare",
       "collections": [
@@ -2874,6 +2874,61 @@
       ],
       "artNum": 62,
       "artFile": "earth_062.webp"
+    },
+    {
+      "id": "trophy_tax_colector",
+      "title": "Гоблін",
+      "element": "earth",
+      "basePower": 0,
+      "rarity": "epic",
+      "collections": [
+        "Трофеї босів (Акт I–V)"
+      ],
+      "artFile": "trophy_tax_colector.webp"
+    },
+    {
+      "id": "trohy_underground_captain",
+      "title": "Капітан Підземної Варти",
+      "element": "air",
+      "basePower": 0,
+      "rarity": "epic",
+      "collections": [
+        "Трофеї босів (Акт I–V)"
+      ],
+      "artFile": "trophy_undergrund_captain.webp"
+    },
+    {
+      "id": "trophy_black_tiheman",
+      "title": "Чорний Десятинник",
+      "element": "water",
+      "basePower": 0,
+      "rarity": "legendary",
+      "collections": [
+        "Трофеї босів (Акт I–V)"
+      ],
+      "artFile": "trophy_black_titeman.webp"
+    },
+    {
+      "id": "trophy_goblin_saman",
+      "title": "Гоблін-Шаман (2 фази)",
+      "element": "fire",
+      "basePower": 0,
+      "rarity": "legendary",
+      "collections": [
+        "Трофеї босів (Акт I–V)"
+      ],
+      "artFile": "tropy_goblin_shaman.webp"
+    },
+    {
+      "id": "trophy_undeking",
+      "title": "Підземний Король (3 фази)",
+      "element": "earth",
+      "basePower": 0,
+      "rarity": "mythic",
+      "collections": [
+        "Трофеї босів (Акт I–V)"
+      ],
+      "artFile": "trophy_undering.webp"
     },
     {
       "id": "tutorial_reward_dragon",

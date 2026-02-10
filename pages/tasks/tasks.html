@@ -94,6 +94,9 @@
     document.addEventListener('DOMContentLoaded', () => {
       const CLAIMED_KEY = 'cardastika:tasks:claimed';
       const PROGRESS_KEY = 'cardastika:tasks:progress';
+      const DAILY_META_KEY = 'cardastika:tasks:dailyMeta';
+      const DAY_MS = 24 * 60 * 60 * 1000;
+      const DEFAULT_DAILY_MULTIPLIER = 1;
       const TASKS = [
         { id: 't_buy_cards_5', title: 'Купіть 5 карт', target: 5, start: 0, rewardDiamonds: 2, href: '../shop/shop.html', goLabel: 'Крамниця', multiplier: 1 },
         { id: 't_upgrade_battle_1', title: 'Покращте бойову карту 1 раз', target: 1, start: 0, rewardDiamonds: 1, href: '../deck/deck.html', goLabel: 'Бойова колода', multiplier: 1 },
@@ -127,6 +130,8 @@
 
       const tasksList = document.querySelector('.tasks-list');
       const completedEl = document.getElementById('tasksCompleted');
+      const headerMultEl = document.querySelector('.tasks-header__multiplier .tasks-header__mult:not(.tasks-header__mult--next)');
+      const headerNextMultEl = document.querySelector('.tasks-header__mult--next');
 
       function readJson(key, fallback) {
         try {
@@ -142,6 +147,44 @@
         } catch {}
       }
 
+      function asNum(value, fallback = 0) {
+        const n = Number(value);
+        return Number.isFinite(n) ? n : fallback;
+      }
+
+      function createInitialProgress() {
+        const progress = {};
+        TASKS.forEach((task) => {
+          progress[task.id] = Math.max(0, Number(task.start || 0));
+        });
+        return progress;
+      }
+
+      function createDailyMeta(multiplier = DEFAULT_DAILY_MULTIPLIER, startedAt = Date.now()) {
+        const base = Math.max(DEFAULT_DAILY_MULTIPLIER, Math.round(asNum(multiplier, DEFAULT_DAILY_MULTIPLIER)));
+        const started = Math.max(0, Math.round(asNum(startedAt, Date.now())));
+        return {
+          rewardMultiplier: base,
+          cycleStartedAt: started,
+          nextResetAt: started + DAY_MS,
+        };
+      }
+
+      function readDailyMeta() {
+        const raw = readJson(DAILY_META_KEY, null);
+        if (!raw || typeof raw !== 'object') return createDailyMeta();
+
+        const rewardMultiplier = Math.max(
+          DEFAULT_DAILY_MULTIPLIER,
+          Math.round(asNum(raw.rewardMultiplier, DEFAULT_DAILY_MULTIPLIER)),
+        );
+        const cycleStartedAt = Math.max(0, Math.round(asNum(raw.cycleStartedAt, Date.now())));
+        let nextResetAt = Math.max(0, Math.round(asNum(raw.nextResetAt, cycleStartedAt + DAY_MS)));
+        if (nextResetAt <= cycleStartedAt) nextResetAt = cycleStartedAt + DAY_MS;
+
+        return { rewardMultiplier, cycleStartedAt, nextResetAt };
+      }
+
       function rewardPill(icon, value) {
         return `<span class="task-reward-inline"><img src="${icon}" alt="" class="icon icon--gold"><span class="task-reward__value">${value}</span></span>`;
       }
@@ -151,9 +194,28 @@
         return current >= Math.max(1, Number(task.target || 1));
       }
 
+      function areAllTasksComplete(progressMap) {
+        return TASKS.every((task) => isTaskComplete(progressMap, task));
+      }
+
+      function getTaskMultiplier(task, dailyMeta) {
+        const taskMul = Math.max(DEFAULT_DAILY_MULTIPLIER, Math.round(asNum(task?.multiplier, DEFAULT_DAILY_MULTIPLIER)));
+        const dailyMul = Math.max(DEFAULT_DAILY_MULTIPLIER, Math.round(asNum(dailyMeta?.rewardMultiplier, DEFAULT_DAILY_MULTIPLIER)));
+        return taskMul * dailyMul;
+      }
+
+      function formatResetIn(nextResetAt) {
+        const diff = Math.max(0, Math.round(asNum(nextResetAt, 0) - Date.now()));
+        const totalMin = Math.floor(diff / (60 * 1000));
+        const hours = Math.floor(totalMin / 60);
+        const mins = totalMin % 60;
+        return `${hours}г ${mins}хв`;
+      }
+
       function ensureState() {
-        const progress = readJson(PROGRESS_KEY, {});
-        const claimed = readJson(CLAIMED_KEY, {});
+        let progress = readJson(PROGRESS_KEY, {});
+        let claimed = readJson(CLAIMED_KEY, {});
+        let dailyMeta = readDailyMeta();
 
         TASKS.forEach((task) => {
           if (!Number.isFinite(Number(progress[task.id]))) {
@@ -161,13 +223,30 @@
           }
         });
 
+        if (!claimed || typeof claimed !== 'object') claimed = {};
+
+        const now = Date.now();
+        if (now >= asNum(dailyMeta.nextResetAt, 0)) {
+          const completedPreviousCycle = areAllTasksComplete(progress);
+          const nextMultiplier = completedPreviousCycle
+            ? Math.max(DEFAULT_DAILY_MULTIPLIER, asNum(dailyMeta.rewardMultiplier, DEFAULT_DAILY_MULTIPLIER) + 1)
+            : DEFAULT_DAILY_MULTIPLIER;
+
+          progress = createInitialProgress();
+          claimed = {};
+          dailyMeta = createDailyMeta(nextMultiplier, now);
+        }
+
         writeJson(PROGRESS_KEY, progress);
         writeJson(CLAIMED_KEY, claimed);
-        return { progress, claimed };
+        writeJson(DAILY_META_KEY, dailyMeta);
+        return { progress, claimed, dailyMeta };
       }
 
-      function grantRewards(task) {
-        const diamonds = Math.max(0, Number(task.rewardDiamonds || 0));
+      function grantRewards(task, dailyMeta) {
+        const baseDiamonds = Math.max(0, Number(task.rewardDiamonds || 0));
+        const totalMultiplier = getTaskMultiplier(task, dailyMeta);
+        const diamonds = Math.max(0, Math.round(baseDiamonds * totalMultiplier));
         if (diamonds > 0) {
           const cur = Number(localStorage.getItem('cardastika:diamonds') || 0) || 0;
           localStorage.setItem('cardastika:diamonds', String(Math.max(0, cur + diamonds)));
@@ -175,12 +254,26 @@
       }
 
       function render() {
-        const { progress, claimed } = ensureState();
+        const { progress, claimed, dailyMeta } = ensureState();
         if (!tasksList) return;
+
+        const currentDailyMultiplier = Math.max(
+          DEFAULT_DAILY_MULTIPLIER,
+          Math.round(asNum(dailyMeta?.rewardMultiplier, DEFAULT_DAILY_MULTIPLIER)),
+        );
+        const nextDailyMultiplier = areAllTasksComplete(progress)
+          ? currentDailyMultiplier + 1
+          : DEFAULT_DAILY_MULTIPLIER;
+        const resetIn = formatResetIn(dailyMeta?.nextResetAt);
+
+        if (headerMultEl) headerMultEl.textContent = `x${currentDailyMultiplier}`;
+        if (headerNextMultEl) headerNextMultEl.textContent = `наступний x${nextDailyMultiplier} через ${resetIn}`;
 
         const itemsHtml = TASKS.map((task) => {
           const current = Math.max(0, Number(progress?.[task.id] ?? 0));
           const target = Math.max(1, Number(task.target || 1));
+          const totalMultiplier = getTaskMultiplier(task, dailyMeta);
+          const rewardValue = Math.max(0, Math.round(Number(task.rewardDiamonds || 0) * totalMultiplier));
           const pct = Math.max(0, Math.min(100, Math.round((current / target) * 100)));
           const complete = current >= target;
           const claimedTask = Boolean(claimed?.[task.id]);
@@ -197,12 +290,12 @@
             <div class="${cardClass}" data-task-id="${task.id}">
               <div class="task-header">
                 <h3 class="task-title">${task.title}</h3>
-                <span class="task-mult">x${task.multiplier || 1}</span>
+                <span class="task-mult">x${totalMultiplier}</span>
               </div>
               <div class="task-progress">
                 <span>${complete ? '<b>Виконано!</b>' : `Прогрес: <b id="${task.id}Progress">${current} з ${target}</b>`}</span>
                 <span class="task-rewards-wrap">
-                  Нагорода: ${rewardPill('../../assets/icons/diamond.svg', task.rewardDiamonds)}
+                  Нагорода: ${rewardPill('../../assets/icons/diamond.svg', rewardValue)}
                 </span>
               </div>
               <div class="task-bar"><i style="width:${pct}%"></i></div>
@@ -251,24 +344,24 @@
           const task = TASKS.find((t) => t.id === taskId);
           if (!task) return;
 
-          const progress = readJson(PROGRESS_KEY, {});
-          const claimed = readJson(CLAIMED_KEY, {});
+          const { progress, claimed, dailyMeta } = ensureState();
           if (!isTaskComplete(progress, task) || claimed?.[taskId]) return;
 
           claimed[taskId] = true;
           writeJson(CLAIMED_KEY, claimed);
-          grantRewards(task);
+          grantRewards(task, dailyMeta);
           render();
         });
       }
 
       bindEvents();
       render();
+      setInterval(render, 60 * 1000);
 
       // Debug/dev API: можна оновлювати прогрес з консолі або з інших модулів.
       window.TaskActs = {
         add(taskId, amount = 1) {
-          const progress = readJson(PROGRESS_KEY, {});
+          const { progress } = ensureState();
           const task = TASKS.find((t) => t.id === taskId);
           if (!task) return false;
           const cur = Math.max(0, Number(progress[taskId] || 0));
@@ -279,7 +372,7 @@
           return true;
         },
         set(taskId, value = 0) {
-          const progress = readJson(PROGRESS_KEY, {});
+          const { progress } = ensureState();
           const task = TASKS.find((t) => t.id === taskId);
           if (!task) return false;
           const next = Math.max(0, Math.min(task.target, Number(value) || 0));
@@ -289,10 +382,12 @@
           return true;
         },
         state() {
+          const { progress, claimed, dailyMeta } = ensureState();
           return {
             tasks: TASKS,
-            progress: readJson(PROGRESS_KEY, {}),
-            claimed: readJson(CLAIMED_KEY, {}),
+            progress,
+            claimed,
+            dailyMeta,
           };
         },
         render,

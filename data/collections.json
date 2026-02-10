@@ -461,10 +461,10 @@
       "sourceLink": "../raids/raids.html",
       "mainArt": "../../assets/cards/arts/fire_001.webp",
       "cards": [
-        { "id": "tamer_01", "title": "Учениця", "found": false, "element": "fire", "rarity": "rarity-4", "basePower": 72, "level": 1 },
-        { "id": "tamer_02", "title": "Вершниця", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 85, "level": 1 },
-        { "id": "tamer_03", "title": "Повелителька", "found": false, "element": "fire", "rarity": "rarity-5", "basePower": 88, "level": 1 },
-        { "id": "tamer_04", "title": "Даенеріс", "found": false, "element": "fire", "rarity": "rarity-6", "basePower": 100, "level": 1 }
+        { "id": "dragon_tamer_ember", "title": "Учениця", "found": false, "element": "fire", "rarity": "rare", "basePower": 15, "level": 1, "artNum": 36, "artFile": "fire_036.webp" },
+        { "id": "dragon_tamer_mist", "title": "Вершниця", "found": false, "element": "water", "rarity": "rare", "basePower": 15, "level": 1, "artNum": 35, "artFile": "water_035.webp" },
+        { "id": "dragon_tamer_zephyr", "title": "Повелителька", "found": false, "element": "air", "rarity": "rare", "basePower": 15, "level": 1, "artNum": 40, "artFile": "air_040.webp" },
+        { "id": "dragon_tamer_rock", "title": "Даенеріс", "found": false, "element": "earth", "rarity": "rare", "basePower": 15, "level": 1, "artNum": 40, "artFile": "earth_040.webp" }
       ]
     },
     {
@@ -868,7 +868,7 @@
       "mainArt": "../../assets/cards/arts/boss_001.webp",
       "cards": [
         {
-          "id": "trophy_tax_collector",
+          "id": "trophy_tax_colector",
           "title": "Гоблін",
           "found": false,
           "element": "earth",
@@ -884,7 +884,7 @@
           "dropFrom": { "type": "campaignBoss", "act": 2, "bossKey": "act2_underground_guard_captain" }
         },
         {
-          "id": "trophy_black_titheman",
+          "id": "trophy_black_tiheman",
           "title": "Чорний Десятинник",
           "found": false,
           "element": "water",
@@ -892,7 +892,7 @@
           "dropFrom": { "type": "campaignBoss", "act": 3, "bossKey": "act3_black_titheman" }
         },
         {
-          "id": "trophy_goblin_shaman",
+          "id": "trophy_goblin_saman",
           "title": "Гоблін-Шаман (2 фази)",
           "found": false,
           "element": "fire",
@@ -900,7 +900,7 @@
           "dropFrom": { "type": "campaignBoss", "act": 4, "bossKey": "act4_goblin_shaman" }
         },
         {
-          "id": "trophy_underking",
+          "id": "trophy_undering",
           "title": "Підземний Король (3 фази)",
           "found": false,
           "element": "earth",

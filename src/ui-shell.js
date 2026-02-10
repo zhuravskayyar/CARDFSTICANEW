@@ -61,6 +61,7 @@ function guessRouteFromPath() {
   if (p.includes("/deck/")) return "deck";
   if (p.includes("/guild/")) return "guild";
   if (p.includes("/shop/")) return "shop";
+  if (p.includes("/battlepass/")) return "battlepass";
   if (p.includes("/collections/")) return "collections";
   if (p.includes("/duel/")) return "duel";
   if (p.includes("/profile/")) return "profile";
@@ -202,7 +203,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const route = guessRouteFromPath();
   setActiveRoute(route);
   const diamondsPill = document.getElementById("hudDiamonds")?.closest?.(".hud__pill");
-  if (diamondsPill) diamondsPill.style.display = route === "shop" ? "" : "none";
+  if (diamondsPill) diamondsPill.style.display = (route === "shop" || route === "battlepass") ? "" : "none";
 
   const botbar = document.getElementById("botbar");
   const wireBotbarButton = (btn) => {
@@ -305,7 +306,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       (Number.isFinite(Number(acc?.diamonds)) ? Number(acc.diamonds) : null) ??
       readNum("cardastika:diamonds") ??
       0;
-    if (hudDiamonds && currentRoute === "shop") hudDiamonds.textContent = fmtK(Math.max(0, Math.round(diamonds)));
+    if (hudDiamonds && (currentRoute === "shop" || currentRoute === "battlepass")) {
+      hudDiamonds.textContent = fmtK(Math.max(0, Math.round(diamonds)));
+    }
 
     // Gold - спочатку acc.currency.gold, потім localStorage
     const gold =

@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cardastika — Алмазні нагороди</title>
-  
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600;700&family=Forum&display=swap" rel="stylesheet">
-  
+
   <link rel="stylesheet" href="../../assets/css/ui-shell.css">
 </head>
 <body>
@@ -17,14 +17,14 @@
     <!-- HUD -->
     <header id="hud" class="hud">
       <div class="hud__left">
-        <span class="hud__icon">⚔️</span>
+        <span class="hud__icon">&#9876;</span>
         <span class="hud__value" id="hudPower">180</span>
       </div>
 
       <div class="hud__right">
         <div class="hud__pill" title="Silver">
           <img class="hud__icon" src="../../assets/icons/coin-silver.svg" alt="Silver" />
-          <span class="hud__value" id="hudSilver">300</span>
+          <span class="hud__value" id="hudSilver">0</span>
         </div>
         <div class="hud__pill" title="Diamonds">
           <img class="hud__icon" src="../../assets/icons/diamond.svg" alt="Diamonds" />
@@ -32,28 +32,37 @@
         </div>
         <div class="hud__pill" title="Gold">
           <img class="hud__icon" src="../../assets/icons/coin-gold.svg" alt="Gold" />
-          <span class="hud__value" id="hudGold">17</span>
+          <span class="hud__value" id="hudGold">0</span>
         </div>
       </div>
     </header>
 
     <!-- Main screen -->
     <main id="screen" class="screen battlepass-screen">
-      
+
       <!-- VIP Banner -->
       <div class="bp-vip-banner">
         <div class="bp-vip-text">
           <span class="bp-vip-highlight">VIP-доступ</span> на сезон дає у <b>3 рази</b> більше нагород!
         </div>
-        <button class="bp-vip-btn">
-          Купити за <span class="bp-vip-price">💎 1250</span>
+        <button id="bpVipBtn" class="bp-vip-btn" type="button">
+          Купити за <span id="bpVipPrice" class="bp-vip-price">&#128142; 1250</span>
         </button>
       </div>
 
       <!-- Progress -->
       <div class="bp-progress">
-        <span class="bp-progress-text">Зібрано алмазів (йде 1 круг сезону з 4)</span>
-        <span class="bp-progress-value">💎 6</span>
+        <div class="bp-progress-head">
+          <span id="bpProgressText" class="bp-progress-text">Зібрано алмазів (йде 1 круг сезону з 4)</span>
+          <span id="bpProgressValue" class="bp-progress-value">&#128142; 0 / 400</span>
+        </div>
+        <div id="bpProgressBar" class="bp-progress-bar" role="progressbar" aria-label="Прогрес алмазних нагород" aria-valuemin="0" aria-valuemax="400" aria-valuenow="0">
+          <div id="bpProgressFill" class="bp-progress-fill"></div>
+        </div>
+        <div class="bp-progress-meta">
+          <span id="bpProgressNext" class="bp-progress-next">До наступної нагороди: 50 &#128142;</span>
+          <button id="bpClaimAllBtn" class="bp-progress-claim" type="button">Забрати все доступне</button>
+        </div>
       </div>
 
       <!-- Column Headers -->
@@ -64,12 +73,12 @@
 
       <!-- Rewards Track -->
       <div class="bp-track">
-        
+
         <!-- Level 50 -->
-        <div class="bp-level">
-          <div class="bp-reward bp-reward--free">
+        <div class="bp-level" data-tier="50">
+          <div class="bp-reward bp-reward--free" data-track="free" data-reward-type="item" data-item-id="battlepass_boost_pack" data-item-name="Магічні посилення" data-amount="1">
             <div class="bp-reward-icons">
-              <span class="bp-reward-icon">⭐</span>
+              <span class="bp-reward-icon">&#9733;</span>
               <span class="bp-reward-bonus">+100%</span>
             </div>
             <div class="bp-reward-icons">
@@ -82,71 +91,80 @@
             <div class="bp-milestone-badge">50</div>
             <div class="bp-milestone-line"></div>
           </div>
-          <div class="bp-reward bp-reward--vip">
+          <div class="bp-reward bp-reward--vip" data-track="vip" data-reward-type="item" data-item-id="shop_discount" data-item-name="Знижка в крамниці" data-amount="1">
             <div class="bp-reward-item">
-              <span class="bp-reward-icon">📜</span>
+              <span class="bp-reward-icon">&#128220;</span>
               <span class="bp-reward-name">Знижка в крамниці</span>
             </div>
           </div>
         </div>
 
         <!-- Level 100 -->
-        <div class="bp-level">
-          <div class="bp-reward bp-reward--free"></div>
+        <div class="bp-level" data-tier="100">
+          <div class="bp-reward bp-reward--free" data-track="free" data-reward-type="diamonds" data-amount="15">
+            <div class="bp-reward-resource">
+              <img class="bp-reward-icon-img" src="../../assets/icons/diamond.svg" alt="Алмази">
+              <span class="bp-reward-amount">15</span>
+            </div>
+          </div>
           <div class="bp-milestone">
             <div class="bp-milestone-line"></div>
             <div class="bp-milestone-badge">100</div>
             <div class="bp-milestone-line"></div>
           </div>
-          <div class="bp-reward bp-reward--vip">
+          <div class="bp-reward bp-reward--vip" data-track="vip" data-reward-type="item" data-item-id="mage_spear_uncommon" data-item-name="Незвичайний спис мага" data-amount="1">
             <div class="bp-reward-item">
-              <span class="bp-reward-icon">🗡️</span>
-              <span class="bp-reward-name">Незвичайне Спис мага</span>
+              <span class="bp-reward-icon">&#128481;</span>
+              <span class="bp-reward-name">Незвичайний спис мага</span>
             </div>
           </div>
         </div>
 
         <!-- Level 150 -->
-        <div class="bp-level">
-          <div class="bp-reward bp-reward--free">
+        <div class="bp-level" data-tier="150">
+          <div class="bp-reward bp-reward--free" data-track="free" data-reward-type="silver" data-amount="3500000">
             <div class="bp-reward-resource">
               <img class="bp-reward-icon-img" src="../../assets/icons/coin-silver.svg" alt="Срібло">
               <span class="bp-reward-amount">3.5М</span>
-            </div>  
-
+            </div>
           </div>
           <div class="bp-milestone">
             <div class="bp-milestone-line"></div>
             <div class="bp-milestone-badge">150</div>
             <div class="bp-milestone-line"></div>
           </div>
-          <div class="bp-reward bp-reward--vip">
+          <div class="bp-reward bp-reward--vip" data-track="vip" data-reward-type="item" data-item-id="old_dwight_tincture" data-item-name="Настойка старого Дуайта" data-amount="1">
             <div class="bp-reward-item">
-              <span class="bp-reward-icon">🧪</span>
+              <span class="bp-reward-icon">&#129514;</span>
               <span class="bp-reward-name">Настойка старого Дуайта</span>
             </div>
           </div>
         </div>
 
         <!-- Level 200 -->
-        <div class="bp-level">
-          <div class="bp-reward bp-reward--free"></div>
+        <div class="bp-level" data-tier="200">
+          <div class="bp-reward bp-reward--free" data-track="free" data-reward-type="diamonds" data-amount="30">
+            <div class="bp-reward-resource">
+              <img class="bp-reward-icon-img" src="../../assets/icons/diamond.svg" alt="Алмази">
+              <span class="bp-reward-amount">30</span>
+            </div>
+          </div>
           <div class="bp-milestone">
             <div class="bp-milestone-line"></div>
             <div class="bp-milestone-badge">200</div>
             <div class="bp-milestone-line"></div>
           </div>
-          <div class="bp-reward bp-reward--vip">
+          <div class="bp-reward bp-reward--vip" data-track="vip" data-reward-type="item" data-item-id="hunting_permit" data-item-name="Дозвіл на полювання" data-amount="1">
             <div class="bp-reward-item">
-              <span class="bp-reward-icon">📋</span>
+              <span class="bp-reward-icon">&#128203;</span>
               <span class="bp-reward-name">Дозвіл на полювання</span>
             </div>
           </div>
         </div>
 
         <!-- Level 250 -->
-        <div class="bp-level">
-          <div class="bp-reward bp-reward--free">
+        <div class="bp-level" data-tier="250">
+          <div class="bp-reward bp-reward--free" data-track="free" data-reward-type="gold" data-amount="350">
             <div class="bp-reward-resource">
               <img class="bp-reward-icon-img" src="../../assets/icons/coin-gold.svg" alt="Золото">
               <span class="bp-reward-amount">350</span>
@@ -157,69 +175,84 @@
             <div class="bp-milestone-badge">250</div>
             <div class="bp-milestone-line"></div>
           </div>
-          <div class="bp-reward bp-reward--vip">
+          <div class="bp-reward bp-reward--vip" data-track="vip" data-reward-type="item" data-item-id="miracle_healing" data-item-name="Чудесне зцілення" data-amount="1">
             <div class="bp-reward-item">
-              <span class="bp-reward-icon">✨</span>
+              <span class="bp-reward-icon">&#10024;</span>
               <span class="bp-reward-name">Чудесне зцілення</span>
             </div>
           </div>
         </div>
 
         <!-- Level 300 -->
-        <div class="bp-level">
-          <div class="bp-reward bp-reward--free"></div>
+        <div class="bp-level" data-tier="300">
+          <div class="bp-reward bp-reward--free" data-track="free" data-reward-type="diamonds" data-amount="45">
+            <div class="bp-reward-resource">
+              <img class="bp-reward-icon-img" src="../../assets/icons/diamond.svg" alt="Алмази">
+              <span class="bp-reward-amount">45</span>
+            </div>
+          </div>
           <div class="bp-milestone">
             <div class="bp-milestone-line"></div>
             <div class="bp-milestone-badge">300</div>
             <div class="bp-milestone-line"></div>
           </div>
-          <div class="bp-reward bp-reward--vip">
+          <div class="bp-reward bp-reward--vip" data-track="vip" data-reward-type="item" data-item-id="uncle_sam_legacy" data-item-name="Спадок дядька Сема" data-amount="1">
             <div class="bp-reward-item">
-              <span class="bp-reward-icon">🍀</span>
+              <span class="bp-reward-icon">&#127808;</span>
               <span class="bp-reward-name">Спадок дядька Сема</span>
             </div>
           </div>
         </div>
 
         <!-- Level 400 -->
-        <div class="bp-level">
-          <div class="bp-reward bp-reward--free"></div>
+        <div class="bp-level" data-tier="400">
+          <div class="bp-reward bp-reward--free" data-track="free" data-reward-type="diamonds" data-amount="80">
+            <div class="bp-reward-resource">
+              <img class="bp-reward-icon-img" src="../../assets/icons/diamond.svg" alt="Алмази">
+              <span class="bp-reward-amount">80</span>
+            </div>
+          </div>
           <div class="bp-milestone">
             <div class="bp-milestone-line"></div>
             <div class="bp-milestone-badge bp-milestone-badge--gold">400</div>
             <div class="bp-milestone-line"></div>
           </div>
-          <div class="bp-reward bp-reward--vip"></div>
+          <div class="bp-reward bp-reward--vip" data-track="vip" data-reward-type="item" data-item-id="dragon_heart" data-item-name="Серце дракона" data-amount="1">
+            <div class="bp-reward-item">
+              <span class="bp-reward-icon">&#10084;&#65039;&#8205;&#128293;</span>
+              <span class="bp-reward-name">Серце дракона</span>
+            </div>
+          </div>
         </div>
 
       </div>
 
       <!-- Exchange Section -->
       <div class="bp-exchange">
-        <div class="bp-exchange-item">
-          <span class="bp-exchange-icon">⬇️</span>
-          <span class="bp-exchange-count">12</span>
-          <div class="bp-exchange-card"></div>
-        </div>
-        <span class="bp-exchange-arrow">➡️</span>
-        <div class="bp-exchange-item">
-          <span class="bp-exchange-icon">⬇️</span>
-          <span class="bp-exchange-count">12</span>
-          <div class="bp-exchange-card"></div>
-        </div>
+        <button class="bp-exchange-item" type="button" data-exchange="12" aria-label="Обміняти 12 алмазів на 12 сезонного прогресу">
+          <span class="bp-exchange-icon">&#128142;</span>
+          <span class="bp-exchange-count">-12</span>
+          <span class="bp-exchange-card">+12 прогресу</span>
+        </button>
+        <span class="bp-exchange-arrow">&rarr;</span>
+        <button class="bp-exchange-item" type="button" data-exchange="60" aria-label="Обміняти 60 алмазів на 60 сезонного прогресу">
+          <span class="bp-exchange-icon">&#128142;</span>
+          <span class="bp-exchange-count">-60</span>
+          <span class="bp-exchange-card">+60 прогресу</span>
+        </button>
       </div>
 
       <!-- Bottom Button -->
       <div class="bp-action">
-        <button class="bp-action-btn" onclick="location.href='my-items.html'">
+        <button class="bp-action-btn" type="button" onclick="location.href='my-items.html'">
           Ваші магічні предмети
         </button>
-        <a href="magic-items.html" class="bp-action-link">ⓘ Опис магічних предметів</a>
+        <a href="magic-items.html" class="bp-action-link">&#9432; Опис магічних предметів</a>
       </div>
 
       <!-- Season Timer -->
       <div class="bp-timer">
-        Кінець сезону і скид через <span class="bp-timer-value">24 д 22 г</span>
+        Кінець сезону і скид через <span id="bpTimerValue" class="bp-timer-value">-- д -- г</span>
       </div>
 
     </main>
@@ -249,8 +282,7 @@
   </div>
 
   <script type="module" defer src="../../src/ui-shell.js"></script>
+  <script defer src="./battlepass.js"></script>
 </body>
 </html>
-
-
 
