@@ -1,6 +1,7 @@
 // pages/deck/deck.js — render deck from active account / storage
 import "../../src/account.js";
 import { CARD_BELONGS_TO, decorateCard, ensureCardCatalogLoaded, resolveCardArt } from "../../src/core/card.js";
+import { emitCampaignEvent } from "../../src/campaign/campaign-events.js";
 
 function clamp(v, a, b) {
   return Math.max(a, Math.min(b, v));
@@ -358,4 +359,11 @@ async function render() {
   if (hudPowerEl && Number.isFinite(power) && power > 0) hudPowerEl.textContent = String(power);
 }
 
-document.addEventListener("DOMContentLoaded", render);
+document.addEventListener("DOMContentLoaded", () => {
+  try {
+    emitCampaignEvent("deck_opened");
+  } catch {
+    // ignore
+  }
+  render();
+});

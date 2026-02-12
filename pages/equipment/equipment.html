@@ -64,15 +64,11 @@
           </div>
 
           <div class="equipment-slots equipment-slots--right">
-            <div class="equipment-slot has-item" data-slot="hand-right">
-              <div class="equipment-slot__inner">
-                <img src="../../assets/icons/artifact-demo.png" alt="Артефакт" class="equipment-slot__item" />
-              </div>
+            <div class="equipment-slot is-empty" data-slot="hand-right">
+              <div class="equipment-slot__inner"></div>
             </div>
-            <div class="equipment-slot is-locked" data-slot="ring-right">
-              <div class="equipment-slot__inner">
-                <span class="equipment-slot__lock">🔒</span>
-              </div>
+            <div class="equipment-slot is-empty" data-slot="ring-right">
+              <div class="equipment-slot__inner"></div>
             </div>
           </div>
         </div>
@@ -85,8 +81,11 @@
           <div class="equipment-slot is-empty" data-slot="pants">
             <div class="equipment-slot__inner"></div>
           </div>
-          <div class="equipment-slot is-empty" data-slot="boots-right">
-            <div class="equipment-slot__inner"></div>
+          <div class="equipment-slot has-item is-locked equipment-slot--relic" data-slot="boots-right">
+            <div class="equipment-slot__inner">
+              <img src="../../assets/icons/elements.svg" alt="Реліквія" class="equipment-slot__item" />
+              <span class="equipment-slot__lock">🔒</span>
+            </div>
           </div>
         </div>
       </div>
@@ -171,7 +170,7 @@
 
       <!-- Прогрес речей -->
       <div class="equipment-progress">
-        <span class="equipment-progress__text">Речі: <b>0</b> / 999</span>
+        <span class="equipment-progress__text">Речі: <b>0</b> / 888</span>
       </div>
 
       <!-- Кнопка Кузниця -->
@@ -183,7 +182,8 @@
 
       <!-- Підказка -->
       <div class="equipment-hint">
-        <p>Виконуйте щоденні завдання, отримуйте речі, покращуйте в Кузні, ставайте сильнішими!</p>
+        <p>Ліміт складу: до 888 речей і 888 артефактів (без урахування надягнених). Бонуси речей застосовуються лише до вашої Бойової колоди.</p>
+        <p>Сети: «Єдина рідкість» (4 речі однієї рідкості = +25% до бонусу кожної) та «Школа всіх стихій» (4 різні стихії = бонус кожної речі діє на всі карти).</p>
       </div>
 
     </main>
@@ -213,6 +213,7 @@
   </div>
 
   <script type="module" defer src="../../src/ui-shell.js"></script>
+  <script type="module" defer src="./equipment.js"></script>
 </body>
 </html>
 

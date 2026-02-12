@@ -3,6 +3,14 @@
 import "../../src/account.js";
 import "../../src/progression-system.js";
 import { ensureCardCatalogLoaded, resolveCardArt } from "../../src/core/card.js";
+import {
+  applyItemsToDeckAndHp,
+  createArtifactRuntime,
+  applyArtifactOutgoingDamage,
+  applyArtifactIncomingDamage,
+  tryArtifactRevive,
+  tryArtifactVoodoo,
+} from "../../src/core/equipment-system.js";
 import { 
   applyBuffToDeck, 
   BUFF_TYPES, 
@@ -33,6 +41,7 @@ let BATTLE_DATA = null;
 let CURRENT_DUEL = null;
 let selectedPlayerCard = null;
 let isTurnAnimating = false;
+let PLAYER_ARTIFACT_RUNTIME = null;
 
 // ==========================================
 // УТИЛІТИ
@@ -345,9 +354,12 @@ function playTurn(duel, idx) {
 
   const pHit = damage(pCard, eCard);
   const eHit = damage(eCard, pCard);
+  const pOut = applyArtifactOutgoingDamage(pHit.dmg, PLAYER_ARTIFACT_RUNTIME);
+  const pIn = applyArtifactIncomingDamage(eHit.dmg, PLAYER_ARTIFACT_RUNTIME);
 
-  duel.enemy.hp -= pHit.dmg;
-  duel.player.hp -= eHit.dmg;
+  duel.enemy.hp -= pOut.dealt;
+  duel.player.hp -= pIn.taken;
+  if (pIn.reflected > 0) duel.enemy.hp -= pIn.reflected;
 
   duel.lastTurn = { pIdx: idx, eIdx: idx, pCard, eCard, pHit, eHit };
 
@@ -361,8 +373,11 @@ function playTurn(duel, idx) {
     ePower: eCard.power,
     pName: String(pCard.name || pCard.element || "Карта"),
     eName: String(eCard.name || eCard.element || "Карта"),
-    pDmg: pHit.dmg, pMult: pHit.mult,
-    eDmg: eHit.dmg, eMult: eHit.mult,
+    pDmg: pOut.dealt, pMult: pHit.mult,
+    eDmg: pIn.taken, eMult: eHit.mult,
+    pSpearBonus: pOut.spearBonus,
+    eReduced: pIn.reduced,
+    eReflected: pIn.reflected,
     pBuffed: !!pCard.buffed
   });
 
@@ -387,6 +402,28 @@ function playTurn(duel, idx) {
       duel.enemy.discardPile.pop();
     }
     duel.enemy.hand[idx] = eCard;
+  }
+
+  if (duel.player.hp <= 0) {
+    const revive = tryArtifactRevive(duel.player.hp, duel.player.maxHp, PLAYER_ARTIFACT_RUNTIME);
+    if (revive.revived) {
+      duel.player.hp = revive.hp;
+      duel.log.push({
+        turn: duel.turn++,
+        system: true,
+        text: "Амулет життя спрацював: маг воскрес.",
+      });
+    } else {
+      const curse = tryArtifactVoodoo(duel.enemy.hp, duel.enemy.maxHp, PLAYER_ARTIFACT_RUNTIME);
+      if (curse.triggered) {
+        duel.enemy.hp = curse.killerHp;
+        duel.log.push({
+          turn: duel.turn++,
+          system: true,
+          text: "Кукла Вуду спрацювала: ворог проклятий.",
+        });
+      }
+    }
   }
 
   if (duel.player.hp <= 0 && duel.enemy.hp <= 0) duel.result = "draw";
@@ -477,6 +514,17 @@ function updateLog() {
   const logs = CURRENT_DUEL.log.slice(-5).reverse();
   
   for (const entry of logs) {
+    if (entry?.system) {
+      const sysHtml = `
+        <div class="battle-log__entry">
+          <div class="log-meta">Системна подія</div>
+          <div class="log-line">${escHtml(entry?.text || "")}</div>
+        </div>
+      `;
+      els.log.insertAdjacentHTML("beforeend", sysHtml);
+      continue;
+    }
+
     const t = Number(entry?.turn) ?? 0;
     const slot = (Number(entry?.playerIdx) ?? 0) + 1;
     const pm = Number.isFinite(Number(entry?.pMult)) ? Number(entry.pMult) : 1;
@@ -642,6 +690,7 @@ async function init() {
   // Завантажуємо дані бою
   const battleRaw = safeGetItem(sessionStorage, "cardastika:tournamentBattle") || safeGetItem(localStorage, "cardastika:tournamentBattle");
   BATTLE_DATA = safeJSON(battleRaw) || {};
+  PLAYER_ARTIFACT_RUNTIME = createArtifactRuntime("tournament");
 
   // Показуємо раунд
   const roundName = getRoundName(BATTLE_DATA.round || "round1");
@@ -659,7 +708,6 @@ async function init() {
 
   // Завантажуємо колоду гравця
   let playerDeck = loadPlayerDeck();
-
   if (playerDeck.length < 3) {
     playerDeck = [
       { uid: "dev1", element: "fire", power: 12, rarity: 3 },
@@ -669,13 +717,19 @@ async function init() {
     ];
   }
 
+  const withEquipment = applyItemsToDeckAndHp(playerDeck, calcHP(playerDeck));
+  if (Array.isArray(withEquipment?.deck) && withEquipment.deck.length) {
+    playerDeck = withEquipment.deck;
+  }
+  const hpFlatFromItems = Math.max(0, Math.round(Number(withEquipment?.profile?.hpBonus || 0)));
+
   // Застосовуємо баф
   if (BATTLE_DATA.buff) {
     playerDeck = applyBuffToDeck(playerDeck, BATTLE_DATA.buff);
   }
 
   // HP гравця
-  let playerHp = calcHP(playerDeck);
+  let playerHp = calcHP(playerDeck) + hpFlatFromItems;
 
   // HP ворога
   const enemy = BATTLE_DATA.enemy || {};
@@ -716,3 +770,4 @@ async function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
+

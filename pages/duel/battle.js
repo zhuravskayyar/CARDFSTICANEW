@@ -1038,8 +1038,25 @@
       ];
     }
 
+    // Flat item bonuses are applied before any percentage battle modifiers.
+    let hpFromEquipment = null;
+    try {
+      const eqApi = window.EquipmentSystem;
+      if (eqApi?.applyItemsToDeckAndHp) {
+        const applied = eqApi.applyItemsToDeckAndHp(playerDeck, calcHP(playerDeck));
+        if (Array.isArray(applied?.deck) && applied.deck.length) {
+          playerDeck = applied.deck;
+        }
+        if (Number.isFinite(Number(applied?.hp))) {
+          hpFromEquipment = Math.max(1, Math.round(Number(applied.hp)));
+        }
+      }
+    } catch (e) {
+      console.warn("[battle] failed to apply equipment bonuses", e);
+    }
+
     console.log("Player deck:", playerDeck);
-    let playerHp = calcHP(playerDeck);
+    let playerHp = hpFromEquipment ?? calcHP(playerDeck);
     console.log("Player HP calculated from deck:", playerHp);
 
     // Якщо duel.html вже показав HP — використовуємо його як source of truth для відображення в battle.html.

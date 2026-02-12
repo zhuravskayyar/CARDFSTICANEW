@@ -12,7 +12,7 @@ export const CAMPAIGN = {
         { id: "a1_q1", type: "shop_purchase", target: 4, reward: { gold: 100, diamonds: 1 }, title: "Купіть 4 карти на ярмарку зброярів" },
         { id: "a1_q2", type: "duel_finished", target: 10, reward: { gold: 100, diamonds: 1 }, title: "Зіграйте 10 дуелей на міському плацу" },
         { id: "a1_q3", type: "card_upgraded", target: 3, reward: { gold: 100, diamonds: 1 }, title: "Удоскональте карти 3 рази у коваля" },
-        { id: "a1_q5", type: "profile_saved", target: 1, reward: { gold: 30, diamonds: 1 }, title: "Збережіть профіль" },
+        { id: "a1_q5", type: "deck_opened", target: 1, reward: { gold: 30, diamonds: 1 }, title: "Відкрийте бойову колоду" },
         { id: "a1_q4", type: "reward_claimed", target: 3, reward: { gold: 50, diamonds: 1 }, title: "Отримайте 3 нагороди за завдання" },
       ],
     },

@@ -84,6 +84,7 @@ function actionForQuestType(type) {
   if (t === "duel_finished") return { label: "Дуелі", href: "../duel/duel.html" };
   if (t === "shop_purchase") return { label: "Крамниця", href: "../shop/shop.html" };
   if (t === "card_upgraded") return { label: "Колода", href: "../deck/deck.html" };
+  if (t === "deck_opened") return { label: "Колода", href: "../deck/deck.html" };
   if (t === "profile_saved") return { label: "Профіль", href: "../profile/profile.html" };
   if (t === "reward_claimed") return { label: "Кампанія", href: "../campaign/campaign.html" };
   return null;

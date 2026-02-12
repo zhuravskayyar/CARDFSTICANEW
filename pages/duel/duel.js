@@ -3,6 +3,7 @@
 import "../../src/account.js";
 import "../../src/progression-system.js";
 import { getDuelLeagueIconPath } from "../../src/core/leagues.js";
+import { applyItemsToDeckAndHp } from "../../src/core/equipment-system.js";
 
 const URL_PARAMS = new URLSearchParams(location.search || "");
 const IS_TUTORIAL_DUEL =
@@ -11,6 +12,12 @@ const IS_TUTORIAL_DUEL =
 
 let CARDS = [];
 let currentEnemy = null;
+const MAGE_ARTS = [
+  "../../assets/cards/arts/mage1.webp",
+  "../../assets/cards/arts/mage2.webp",
+  "../../assets/cards/arts/mage3.webp",
+  "../../assets/cards/arts/mage4.webp",
+];
 let playerProfile = {
   power: 180,
   silver: 1500,
@@ -148,12 +155,13 @@ function generateEnemy(playerPower = 180) {
   ];
 
   const name = names[Math.floor(Math.random() * names.length)];
+  const avatar = MAGE_ARTS[Math.floor(Math.random() * MAGE_ARTS.length)];
 
   currentEnemy = {
     name,
     hp: enemyPower,
     power: enemyPower,
-    avatar: "",
+    avatar,
     description: `Сила: ${enemyPower}`
   };
 
@@ -193,6 +201,8 @@ function renderEnemy() {
   const bannerEl = document.getElementById("banner");
   const nameEl = document.getElementById("opponentName");
   const hpEl = document.getElementById("opponentHealth");
+  const silhouetteEl = document.querySelector(".duel-silhouette");
+  const avatarEl = document.querySelector(".duel-opponent__avatar");
 
   if (!currentEnemy) return;
 
@@ -206,6 +216,15 @@ function renderEnemy() {
 
   if (nameEl) nameEl.textContent = currentEnemy.name;
   if (hpEl) hpEl.textContent = currentEnemy.hp;
+  if (avatarEl && currentEnemy.avatar) {
+    avatarEl.style.background = `center / cover no-repeat url("${currentEnemy.avatar}")`;
+  }
+  if (silhouetteEl && currentEnemy.avatar) {
+    silhouetteEl.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.82)), url("${currentEnemy.avatar}")`;
+    silhouetteEl.style.backgroundSize = "125% auto";
+    silhouetteEl.style.backgroundPosition = "center 38%";
+    silhouetteEl.style.backgroundRepeat = "no-repeat";
+  }
 }
 
 function handleAttack() {
@@ -371,13 +390,15 @@ async function initDuel() {
   loadPlayerProfile();
   
   // Завантажуємо реальну колоду й розраховуємо силу
-  const playerDeck = loadPlayerDeckFromStorage();
-  const realPower = calcDeckPower(playerDeck);
+  const playerDeckRaw = loadPlayerDeckFromStorage();
+  const realPower = calcDeckPower(playerDeckRaw);
+  const deckWithEquipment = applyItemsToDeckAndHp(playerDeckRaw, realPower);
+  const finalPower = Math.max(0, Math.round(Number(deckWithEquipment?.hp || realPower || 0)));
   
   // Якщо колода є  використовуємо реальну силу
   if (realPower > 0) {
-    playerProfile.power = realPower;
-    console.log(" Player deck loaded from storage. Power:", realPower);
+    playerProfile.power = finalPower;
+    console.log(" Player deck loaded from storage with equipment. Power:", finalPower);
   } else {
     console.warn(" No deck found. Using default power:", playerProfile.power);
   }

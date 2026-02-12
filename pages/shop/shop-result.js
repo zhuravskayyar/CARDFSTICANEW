@@ -71,15 +71,19 @@ function buildMiniRefCard(card) {
   const rarity = String(card?.rarity || "");
 
   const wrap = document.createElement("div");
-  wrap.className = `ref-card elem-${element} ${rarity}`.trim();
+  wrap.className = `ref-card ref-card--reward elem-${element} ${rarity}`.trim();
   wrap.setAttribute("aria-label", String(card?.title || "Карта"));
 
-  const size = Math.max(60, Math.round(asNum(card?.__uiSize, 130)));
-  wrap.style.width = `${size}px`;
-  wrap.style.height = `${size}px`;
+  const width = Math.max(80, Math.round(asNum(card?.__uiWidth, 200)));
+  const height = Math.max(100, Math.round(asNum(card?.__uiHeight, 240)));
+  const topBar = Math.max(20, Math.round(asNum(card?.__uiTopBar, 40)));
+  wrap.style.width = `${width}px`;
+  wrap.style.height = `${height}px`;
 
   const top = document.createElement("div");
   top.className = "ref-card__top";
+  top.style.height = `${topBar}px`;
+  top.style.minHeight = `${topBar}px`;
   const type = document.createElement("span");
   type.className = "ref-card__type";
   type.setAttribute("aria-hidden", "true");
@@ -90,6 +94,13 @@ function buildMiniRefCard(card) {
 
   const art = document.createElement("div");
   art.className = "ref-card__art";
+  // Keep reward art anchored under the top bar to avoid visual sliding on reveal.
+  art.style.top = `${topBar}px`;
+  art.style.bottom = "0";
+  art.style.borderRadius = "0";
+  art.style.backgroundSize = "contain";
+  art.style.backgroundPosition = "center";
+  art.style.backgroundRepeat = "no-repeat";
   const artUrl = resolveCardArtUrl(card);
   if (artUrl) art.style.backgroundImage = `url('${String(artUrl)}')`;
 
@@ -199,7 +210,15 @@ document.addEventListener("DOMContentLoaded", () => {
     grid.className = cards.length > 1 ? "shop-result__grid" : "shop-result__single";
     for (const c of cards) {
       const ui = { ...(c || {}) };
-      ui.__uiSize = cards.length > 1 ? 92 : 130;
+      if (cards.length > 1) {
+        ui.__uiWidth = 92;
+        ui.__uiHeight = 112;
+        ui.__uiTopBar = 22;
+      } else {
+        ui.__uiWidth = 200;
+        ui.__uiHeight = 240;
+        ui.__uiTopBar = 40;
+      }
       grid.appendChild(buildMiniRefCard(ui));
     }
     host.appendChild(grid);

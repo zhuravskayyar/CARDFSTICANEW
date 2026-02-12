@@ -12,6 +12,14 @@
 import "../../src/account.js";
 import { ensureCardCatalogLoaded, resolveCardArt } from "../../src/core/card.js";
 import {
+  applyItemsToDeckAndHp,
+  createArtifactRuntime,
+  applyArtifactOutgoingDamage,
+  applyArtifactIncomingDamage,
+  tryArtifactRevive,
+  tryArtifactVoodoo,
+} from "../../src/core/equipment-system.js";
+import {
   getArenaLeagueByRating,
   updateArenaRating,
   getArenaState,
@@ -64,6 +72,7 @@ const arena = {
 
   log: [],                   // останні записи
   playerDeck: [],            // 9 карт (з акаунта або fallback)
+  playerArtifactRuntime: null,
 };
 
 // ===================== BOOT =====================
@@ -87,6 +96,12 @@ function initArena() {
   let deck = acc?.deck ?? [];
   if (!Array.isArray(deck) || deck.length < 9) deck = generateFallbackDeck(180);
   arena.playerDeck = deck.slice(0, 9).map(normalizeCard);
+  const withEquipment = applyItemsToDeckAndHp(arena.playerDeck, arena.playerDeck.reduce((s, c) => s + (c?.power || 0), 0));
+  if (Array.isArray(withEquipment?.deck) && withEquipment.deck.length) {
+    arena.playerDeck = withEquipment.deck;
+  }
+  const itemHpBonus = Math.max(0, Math.round(Number(withEquipment?.profile?.hpBonus || 0)));
+  arena.playerArtifactRuntime = createArtifactRuntime("arena");
 
   const deckPower = arena.playerDeck.reduce((sum, c) => sum + (c?.power ?? 0), 0);
   const power = deckPower || acc?.duel?.power || acc?.power || 180;
@@ -108,6 +123,10 @@ function initArena() {
     isBot: false,
     deck: arena.playerDeck
   });
+  if (itemHpBonus > 0) {
+    player.hp += itemHpBonus;
+    player.maxHp += itemHpBonus;
+  }
 
   arena.participants = [player];
 
@@ -522,16 +541,59 @@ function performHit(attackerId, targetId, slotIndex) {
   // Атака відбувається навіть якщо у цілі немає карти в цьому слоті
 
   const mult = def ? (MULT[atk.element][def.element] ?? 1.0) : 1.0;
-  const dmg = Math.round(atk.power * mult);
+  const baseDmg = Math.round(atk.power * mult);
 
-  t.hp = Math.max(0, t.hp - dmg);
-  if (attackerId === 0) a.hp = Math.max(0, a.hp - dmg); // Тільки при атаці гравця він теж втрачає HP
-  a.damageDone += dmg;
+  const outgoing = attackerId === 0
+    ? applyArtifactOutgoingDamage(baseDmg, arena.playerArtifactRuntime)
+    : { dealt: baseDmg, spearBonus: 0 };
 
-  console.log(`Атака: ${a.name} (${attackerId}) -> ${t.name} (${targetId}), слот ${slotIndex}, dmg ${dmg}, HP ${t.name} тепер ${t.hp}`);
+  let dmgToTarget = outgoing.dealt;
+  let reflected = 0;
+
+  if (targetId === 0 && attackerId !== 0) {
+    const incoming = applyArtifactIncomingDamage(dmgToTarget, arena.playerArtifactRuntime);
+    dmgToTarget = incoming.taken;
+    reflected = incoming.reflected;
+  }
+
+  t.hp = Math.max(0, t.hp - dmgToTarget);
+  a.damageDone += dmgToTarget;
+
+  if (reflected > 0 && attackerId !== 0) {
+    a.hp = Math.max(0, a.hp - reflected);
+    const player = arena.participants[0];
+    if (player) player.damageDone += reflected;
+  }
+
+  // При атаці гравця працює механіка "відповідного удару".
+  if (attackerId === 0) {
+    a.hp = Math.max(0, a.hp - baseDmg);
+  }
+
+  const killerForPlayer = attackerId === 0 ? targetId : attackerId;
+
+  if (arena.participants[0]?.hp <= 0) {
+    const revive = tryArtifactRevive(arena.participants[0].hp, arena.participants[0].maxHp, arena.playerArtifactRuntime);
+    if (revive.revived) {
+      arena.participants[0].hp = revive.hp;
+      addLogEntry("Амулет життя спрацював: гравець воскрес.");
+    } else {
+      const killer = arena.participants[killerForPlayer];
+      if (killer) {
+        const curse = tryArtifactVoodoo(killer.hp, killer.maxHp, arena.playerArtifactRuntime);
+        if (curse.triggered) {
+          killer.hp = curse.killerHp;
+          addLogEntry(`Кукла Вуду спрацювала: ${killer.name} втратив ${curse.reduced} HP.`);
+        }
+      }
+    }
+  }
+
+  console.log(`Атака: ${a.name} (${attackerId}) -> ${t.name} (${targetId}), слот ${slotIndex}, dmg ${dmgToTarget}, HP ${t.name} тепер ${t.hp}`);
 
   const multText = mult !== 1 ? ` (x${formatMult(mult)})` : "";
-  addLogEntry(`${a.name} → ${t.name}, слот ${slotIndex + 1}: ${dmg} шкоди${multText}`);
+  const extraText = outgoing.spearBonus > 0 ? ` +спис ${outgoing.spearBonus}` : "";
+  addLogEntry(`${a.name} → ${t.name}, слот ${slotIndex + 1}: ${dmgToTarget} шкоди${multText}${extraText}`);
 
   // Витрата слоту: встановлюємо КД 9 сек для цього слоту атакуючого
   a.slots[slotIndex] = null;
@@ -544,23 +606,27 @@ function performHit(attackerId, targetId, slotIndex) {
 
   // Після атаки НЕ змінюємо ціль автоматично - гравець сам переключає
 
-  // смерть
-  if (t.hp <= 0) {
-    t.alive = false;
-    addLogEntry(`☠ ${t.name} повалений. Останній удар: ${a.name}`);
+  function markDefeated(victim, killer) {
+    if (!victim || !victim.alive || victim.hp > 0) return;
+    victim.alive = false;
+    addLogEntry(`☠ ${victim.name} повалений. Останній удар: ${killer?.name || "невідомо"}`);
 
-    // боти, що били цю ціль — перевибирають
     for (const bot of arena.participants) {
-      if (bot.isBot && bot.alive && bot.targetId === t.id) {
+      if (bot.isBot && bot.alive && bot.targetId === victim.id) {
         bot.targetId = pickNewTargetId(bot.id);
       }
     }
 
-    // якщо спостерігали — авто-перемикнути
-    if (arena.observedTargetId === t.id) {
-      const next = findNextAliveAfter(t.id);
+    if (arena.observedTargetId === victim.id) {
+      const next = findNextAliveAfter(victim.id);
       if (next != null) arena.observedTargetId = next;
     }
+  }
+
+  markDefeated(t, a);
+  if (a.hp <= 0) {
+    const killer = attackerId === 0 ? t : arena.participants[0];
+    markDefeated(a, killer);
   }
 
   return true;

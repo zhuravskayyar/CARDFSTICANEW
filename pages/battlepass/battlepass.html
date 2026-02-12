@@ -46,7 +46,7 @@
           <span class="bp-vip-highlight">VIP-доступ</span> на сезон дає у <b>3 рази</b> більше нагород!
         </div>
         <button id="bpVipBtn" class="bp-vip-btn" type="button">
-          Купити за <span id="bpVipPrice" class="bp-vip-price">&#128142; 1250</span>
+          Купити за <span id="bpVipPrice" class="bp-vip-price">&#129689; 1 250</span>
         </button>
       </div>
 
@@ -206,10 +206,17 @@
 
         <!-- Level 400 -->
         <div class="bp-level" data-tier="400">
-          <div class="bp-reward bp-reward--free" data-track="free" data-reward-type="diamonds" data-amount="80">
-            <div class="bp-reward-resource">
-              <img class="bp-reward-icon-img" src="../../assets/icons/diamond.svg" alt="Алмази">
-              <span class="bp-reward-amount">80</span>
+          <div class="bp-reward bp-reward--free" data-track="free" data-reward-type="item" data-item-id="deck_card" data-item-name="Карта в колоду" data-amount="1">
+            <div class="bp-reward-deck-card" data-role="deck-card-preview">
+              <div class="bp-mini-card bp-mini-card--source" data-role="source-card">
+                <div class="bp-mini-card__power" data-role="source-power">--</div>
+                <div class="bp-mini-card__art" data-role="source-art"></div>
+              </div>
+              <span class="bp-reward-deck-card__arrow" aria-hidden="true">&#8594;</span>
+              <div class="bp-mini-card bp-mini-card--result" data-role="result-card">
+                <div class="bp-mini-card__power" data-role="result-power">--</div>
+                <div class="bp-mini-card__art" data-role="result-art"></div>
+              </div>
             </div>
           </div>
           <div class="bp-milestone">
@@ -225,21 +232,6 @@
           </div>
         </div>
 
-      </div>
-
-      <!-- Exchange Section -->
-      <div class="bp-exchange">
-        <button class="bp-exchange-item" type="button" data-exchange="12" aria-label="Обміняти 12 алмазів на 12 сезонного прогресу">
-          <span class="bp-exchange-icon">&#128142;</span>
-          <span class="bp-exchange-count">-12</span>
-          <span class="bp-exchange-card">+12 прогресу</span>
-        </button>
-        <span class="bp-exchange-arrow">&rarr;</span>
-        <button class="bp-exchange-item" type="button" data-exchange="60" aria-label="Обміняти 60 алмазів на 60 сезонного прогресу">
-          <span class="bp-exchange-icon">&#128142;</span>
-          <span class="bp-exchange-count">-60</span>
-          <span class="bp-exchange-card">+60 прогресу</span>
-        </button>
       </div>
 
       <!-- Bottom Button -->

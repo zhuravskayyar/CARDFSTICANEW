@@ -9,6 +9,21 @@
   const VIP_PRICE = 1250;
   const SEASON_DURATION_MS = 28 * 24 * 60 * 60 * 1000;
   const DIAMOND_SYMBOL = "\uD83D\uDC8E";
+  const GOLD_SYMBOL = "\uD83E\uDE99";
+  const DECK_CARD_ITEM_ID = "deck_card";
+  const CARD_ELEMENTS = new Set(["fire", "water", "air", "earth"]);
+  const ELEMENT_LABELS = {
+    fire: "Вогонь",
+    water: "Вода",
+    air: "Повітря",
+    earth: "Земля",
+  };
+  const DEFAULT_ART_BY_ELEMENT = {
+    fire: "../../assets/cards/arts/fire_001.webp",
+    water: "../../assets/cards/arts/water_001.webp",
+    air: "../../assets/cards/arts/air_001.webp",
+    earth: "../../assets/cards/arts/earth_001.webp",
+  };
 
   const dom = {
     vipBtn: null,
@@ -111,6 +126,276 @@
     }
   }
 
+  function normalizeElement(value) {
+    const el = String(value || "").trim().toLowerCase();
+    if (CARD_ELEMENTS.has(el)) return el;
+    if (el === "wind") return "air";
+    return "earth";
+  }
+
+  function normalizeArtPath(raw, fallbackElement = "earth") {
+    const value = String(raw || "").trim();
+    if (value) {
+      if (/^(data:|blob:|https?:\/\/|\/)/i.test(value)) return value;
+      if (value.startsWith("../../") || value.startsWith("../")) return value;
+      if (value.startsWith("./assets/")) return `../../${value.slice(2)}`;
+      if (value.startsWith("assets/")) return `../../${value}`;
+      if (/^[^/\\]+\.(webp|png|jpe?g|gif|svg)$/i.test(value)) {
+        return `../../assets/cards/arts/${value}`;
+      }
+      if (/^[^/\\]+$/i.test(value)) {
+        return `../../assets/cards/arts/${value}.webp`;
+      }
+      return value;
+    }
+
+    return DEFAULT_ART_BY_ELEMENT[normalizeElement(fallbackElement)] || DEFAULT_ART_BY_ELEMENT.earth;
+  }
+
+  function parseDeckFromStorage() {
+    const fromAccount = window.AccountSystem?.getActive?.()?.deck;
+    if (Array.isArray(fromAccount)) return fromAccount.slice(0, 9);
+
+    const fromStorage = safeParse(localStorage.getItem("cardastika:deck"), []);
+    if (Array.isArray(fromStorage)) return fromStorage.slice(0, 9);
+    return [];
+  }
+
+  function cardPowerValue(card) {
+    const value = Number(card?.power ?? card?.basePower ?? card?.str ?? card?.attack ?? card?.value ?? 0);
+    if (!Number.isFinite(value)) return 0;
+    return Math.max(0, Math.round(value));
+  }
+
+  function pickNinthDeckCard(deckCards = []) {
+    if (!Array.isArray(deckCards) || !deckCards.length) return null;
+    const sorted = deckCards
+      .filter((card) => card && typeof card === "object")
+      .slice()
+      .sort((a, b) => cardPowerValue(b) - cardPowerValue(a));
+    if (!sorted.length) return null;
+    return sorted[Math.min(8, sorted.length - 1)] || null;
+  }
+
+  function defaultDeckCardSnapshot(cycle) {
+    return {
+      cycle: Math.max(1, asInt(cycle, DEFAULT_CYCLE)),
+      createdAt: Date.now(),
+      source: {
+        id: "bp_source_fallback",
+        title: "9-та карта",
+        power: 10,
+        element: "earth",
+        art: DEFAULT_ART_BY_ELEMENT.earth,
+      },
+      reward: {
+        title: "Карта в колоду",
+        power: 11,
+        element: "earth",
+        art: DEFAULT_ART_BY_ELEMENT.earth,
+        rarity: 2,
+        level: 1,
+      },
+    };
+  }
+
+  function createDeckCardSnapshot(cycle) {
+    const snapshot = defaultDeckCardSnapshot(cycle);
+    const deck = parseDeckFromStorage();
+    const base = pickNinthDeckCard(deck);
+    if (!base) return snapshot;
+
+    const basePower = Math.max(1, cardPowerValue(base));
+    const bonusPower = Math.max(1, Math.round(basePower * 0.08));
+    const element = normalizeElement(base?.element || base?.elem || base?.type);
+    const baseArt = normalizeArtPath(base?.art || base?.image || base?.img || base?.cover || base?.artFile, element);
+    const rarity = clamp(asInt(base?.rarity, 2), 1, 6);
+    const level = Math.max(1, asInt(base?.level, 1));
+
+    snapshot.source = {
+      id: String(base?.id || "bp_source_card"),
+      title: String(base?.title || base?.name || "9-та карта"),
+      power: basePower,
+      element,
+      art: baseArt,
+    };
+
+    snapshot.reward = {
+      title: "Карта в колоду",
+      power: basePower + bonusPower,
+      element,
+      art: baseArt,
+      rarity,
+      level,
+    };
+
+    return snapshot;
+  }
+
+  function normalizeDeckCardSnapshot(rawSnapshot, fallbackCycle) {
+    const cycleFallback = Math.max(1, asInt(fallbackCycle, DEFAULT_CYCLE));
+    const cycle = Math.max(1, asInt(rawSnapshot?.cycle, cycleFallback));
+    const sourceElement = normalizeElement(rawSnapshot?.source?.element);
+    const rewardElement = normalizeElement(rawSnapshot?.reward?.element || sourceElement);
+
+    const normalized = {
+      cycle,
+      createdAt: Math.max(0, asInt(rawSnapshot?.createdAt, Date.now())),
+      source: {
+        id: String(rawSnapshot?.source?.id || "bp_source_card"),
+        title: String(rawSnapshot?.source?.title || "9-та карта"),
+        power: Math.max(1, asInt(rawSnapshot?.source?.power, 10)),
+        element: sourceElement,
+        art: normalizeArtPath(rawSnapshot?.source?.art, sourceElement),
+      },
+      reward: {
+        title: String(rawSnapshot?.reward?.title || "Карта в колоду"),
+        power: Math.max(1, asInt(rawSnapshot?.reward?.power, 11)),
+        element: rewardElement,
+        art: normalizeArtPath(rawSnapshot?.reward?.art, rewardElement),
+        rarity: clamp(asInt(rawSnapshot?.reward?.rarity, 2), 1, 6),
+        level: Math.max(1, asInt(rawSnapshot?.reward?.level, 1)),
+      },
+    };
+
+    if (normalized.reward.power <= normalized.source.power) {
+      normalized.reward.power = normalized.source.power + 1;
+    }
+
+    return normalized;
+  }
+
+  function ensureDeckCardSnapshot() {
+    const current = bpState?.deckCardSnapshot
+      ? normalizeDeckCardSnapshot(bpState.deckCardSnapshot, bpState.cycle)
+      : null;
+
+    if (current && current.cycle === bpState.cycle) {
+      bpState.deckCardSnapshot = current;
+      return false;
+    }
+
+    bpState.deckCardSnapshot = createDeckCardSnapshot(bpState.cycle);
+    return true;
+  }
+
+  function isDeckCardReward(reward) {
+    return reward?.type === "item" && String(reward?.itemId || "").trim().toLowerCase() === DECK_CARD_ITEM_ID;
+  }
+
+  function makeRewardCard(snapshot) {
+    const src = snapshot?.reward || {};
+    return {
+      uid: globalThis.crypto?.randomUUID ? globalThis.crypto.randomUUID() : `bp_card_${Date.now()}_${Math.random().toString(16).slice(2)}`,
+      id: `bp_deck_card_${Date.now()}`,
+      title: "Карта в колоду",
+      name: "Карта в колоду",
+      element: normalizeElement(src.element),
+      power: Math.max(1, asInt(src.power, 1)),
+      basePower: Math.max(1, asInt(src.power, 1)),
+      rarity: clamp(asInt(src.rarity, 2), 1, 6),
+      level: Math.max(1, asInt(src.level, 1)),
+      art: normalizeArtPath(src.art, src.element),
+      createdAt: Date.now(),
+      fromBattlePass: true,
+    };
+  }
+
+  function maybeAutoPutIntoDeck(deckArr, newCard) {
+    if (!Array.isArray(deckArr) || !newCard) return { equipped: false, replaced: null };
+    if (deckArr.length < 9) {
+      deckArr.push(newCard);
+      return { equipped: true, replaced: null };
+    }
+
+    let minIdx = -1;
+    let minPower = Infinity;
+    for (let i = 0; i < deckArr.length; i++) {
+      const p = cardPowerValue(deckArr[i]);
+      if (p < minPower) {
+        minPower = p;
+        minIdx = i;
+      }
+    }
+
+    const cardPower = cardPowerValue(newCard);
+    if (minIdx >= 0 && cardPower > minPower) {
+      const replaced = deckArr[minIdx] || null;
+      deckArr[minIdx] = newCard;
+      return { equipped: true, replaced };
+    }
+
+    return { equipped: false, replaced: null };
+  }
+
+  function grantDeckCardReward() {
+    ensureDeckCardSnapshot();
+    const snapshot = bpState.deckCardSnapshot || createDeckCardSnapshot(bpState.cycle);
+    const newCard = makeRewardCard(snapshot);
+    let equipped = false;
+
+    const account = window.AccountSystem;
+    if (account?.getActive && account?.updateActive && account.getActive()) {
+      account.updateActive((acc) => {
+        if (!Array.isArray(acc.inventory)) acc.inventory = [];
+        if (!Array.isArray(acc.deck)) acc.deck = [];
+
+        const cardForStorage = { ...newCard };
+        acc.inventory.push(cardForStorage);
+
+        const deck = acc.deck.slice(0, 9);
+        const equipRes = maybeAutoPutIntoDeck(deck, cardForStorage);
+        equipped = !!equipRes?.equipped;
+        acc.deck = deck.slice(0, 9);
+        return acc;
+      });
+    } else {
+      const inventory = safeParse(localStorage.getItem("cardastika:inventory"), []);
+      const inv = Array.isArray(inventory) ? inventory : [];
+      const deckRaw = safeParse(localStorage.getItem("cardastika:deck"), []);
+      const deck = Array.isArray(deckRaw) ? deckRaw.slice(0, 9) : [];
+
+      const cardForStorage = { ...newCard };
+      inv.push(cardForStorage);
+      const equipRes = maybeAutoPutIntoDeck(deck, cardForStorage);
+      equipped = !!equipRes?.equipped;
+
+      localStorage.setItem("cardastika:inventory", JSON.stringify(inv));
+      localStorage.setItem("cardastika:deck", JSON.stringify(deck.slice(0, 9)));
+    }
+
+    const elementLabel = ELEMENT_LABELS[normalizeElement(newCard.element)] || "Стихія";
+    return `${newCard.title}: ${formatNumber(newCard.power)} сили (${elementLabel})${equipped ? ", додано в колоду" : ", додано в інвентар"}`;
+  }
+
+  function applyMiniCardPreview(cardEl, cardData) {
+    if (!cardEl) return;
+    const powerEl = cardEl.querySelector(".bp-mini-card__power");
+    const artEl = cardEl.querySelector(".bp-mini-card__art");
+
+    const power = Math.max(1, asInt(cardData?.power, 1));
+    const element = normalizeElement(cardData?.element);
+    const art = normalizeArtPath(cardData?.art, element);
+
+    if (powerEl) powerEl.textContent = String(power);
+    if (artEl) artEl.style.backgroundImage = `linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.45)), url("${art}")`;
+    cardEl.dataset.element = element;
+  }
+
+  function renderDeckCardRewardPreview(reward) {
+    if (!isDeckCardReward(reward)) return;
+
+    const root = reward.el.querySelector('[data-role="deck-card-preview"]');
+    if (!root) return;
+
+    ensureDeckCardSnapshot();
+    const snapshot = bpState.deckCardSnapshot || createDeckCardSnapshot(bpState.cycle);
+    const sourceCardEl = root.querySelector('[data-role="source-card"]');
+    const resultCardEl = root.querySelector('[data-role="result-card"]');
+    applyMiniCardPreview(sourceCardEl, snapshot.source);
+    applyMiniCardPreview(resultCardEl, snapshot.reward);
+  }
+
   function defaultState(walletDiamonds) {
     return {
       version: 1,
@@ -118,6 +403,7 @@
       progress: 6,
       vip: false,
       claimed: {},
+      deckCardSnapshot: createDeckCardSnapshot(DEFAULT_CYCLE),
       trackedDiamonds: Math.max(0, asInt(walletDiamonds, 0)),
       seasonEndsAt: Date.now() + SEASON_DURATION_MS,
     };
@@ -131,12 +417,14 @@
       return base;
     }
 
+    const loadedCycle = clamp(asInt(raw.cycle, base.cycle), 1, MAX_CYCLE);
     const state = {
       version: 1,
-      cycle: clamp(asInt(raw.cycle, base.cycle), 1, MAX_CYCLE),
+      cycle: loadedCycle,
       progress: clamp(asInt(raw.progress, base.progress), 0, MAX_PROGRESS),
       vip: Boolean(raw.vip),
       claimed: raw.claimed && typeof raw.claimed === "object" ? { ...raw.claimed } : {},
+      deckCardSnapshot: raw.deckCardSnapshot ? normalizeDeckCardSnapshot(raw.deckCardSnapshot, loadedCycle) : null,
       trackedDiamonds: Math.max(0, asInt(raw.trackedDiamonds, base.trackedDiamonds)),
       seasonEndsAt: Math.max(0, asInt(raw.seasonEndsAt, base.seasonEndsAt)),
     };
@@ -146,6 +434,7 @@
       state.progress = 0;
       state.vip = false;
       state.claimed = {};
+      state.deckCardSnapshot = createDeckCardSnapshot(DEFAULT_CYCLE);
       state.seasonEndsAt = Date.now() + SEASON_DURATION_MS;
       state.trackedDiamonds = Math.max(0, asInt(walletDiamonds, 0));
     }
@@ -210,16 +499,25 @@
     if (reward.type === "silver") return `+${formatNumber(reward.amount)} срібла`;
     if (reward.type === "gold") return `+${formatNumber(reward.amount)} золота`;
     if (reward.type === "diamonds") return `+${formatNumber(reward.amount)} алмазів`;
-    if (reward.type === "item") return `${reward.itemName} ?${reward.amount}`;
+    if (isDeckCardReward(reward)) {
+      ensureDeckCardSnapshot();
+      const rewardPower = Math.max(1, asInt(bpState?.deckCardSnapshot?.reward?.power, 1));
+      return `${reward.itemName} (${formatNumber(rewardPower)} сили)`;
+    }
+    if (reward.type === "item") return `${reward.itemName} x${reward.amount}`;
     return "Нагорода";
   }
 
   function applyReward(reward) {
     if (!reward) return "";
 
+    if (isDeckCardReward(reward)) {
+      return grantDeckCardReward();
+    }
+
     if (reward.type === "item") {
       addMagicItem(reward.itemId, reward.itemName, reward.amount);
-      return `${reward.itemName} ?${reward.amount}`;
+      return `${reward.itemName} x${reward.amount}`;
     }
 
     const wallet = readWallet();
@@ -309,6 +607,11 @@
       btn: claimBtn,
       state: stateLine,
     };
+
+    if (isDeckCardReward(reward)) {
+      reward.el.classList.add("bp-reward--deck-card");
+      renderDeckCardRewardPreview(reward);
+    }
 
     const key = claimKey(tier, track);
     rewardsByKey.set(key, reward);
@@ -401,19 +704,18 @@
     if (bpState.vip) return;
 
     const wallet = readWallet();
-    if (wallet.diamonds < VIP_PRICE) {
-      showToast(`Потрібно ${formatNumber(VIP_PRICE)} алмазів для VIP.`, "error");
+    if (wallet.gold < VIP_PRICE) {
+      showToast(`Потрібно ${formatNumber(VIP_PRICE)} золота для VIP.`, "error");
       return;
     }
 
-    const allow = window.confirm(`Купити VIP-доступ за ${VIP_PRICE} алмазів?`);
+    const allow = window.confirm(`Купити VIP-доступ за ${formatNumber(VIP_PRICE)} золота?`);
     if (!allow) return;
 
-    wallet.diamonds -= VIP_PRICE;
+    wallet.gold -= VIP_PRICE;
     writeWallet(wallet);
 
     bpState.vip = true;
-    bpState.trackedDiamonds = wallet.diamonds;
     saveState();
 
     render();
@@ -496,9 +798,9 @@
     }
 
     dom.vipBtn.classList.remove("is-owned");
-    dom.vipBtn.innerHTML = `Купити за <span id="bpVipPrice" class="bp-vip-price">${DIAMOND_SYMBOL} ${formatNumber(VIP_PRICE)}</span>`;
+    dom.vipBtn.innerHTML = `Купити за <span id="bpVipPrice" class="bp-vip-price">${GOLD_SYMBOL} ${formatNumber(VIP_PRICE)}</span>`;
 
-    const canBuy = wallet.diamonds >= VIP_PRICE;
+    const canBuy = wallet.gold >= VIP_PRICE;
     dom.vipBtn.disabled = !canBuy;
     dom.vipBtn.classList.toggle("is-disabled", !canBuy);
   }
@@ -530,6 +832,9 @@
         reward.el.classList.toggle("is-ready", available);
         reward.el.classList.toggle("is-claimed", claimed);
         reward.el.classList.toggle("is-vip-locked", unlocked && vipLocked && !claimed);
+        if (isDeckCardReward(reward)) {
+          renderDeckCardRewardPreview(reward);
+        }
 
         if (claimed) {
           reward.btn.disabled = true;
@@ -554,7 +859,15 @@
 
         reward.btn.disabled = false;
         reward.btn.textContent = "Забрати";
-        reward.state.textContent = `Доступно: ${getRewardPreview(reward)}`;
+        if (isDeckCardReward(reward)) {
+          ensureDeckCardSnapshot();
+          const snap = bpState?.deckCardSnapshot;
+          const element = normalizeElement(snap?.reward?.element);
+          const elementLabel = ELEMENT_LABELS[element] || "Стихія";
+          reward.state.textContent = `Доступно: ${formatNumber(snap?.reward?.power)} сили, ${elementLabel}`;
+        } else {
+          reward.state.textContent = `Доступно: ${getRewardPreview(reward)}`;
+        }
       }
     }
   }
@@ -626,7 +939,9 @@
 
       const wallet = readWallet();
       bpState = loadState(wallet.diamonds);
-      syncProgressFromDiamonds({ silent: true });
+      const changedBySnapshot = ensureDeckCardSnapshot();
+      const changedBySync = syncProgressFromDiamonds({ silent: true });
+      if (changedBySnapshot && !changedBySync) saveState();
       render();
     });
   }
@@ -636,11 +951,12 @@
 
     const wallet = readWallet();
     bpState = loadState(wallet.diamonds);
+    const changedBySnapshot = ensureDeckCardSnapshot();
 
     tiers = collectTiers();
 
     const changedBySync = syncProgressFromDiamonds({ silent: true });
-    if (!changedBySync) saveState();
+    if (changedBySnapshot || !changedBySync) saveState();
 
     render();
     setupStorageListener();
