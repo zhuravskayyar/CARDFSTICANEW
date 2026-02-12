@@ -12,6 +12,11 @@
 import "../../src/account.js";
 import { ensureCardCatalogLoaded, resolveCardArt } from "../../src/core/card.js";
 import {
+  getCollectionBattleBonuses,
+  applyCollectionBonusesToDeck,
+  applyCollectionBonusesToHp,
+} from "../../src/core/collection-bonuses.js";
+import {
   applyItemsToDeckAndHp,
   createArtifactRuntime,
   applyArtifactOutgoingDamage,
@@ -82,15 +87,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch {
     // ignore
   }
-  initArena();
+  await initArena();
   bindEvents();
   startNextCycle();
   startBotTick();
 });
 
 // ===================== INIT =====================
-function initArena() {
+async function initArena() {
   const acc = window.AccountSystem?.getActive?.();
+  let collectionBonuses = null;
+  try {
+    collectionBonuses = await getCollectionBattleBonuses();
+  } catch (e) {
+    console.warn("[arena] failed to load collection bonuses", e);
+  }
 
   // deck (9)
   let deck = acc?.deck ?? [];
@@ -100,6 +111,7 @@ function initArena() {
   if (Array.isArray(withEquipment?.deck) && withEquipment.deck.length) {
     arena.playerDeck = withEquipment.deck;
   }
+  arena.playerDeck = applyCollectionBonusesToDeck(arena.playerDeck, collectionBonuses);
   const itemHpBonus = Math.max(0, Math.round(Number(withEquipment?.profile?.hpBonus || 0)));
   arena.playerArtifactRuntime = createArtifactRuntime("arena");
 
@@ -126,6 +138,11 @@ function initArena() {
   if (itemHpBonus > 0) {
     player.hp += itemHpBonus;
     player.maxHp += itemHpBonus;
+  }
+  const hpWithCollections = applyCollectionBonusesToHp(player.maxHp, collectionBonuses, { mode: "arena" });
+  if (Number.isFinite(Number(hpWithCollections)) && hpWithCollections > 0) {
+    player.maxHp = Math.round(hpWithCollections);
+    player.hp = Math.round(hpWithCollections);
   }
 
   arena.participants = [player];

@@ -4,6 +4,11 @@ import "../../src/account.js";
 import "../../src/progression-system.js";
 import { getDuelLeagueIconPath } from "../../src/core/leagues.js";
 import { applyItemsToDeckAndHp } from "../../src/core/equipment-system.js";
+import {
+  getCollectionBattleBonuses,
+  applyCollectionBonusesToDeck,
+  applyCollectionBonusesToHp,
+} from "../../src/core/collection-bonuses.js";
 
 const URL_PARAMS = new URLSearchParams(location.search || "");
 const IS_TUTORIAL_DUEL =
@@ -392,8 +397,23 @@ async function initDuel() {
   // Завантажуємо реальну колоду й розраховуємо силу
   const playerDeckRaw = loadPlayerDeckFromStorage();
   const realPower = calcDeckPower(playerDeckRaw);
+  let collectionBonuses = null;
+  try {
+    collectionBonuses = await getCollectionBattleBonuses();
+  } catch (e) {
+    console.warn("[duel] failed to load collection bonuses", e);
+  }
+
   const deckWithEquipment = applyItemsToDeckAndHp(playerDeckRaw, realPower);
-  const finalPower = Math.max(0, Math.round(Number(deckWithEquipment?.hp || realPower || 0)));
+  let battleDeck = Array.isArray(deckWithEquipment?.deck) && deckWithEquipment.deck.length
+    ? deckWithEquipment.deck
+    : playerDeckRaw;
+  battleDeck = applyCollectionBonusesToDeck(battleDeck, collectionBonuses);
+
+  const itemHpBonus = Math.max(0, Math.round(Number(deckWithEquipment?.profile?.hpBonus || 0)));
+  let finalPower = calcDeckPower(battleDeck) + itemHpBonus;
+  finalPower = applyCollectionBonusesToHp(finalPower, collectionBonuses, { mode: "duel" });
+  finalPower = Math.max(0, Math.round(Number(finalPower || 0)));
   
   // Якщо колода є  використовуємо реальну силу
   if (realPower > 0) {

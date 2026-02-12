@@ -4,6 +4,10 @@ import "../../src/account.js";
 import "../../src/progression-system.js";
 import { getDuelLeagueByRating, getDuelLeagueIconPath } from "../../src/core/leagues.js";
 import {
+  getCollectionBattleBonuses,
+  applyCollectionBonusesToDeck,
+} from "../../src/core/collection-bonuses.js";
+import {
   canAccessTournament,
   getGlobalLeague,
   generateDemoParticipants,
@@ -72,7 +76,7 @@ function showToast(message, type = "info") {
 // ЗАВАНТАЖЕННЯ ДАНИХ ГРАВЦЯ
 // ==========================================
 
-function loadPlayerData() {
+async function loadPlayerData() {
   // Завантажуємо акаунт
   const acc = window.AccountSystem?.getActive?.();
   
@@ -84,7 +88,13 @@ function loadPlayerData() {
   
   // Завантажуємо колоду
   const deckRaw = localStorage.getItem("cardastika:deck");
-  const deck = safeJSON(deckRaw) || [];
+  let deck = safeJSON(deckRaw) || [];
+  try {
+    const collectionBonuses = await getCollectionBattleBonuses();
+    deck = applyCollectionBonusesToDeck(deck, collectionBonuses);
+  } catch (e) {
+    console.warn("[tournament-lobby] failed to apply collection bonuses", e);
+  }
   
   // Рахуємо силу
   let power = 0;
@@ -671,7 +681,7 @@ function setupEventListeners() {
 
 async function init() {
   // Завантажуємо дані гравця
-  loadPlayerData();
+  await loadPlayerData();
   
   // Перевіряємо доступ
   if (!canAccessTournament(playerData.rating)) {

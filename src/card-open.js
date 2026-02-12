@@ -221,6 +221,82 @@
     }
   }
 
+  const FOUND_HISTORY_KEY = "cardastika:foundEver";
+  const FOUND_HISTORY_KEY_PREFIX = "cardastika:foundEver:";
+
+  function getFoundHistoryKey() {
+    const fromAccount = String(window.AccountSystem?.getActive?.()?.name || "").trim();
+    const fromStorage = String(localStorage.getItem("activeAccount") || "").trim();
+    const accountName = fromAccount || fromStorage;
+    return accountName ? `${FOUND_HISTORY_KEY_PREFIX}${accountName}` : FOUND_HISTORY_KEY;
+  }
+
+  function normalizeHistoryElement(raw) {
+    const s = String(raw || "").toLowerCase().trim();
+    if (s === "wind") return "air";
+    if (s === "fire" || s === "water" || s === "air" || s === "earth") return s;
+    return "";
+  }
+
+  function normalizeHistoryTitle(raw) {
+    return String(raw || "").toLowerCase().replace(/\s+/g, " ").trim();
+  }
+
+  function fingerprintCardForHistory(card) {
+    const title = normalizeHistoryTitle(card?.title ?? card?.name ?? "");
+    const element = normalizeHistoryElement(card?.element);
+    if (!title || !element) return "";
+    return `${title}|${element}`;
+  }
+
+  function parseFoundHistory(raw) {
+    const parsed = safeParse(raw);
+    if (Array.isArray(parsed)) {
+      return { ids: new Set(parsed.map(String).filter(Boolean)), fingerprints: new Set() };
+    }
+    const ids = Array.isArray(parsed?.ids) ? parsed.ids.map(String).filter(Boolean) : [];
+    const fps = Array.isArray(parsed?.fingerprints) ? parsed.fingerprints.map(String).filter(Boolean) : [];
+    return { ids: new Set(ids), fingerprints: new Set(fps) };
+  }
+
+  function rememberFoundCard(card) {
+    if (!card || typeof card !== "object") return;
+
+    const key = getFoundHistoryKey();
+    let history = parseFoundHistory(localStorage.getItem(key) || "null");
+    if (key !== FOUND_HISTORY_KEY) {
+      const legacy = parseFoundHistory(localStorage.getItem(FOUND_HISTORY_KEY) || "null");
+      for (const id of legacy.ids) history.ids.add(id);
+      for (const fp of legacy.fingerprints) history.fingerprints.add(fp);
+    }
+
+    const id = String(card?.id ?? card?.cardId ?? card?.slug ?? card?.uid ?? "").trim();
+    const fp = fingerprintCardForHistory(card);
+
+    let changed = false;
+    if (id && !history.ids.has(id)) {
+      history.ids.add(id);
+      changed = true;
+    }
+    if (fp && !history.fingerprints.has(fp)) {
+      history.fingerprints.add(fp);
+      changed = true;
+    }
+    if (!changed) return;
+
+    try {
+      localStorage.setItem(
+        key,
+        JSON.stringify({
+          ids: Array.from(history.ids),
+          fingerprints: Array.from(history.fingerprints),
+        }),
+      );
+    } catch {
+      // ignore storage write errors
+    }
+  }
+
   function loadStateFallback() {
     const deck = safeParse(localStorage.getItem("cardastika:deck") || "null");
     const inventory = safeParse(localStorage.getItem("cardastika:inventory") || "null");
@@ -829,6 +905,7 @@
       const absorbOne = () => {
         const uid = String(c.uid || "").trim();
         if (!uid) return;
+        rememberFoundCard(c);
 
         if (window.AccountSystem?.updateActive) {
           window.AccountSystem.updateActive((acc) => {

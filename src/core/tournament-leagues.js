@@ -249,20 +249,25 @@ export function recommendBuffs(playerCards, enemyBestElement) {
 }
 
 // Застосувати баф до колоди
-export function applyBuffToDeck(cards, buffElement) {
+export function applyBuffToDeck(cards, buffElement, opts = {}) {
   const buff = BUFF_TYPES[buffElement];
   if (!buff || !Array.isArray(cards)) return cards;
+  const requestedBuffBonus = Number(opts?.buffBonus);
+  const buffBonus = Number.isFinite(requestedBuffBonus)
+    ? Math.max(0, requestedBuffBonus)
+    : Math.max(0, Number(buff.hpBonus || 0));
   
   return cards.map(card => {
     if (!card) return card;
     const cardEl = String(card.element || "").toLowerCase();
     if (cardEl === buffElement) {
-      const bonusPower = Math.round(Number(card.power || 0) * buff.hpBonus);
+      const bonusPower = Math.round(Number(card.power || 0) * buffBonus);
       return {
         ...card,
         power: (Number(card.power) || 0) + bonusPower,
         buffed: true,
-        buffElement: buffElement
+        buffElement: buffElement,
+        buffBonusPct: Math.round(buffBonus * 100),
       };
     }
     return card;

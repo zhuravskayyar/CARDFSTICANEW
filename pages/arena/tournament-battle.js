@@ -4,6 +4,12 @@ import "../../src/account.js";
 import "../../src/progression-system.js";
 import { ensureCardCatalogLoaded, resolveCardArt } from "../../src/core/card.js";
 import {
+  getCollectionBattleBonuses,
+  applyCollectionBonusesToDeck,
+  applyCollectionBonusesToHp,
+  getTournamentBuffBonusFraction,
+} from "../../src/core/collection-bonuses.js";
+import {
   applyItemsToDeckAndHp,
   createArtifactRuntime,
   applyArtifactOutgoingDamage,
@@ -691,6 +697,12 @@ async function init() {
   const battleRaw = safeGetItem(sessionStorage, "cardastika:tournamentBattle") || safeGetItem(localStorage, "cardastika:tournamentBattle");
   BATTLE_DATA = safeJSON(battleRaw) || {};
   PLAYER_ARTIFACT_RUNTIME = createArtifactRuntime("tournament");
+  let collectionBonuses = null;
+  try {
+    collectionBonuses = await getCollectionBattleBonuses();
+  } catch (e) {
+    console.warn("[tournament-battle] failed to load collection bonuses", e);
+  }
 
   // Показуємо раунд
   const roundName = getRoundName(BATTLE_DATA.round || "round1");
@@ -723,13 +735,18 @@ async function init() {
   }
   const hpFlatFromItems = Math.max(0, Math.round(Number(withEquipment?.profile?.hpBonus || 0)));
 
+  // Колекційні бафи застосовуються до карт на старті бою.
+  playerDeck = applyCollectionBonusesToDeck(playerDeck, collectionBonuses);
+
   // Застосовуємо баф
   if (BATTLE_DATA.buff) {
-    playerDeck = applyBuffToDeck(playerDeck, BATTLE_DATA.buff);
+    const buffBonus = getTournamentBuffBonusFraction(collectionBonuses);
+    playerDeck = applyBuffToDeck(playerDeck, BATTLE_DATA.buff, { buffBonus });
   }
 
   // HP гравця
   let playerHp = calcHP(playerDeck) + hpFlatFromItems;
+  playerHp = applyCollectionBonusesToHp(playerHp, collectionBonuses, { mode: "tournament" });
 
   // HP ворога
   const enemy = BATTLE_DATA.enemy || {};

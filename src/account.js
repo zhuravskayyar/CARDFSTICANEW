@@ -5,6 +5,8 @@ import { DUEL_LEAGUE_DEFAULT_ID } from "./core/leagues.js";
 const KEY_PREFIX = "account:";
 const KEY_ACTIVE = "activeAccount";
 const SCHEMA_VERSION = 1;
+const FOUND_HISTORY_KEY = "cardastika:foundEver";
+const FOUND_HISTORY_KEY_PREFIX = "cardastika:foundEver:";
 
 const now = () => Date.now();
 
@@ -28,6 +30,88 @@ function safeParse(raw) {
     return JSON.parse(raw);
   } catch {
     return null;
+  }
+}
+
+function foundHistoryKeyForAccountName(name) {
+  const n = normalizeName(name);
+  return n ? `${FOUND_HISTORY_KEY_PREFIX}${n}` : FOUND_HISTORY_KEY;
+}
+
+function normalizeElementForHistory(raw) {
+  const s = String(raw || "").toLowerCase().trim();
+  if (s === "wind") return "air";
+  if (s === "fire" || s === "water" || s === "air" || s === "earth") return s;
+  return "";
+}
+
+function normalizeTitleForHistory(raw) {
+  return String(raw || "").toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function fingerprintCardForHistory(card) {
+  const title = normalizeTitleForHistory(card?.title ?? card?.name ?? "");
+  const element = normalizeElementForHistory(card?.element);
+  if (!title || !element) return "";
+  return `${title}|${element}`;
+}
+
+function parseFoundHistory(raw) {
+  const parsed = safeParse(raw);
+  if (Array.isArray(parsed)) {
+    return { ids: new Set(parsed.map(String).filter(Boolean)), fingerprints: new Set() };
+  }
+  const ids = Array.isArray(parsed?.ids) ? parsed.ids.map(String).filter(Boolean) : [];
+  const fps = Array.isArray(parsed?.fingerprints) ? parsed.fingerprints.map(String).filter(Boolean) : [];
+  return { ids: new Set(ids), fingerprints: new Set(fps) };
+}
+
+function rememberAccountCardsInFoundHistory(acc) {
+  if (!acc || typeof acc !== "object") return;
+
+  const key = foundHistoryKeyForAccountName(acc.name);
+  let history = { ids: new Set(), fingerprints: new Set() };
+
+  try {
+    history = parseFoundHistory(localStorage.getItem(key));
+    if (key !== FOUND_HISTORY_KEY) {
+      const legacy = parseFoundHistory(localStorage.getItem(FOUND_HISTORY_KEY));
+      for (const id of legacy.ids) history.ids.add(id);
+      for (const fp of legacy.fingerprints) history.fingerprints.add(fp);
+    }
+  } catch {
+    // ignore storage read errors
+  }
+
+  let changed = false;
+  const addCard = (card) => {
+    if (!card || typeof card !== "object") return;
+    const id = String(card?.id ?? card?.cardId ?? card?.slug ?? card?.uid ?? "").trim();
+    if (id && !history.ids.has(id)) {
+      history.ids.add(id);
+      changed = true;
+    }
+    const fp = fingerprintCardForHistory(card);
+    if (fp && !history.fingerprints.has(fp)) {
+      history.fingerprints.add(fp);
+      changed = true;
+    }
+  };
+
+  if (Array.isArray(acc.deck)) for (const c of acc.deck) addCard(c);
+  if (Array.isArray(acc.inventory)) for (const c of acc.inventory) addCard(c);
+
+  if (!changed) return;
+  try {
+    localStorage.setItem(
+      key,
+      JSON.stringify({
+        ids: Array.from(history.ids),
+        fingerprints: Array.from(history.fingerprints),
+      }),
+    );
+  } catch {
+    // ignore storage write errors
   }
 }
 
@@ -164,6 +248,7 @@ function saveAccount(account) {
 
   normalizeAccountCurrency(account);
   normalizeAccountProgression(account);
+  rememberAccountCardsInFoundHistory(account);
   account.updated = now();
   localStorage.setItem(keyFor(account.name), JSON.stringify(account));
   return account;
@@ -216,6 +301,7 @@ function deleteAccount(name) {
   if (!existed) return false;
 
   localStorage.removeItem(k);
+  localStorage.removeItem(foundHistoryKeyForAccountName(n));
 
   if (localStorage.getItem(KEY_ACTIVE) === n) {
     localStorage.removeItem(KEY_ACTIVE);

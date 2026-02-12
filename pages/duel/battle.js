@@ -1012,6 +1012,24 @@
   async function init(){
     // Завантажити кеш артів перед стартом
     await loadArtFileCache();
+    let collectionBonuses = null;
+    let applyDeckCollectionBonuses = (deck) => deck;
+    let applyHpCollectionBonuses = (hp) => hp;
+    try {
+      const collectionApi = await import("../../src/core/collection-bonuses.js");
+      collectionBonuses = await collectionApi.getCollectionBattleBonuses();
+      if (typeof collectionApi.applyCollectionBonusesToDeck === "function") {
+        applyDeckCollectionBonuses = (deck) => collectionApi.applyCollectionBonusesToDeck(deck, collectionBonuses);
+      }
+      if (typeof collectionApi.applyCollectionBonusesToHp === "function") {
+        applyHpCollectionBonuses = (hp) =>
+          collectionApi.applyCollectionBonusesToHp(hp, collectionBonuses, {
+            mode: IS_BOSS_BATTLE ? "boss" : "duel",
+          });
+      }
+    } catch (e) {
+      console.warn("[battle] failed to load collection bonuses", e);
+    }
 
     try {
       const screenEl = document.getElementById("screen");
@@ -1039,7 +1057,7 @@
     }
 
     // Flat item bonuses are applied before any percentage battle modifiers.
-    let hpFromEquipment = null;
+    let hpBonusFromEquipment = 0;
     try {
       const eqApi = window.EquipmentSystem;
       if (eqApi?.applyItemsToDeckAndHp) {
@@ -1047,16 +1065,16 @@
         if (Array.isArray(applied?.deck) && applied.deck.length) {
           playerDeck = applied.deck;
         }
-        if (Number.isFinite(Number(applied?.hp))) {
-          hpFromEquipment = Math.max(1, Math.round(Number(applied.hp)));
-        }
+        hpBonusFromEquipment = Math.max(0, Math.round(Number(applied?.profile?.hpBonus || 0)));
       }
     } catch (e) {
       console.warn("[battle] failed to apply equipment bonuses", e);
     }
+    playerDeck = applyDeckCollectionBonuses(playerDeck);
 
     console.log("Player deck:", playerDeck);
-    let playerHp = hpFromEquipment ?? calcHP(playerDeck);
+    let playerHp = calcHP(playerDeck) + hpBonusFromEquipment;
+    playerHp = applyHpCollectionBonuses(playerHp);
     console.log("Player HP calculated from deck:", playerHp);
 
     // Якщо duel.html вже показав HP — використовуємо його як source of truth для відображення в battle.html.

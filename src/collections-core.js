@@ -4,6 +4,8 @@
 import { fixMojibake } from "./core/mojibake.js";
 
 const EXTRA_FOUND_KEY = "cardastika:foundExtra";
+const EVER_FOUND_KEY = "cardastika:foundEver";
+const EVER_FOUND_KEY_PREFIX = "cardastika:foundEver:";
 const ID_ALIASES = [
   ["elem_01", "elem_flame_spark"],
   ["elem_02", "elem_tide_drop"],
@@ -22,6 +24,68 @@ function safeParse(raw) {
   } catch {
     return null;
   }
+}
+
+function safeGetItem(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function safeSetItem(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    // ignore storage errors
+  }
+}
+
+function getActiveAccountName() {
+  const fromAccountSystem = String(window.AccountSystem?.getActive?.()?.name || "").trim();
+  if (fromAccountSystem) return fromAccountSystem;
+  return String(safeGetItem("activeAccount") || "").trim();
+}
+
+function getFoundHistoryKey() {
+  const accountName = getActiveAccountName();
+  return accountName ? `${EVER_FOUND_KEY_PREFIX}${accountName}` : EVER_FOUND_KEY;
+}
+
+function parseFoundHistory(raw) {
+  const parsed = safeParse(raw);
+  if (Array.isArray(parsed)) {
+    return { ids: new Set(parsed.map(String).filter(Boolean)), fingerprints: new Set() };
+  }
+
+  const ids = Array.isArray(parsed?.ids) ? parsed.ids.map(String).filter(Boolean) : [];
+  const fps = Array.isArray(parsed?.fingerprints) ? parsed.fingerprints.map(String).filter(Boolean) : [];
+  return { ids: new Set(ids), fingerprints: new Set(fps) };
+}
+
+function readFoundHistory() {
+  const key = getFoundHistoryKey();
+  const primary = parseFoundHistory(safeGetItem(key));
+
+  // Legacy migration path: merge global key into account-scoped key.
+  if (key !== EVER_FOUND_KEY) {
+    const legacy = parseFoundHistory(safeGetItem(EVER_FOUND_KEY));
+    for (const id of legacy.ids) primary.ids.add(id);
+    for (const fp of legacy.fingerprints) primary.fingerprints.add(fp);
+  }
+
+  return { key, ids: primary.ids, fingerprints: primary.fingerprints };
+}
+
+function persistFoundHistory(key, ids, fingerprints) {
+  safeSetItem(
+    key,
+    JSON.stringify({
+      ids: Array.from(ids),
+      fingerprints: Array.from(fingerprints),
+    }),
+  );
 }
 
 function getActiveInventory() {
@@ -92,15 +156,30 @@ export function buildFoundSet() {
 export function buildFoundMatcher() {
   const inv = getActiveInventory();
   const deck = getActiveDeck();
-  const found = new Set();
-  const foundFingerprints = new Set();
+  const history = readFoundHistory();
+  const found = new Set(history.ids);
+  const foundFingerprints = new Set(history.fingerprints);
+  let historyChanged = false;
 
   const pushCard = (card) => {
     if (!card || typeof card !== "object") return;
     const id = normalizeCardId(card);
-    if (id) found.add(String(id));
+    if (id) {
+      const key = String(id);
+      if (!history.ids.has(key)) {
+        history.ids.add(key);
+        historyChanged = true;
+      }
+      found.add(key);
+    }
     const fp = fingerprintCard(card);
-    if (fp) foundFingerprints.add(fp);
+    if (fp) {
+      if (!history.fingerprints.has(fp)) {
+        history.fingerprints.add(fp);
+        historyChanged = true;
+      }
+      foundFingerprints.add(fp);
+    }
   };
 
   for (const c of inv) {
@@ -111,6 +190,11 @@ export function buildFoundMatcher() {
   // still count it as found for collection progress UI.
   for (const c of deck) {
     pushCard(c);
+  }
+
+  // Persist "ever owned" snapshot so consumed cards stay found in collection.
+  if (historyChanged) {
+    persistFoundHistory(history.key, history.ids, history.fingerprints);
   }
 
   // Extra found ids (e.g., trophies) that are not real deck/inventory cards.
