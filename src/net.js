@@ -295,6 +295,31 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
     });
   }
 
+  function shouldAutoFocusInputs() {
+    try {
+      if (window.matchMedia?.("(pointer: coarse)")?.matches) return false;
+      if (window.matchMedia?.("(hover: none)")?.matches) return false;
+    } catch {
+      // ignore
+    }
+    return Number(window.navigator?.maxTouchPoints || 0) <= 0;
+  }
+
+  function focusInputIfDesktop(input) {
+    if (!input || !shouldAutoFocusInputs()) return;
+    requestAnimationFrame(() => {
+      try {
+        input.focus({ preventScroll: true });
+      } catch {
+        try {
+          input.focus();
+        } catch {
+          // ignore
+        }
+      }
+    });
+  }
+
   function loadScript(src) {
     return new Promise((resolve, reject) => {
       if (window.io) return resolve();
@@ -1328,7 +1353,7 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
     updateChatStatusLabel();
     joinGlobalChat(true);
 
-    document.getElementById(IDS.chatInput)?.focus();
+    focusInputIfDesktop(document.getElementById(IDS.chatInput));
   }
 
   // Expose chat opener as early as possible, independent from socket/API readiness.
@@ -1667,7 +1692,7 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
     document.addEventListener("keydown", escHandler);
 
     renderList();
-    input?.focus();
+    focusInputIfDesktop(input);
   }
 
   function updatePresenceUI(snapshotLike) {
