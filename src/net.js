@@ -10,6 +10,7 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
   const CHAT_ROOM_ID = "global";
   const CHAT_LIMIT = 50;
   const AVATAR_PATH_RE = /^(?:\.\/|\.\.\/\.\.\/|\/)?assets\/cards\/arts\/[\w.-]+\.(?:webp|png|jpe?g|avif)$/i;
+  const CARD_ART_FILE_RE = /^[\w.-]+\.(?:webp|png|jpe?g|avif)$/i;
 
   const IDS = {
     style: "onlinePresenceStyle",
@@ -208,6 +209,19 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
     return raw.replace(/[^\w.-]/g, "");
   }
 
+  function extractCardId(cardLike) {
+    const card = cardLike && typeof cardLike === "object" ? cardLike : {};
+    return normalizeCardId(
+      card?.id
+      ?? card?.cardId
+      ?? card?.card_id
+      ?? card?.slug
+      ?? card?.uid
+      ?? card?.nameId
+      ?? card?.code
+    );
+  }
+
   function rarityClassFromValue(value) {
     const raw = String(value || "").trim().toLowerCase();
     if (/^rarity-[1-6]$/.test(raw)) return raw;
@@ -226,17 +240,50 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
     return toAbsoluteUrl(`${assetPrefix()}assets/cards/arts/${element}_001.webp`, DEFAULT_AVATAR);
   }
 
+  function normalizeCardArtFileSource(value) {
+    const raw = String(value || "").trim();
+    if (!raw) return "";
+    if (CARD_ART_FILE_RE.test(raw)) return `${assetPrefix()}assets/cards/arts/${raw}`;
+    return sanitizeAvatarValue(raw);
+  }
+
+  function directCardArtUrl(cardLike) {
+    const card = cardLike && typeof cardLike === "object" ? cardLike : {};
+    const direct = sanitizeAvatarValue(card?.art ?? card?.image ?? card?.img ?? card?.avatar ?? card?.cover);
+    return direct ? toAbsoluteUrl(direct, "") : "";
+  }
+
+  function cardArtByIdUrl(cardLike) {
+    const id = extractCardId(cardLike);
+    if (!id) return "";
+    return toAbsoluteUrl(`${assetPrefix()}assets/cards/arts/${id}.webp`, "");
+  }
+
+  function cardArtFromFileUrl(cardLike) {
+    const card = cardLike && typeof cardLike === "object" ? cardLike : {};
+    const source = normalizeCardArtFileSource(card?.artFile ?? card?.art_file);
+    return source ? toAbsoluteUrl(source, "") : "";
+  }
+
   function toCardArtUrl(cardLike) {
     const card = cardLike && typeof cardLike === "object" ? cardLike : {};
-    const direct = sanitizeAvatarValue(card?.art ?? card?.image ?? card?.img ?? card?.avatar);
-    if (direct) return toAbsoluteUrl(direct, cardArtFallbackUrl(card));
-
-    const id = normalizeCardId(card?.id ?? card?.cardId ?? card?.card_id);
-    if (id) {
-      return toAbsoluteUrl(`${assetPrefix()}assets/cards/arts/${id}.webp`, cardArtFallbackUrl(card));
-    }
-
+    const byId = cardArtByIdUrl(card);
+    if (byId) return byId;
+    const byFile = cardArtFromFileUrl(card);
+    if (byFile) return byFile;
+    const direct = directCardArtUrl(card);
+    if (direct) return direct;
     return cardArtFallbackUrl(card);
+  }
+
+  function toCardArtBackupUrl(cardLike) {
+    const card = cardLike && typeof cardLike === "object" ? cardLike : {};
+    const primary = toCardArtUrl(card);
+    const byFile = cardArtFromFileUrl(card);
+    if (byFile && byFile !== primary) return byFile;
+    const direct = directCardArtUrl(card);
+    if (direct && direct !== primary) return direct;
+    return "";
   }
 
   function installAvatarFallback(img, fallbackUrl = DEFAULT_AVATAR) {
@@ -931,7 +978,7 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
     const rarity = String(card?.rarity ?? card?.quality ?? "").toLowerCase().trim();
     const element = normalizeCardElement(card?.element);
     return {
-      id: normalizeCardId(card?.id ?? card?.cardId ?? card?.card_id),
+      id: extractCardId(card),
       title: String(card?.title || card?.name || "\u041A\u0430\u0440\u0442\u0430"),
       power: Number.isFinite(power) ? Math.max(0, Math.round(power)) : 0,
       level: Number.isFinite(level) ? Math.max(0, Math.round(level)) : 0,
@@ -1333,12 +1380,21 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
       const element = normalizeCardElement(card?.element);
       const rarityClass = rarityClassFromValue(card?.rarityClass || card?.rarity || card?.quality);
       const artPrimary = escapeHtml(toCardArtUrl(card));
+      const artSecondary = escapeHtml(toCardArtBackupUrl(card));
       const artFallback = escapeHtml(cardArtFallbackUrl(card));
       const power = fmtNum(card?.power || 0);
       const level = Number(card?.level || 0);
       const rarity = String(card?.rarity || "").toLowerCase();
       const color = qualityColor(rarity);
       const meta = level > 0 ? `${power} | \u0420\u0456\u0432 ${level}` : power;
+      const artLayers = [
+        `url(${artPrimary})`,
+        artSecondary ? `url(${artSecondary})` : "",
+        `url(${artFallback})`,
+        "radial-gradient(120% 90% at 30% 20%, rgba(255,255,255,.08), transparent 55%)",
+        "radial-gradient(140% 120% at 70% 80%, rgba(0,0,0,.55), transparent 60%)",
+        "linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.40))"
+      ].filter(Boolean).join(",");
       return `
 <div class="online-profile__card-slot">
   <div class="online-profile__deck-card ref-card elem-${element} ${rarityClass}" role="img" aria-label="${title}">
@@ -1346,7 +1402,7 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
       <span class="ref-card__type"></span>
       <span class="ref-card__power">${power}</span>
     </span>
-    <span class="ref-card__art" style="background-image:url(${artPrimary}),url(${artFallback}),radial-gradient(120% 90% at 30% 20%, rgba(255,255,255,.08), transparent 55%),radial-gradient(140% 120% at 70% 80%, rgba(0,0,0,.55), transparent 60%),linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.40));"></span>
+    <span class="ref-card__art" style="background-image:${artLayers};"></span>
     <span class="ref-card__elem"></span>
   </div>
   <div class="online-profile__card-meta">

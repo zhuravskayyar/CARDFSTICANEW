@@ -1,6 +1,7 @@
 const PUBLIC_PROFILE_CACHE_KEY = "cardastika:publicProfileCache";
 const DEFAULT_AVATAR = "assets/cards/arts/fire_001.webp";
 const AVATAR_ASSET_RE = /^(?:\.\/|\.\.\/\.\.\/|\/)?assets\/cards\/arts\/[\w.-]+\.(?:webp|png|jpe?g|avif)$/i;
+const CARD_ART_FILE_RE = /^[\w.-]+\.(?:webp|png|jpe?g|avif)$/i;
 
 function asInt(v, d = 0) {
   const n = Number(v);
@@ -112,22 +113,49 @@ function deckPower(deck) {
   return deck.reduce((sum, card) => sum + Number(card?.power ?? card?.basePower ?? 0), 0);
 }
 
+function normalizeCardId(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+  return raw.replace(/[^\w.-]/g, "");
+}
+
+function extractCardId(card) {
+  const safe = card && typeof card === "object" ? card : {};
+  return normalizeCardId(
+    safe?.id
+    ?? safe?.cardId
+    ?? safe?.card_id
+    ?? safe?.slug
+    ?? safe?.uid
+    ?? safe?.nameId
+    ?? safe?.code
+  );
+}
+
+function normalizeCardArtSource(value) {
+  const raw = String(value || "").trim();
+  if (!raw) return "";
+  if (raw.startsWith("./assets/")) return raw.slice(2);
+  if (raw.startsWith("/assets/")) return raw.replace(/^\/+/, "");
+  if (raw.startsWith("assets/")) return raw;
+  if (CARD_ART_FILE_RE.test(raw)) return `assets/cards/arts/${raw}`;
+  return raw;
+}
+
 function cardArt(card) {
   if (!card || typeof card !== "object") return DEFAULT_AVATAR;
-  const direct = String(card.art || card.image || card.img || "").trim();
-  if (direct) {
-    if (direct.startsWith("./assets/")) return direct.slice(2);
-    if (direct.startsWith("/assets/")) return direct.replace(/^\/+/, "");
-    return direct;
-  }
-  const id = String(card.id || "").trim();
+  const id = extractCardId(card);
   if (id) return `assets/cards/arts/${id}.webp`;
+  const byFile = normalizeCardArtSource(card.artFile ?? card.art_file);
+  if (byFile) return byFile;
+  const direct = normalizeCardArtSource(card.art || card.image || card.img || card.cover);
+  if (direct) return direct;
   return DEFAULT_AVATAR;
 }
 
 function normalizeCardPreview(card) {
   return {
-    id: String((card?.id ?? card?.cardId ?? card?.card_id) || "").trim(),
+    id: extractCardId(card),
     title: String(card?.title || card?.name || "\u041A\u0430\u0440\u0442\u0430"),
     power: Math.max(0, asInt(card?.power ?? card?.basePower, 0)),
     level: Math.max(0, asInt(card?.level, 0)),
