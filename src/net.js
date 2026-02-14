@@ -2,7 +2,8 @@
 import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./public-profile.js";
 (function () {
   const SOCKET_IO_CDN = "https://cdn.socket.io/4.7.5/socket.io.min.js";
-  const DEFAULT_API = window.__CARDASTICA_API__ || `${location.protocol}//${location.hostname}:3000`;
+  const GITHUB_PAGES_API = "https://cardastica-server.onrender.com";
+  const API_PROBE_TIMEOUT_MS = 3500;
   const PING_INTERVAL_MS = 20_000;
   const REST_REFRESH_MS = 30_000;
   const LIST_LIMIT = 200;
@@ -37,6 +38,102 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
   let restInterval = null;
   let latestSnapshot = { count: 0, list: [] };
   let escHandler = null;
+  let apiBase = "";
+
+  function defaultLocalApi() {
+    return `${location.protocol}//${location.hostname}:3000`;
+  }
+
+  function activeApi() {
+    return apiBase || defaultLocalApi();
+  }
+
+  function normalizeApiBase(value) {
+    const raw = String(value || "").trim();
+    if (!raw) return "";
+    try {
+      const url = new URL(raw, location.href);
+      if (!/^https?:$/i.test(url.protocol)) return "";
+      return `${url.origin}${url.pathname.replace(/\/+$/, "")}`;
+    } catch {
+      return "";
+    }
+  }
+
+  function isGithubPagesHost() {
+    return /(?:^|\.)github\.io$/i.test(String(location.hostname || ""));
+  }
+
+  function uniquePush(list, value) {
+    const normalized = normalizeApiBase(value);
+    if (!normalized) return;
+    if (!list.includes(normalized)) list.push(normalized);
+  }
+
+  function readConfiguredApiBase() {
+    let fromQuery = "";
+    try {
+      fromQuery = new URLSearchParams(location.search).get("api") || "";
+    } catch {
+      // ignore
+    }
+
+    const candidates = [];
+    uniquePush(candidates, fromQuery);
+    uniquePush(candidates, window.__CARDASTICA_API__);
+    uniquePush(candidates, localStorage.getItem("cardastika:apiBase"));
+    uniquePush(candidates, localStorage.getItem("cardastika:api"));
+    uniquePush(candidates, localStorage.getItem("cardastika:apiLast"));
+    return candidates[0] || "";
+  }
+
+  function buildApiCandidates() {
+    const out = [];
+    if (isGithubPagesHost()) {
+      uniquePush(out, GITHUB_PAGES_API);
+    }
+    uniquePush(out, defaultLocalApi());
+    return out;
+  }
+
+  async function probeApi(base) {
+    const root = normalizeApiBase(base);
+    if (!root) return false;
+
+    const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+    const timer = setTimeout(() => {
+      try {
+        controller?.abort();
+      } catch {
+        // ignore
+      }
+    }, API_PROBE_TIMEOUT_MS);
+
+    try {
+      const response = await fetch(`${root}/`, {
+        method: "GET",
+        cache: "no-store",
+        signal: controller?.signal
+      });
+      return !!response.ok;
+    } catch {
+      return false;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  async function resolveApiBase() {
+    const configured = readConfiguredApiBase();
+    if (configured) return configured;
+
+    const candidates = buildApiCandidates();
+    for (const candidate of candidates) {
+      if (await probeApi(candidate)) return candidate;
+    }
+
+    return candidates[0] || defaultLocalApi();
+  }
 
   function toAbsoluteUrl(value, fallback = "") {
     const raw = String(value || "").trim();
@@ -700,7 +797,7 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
     if (!id) return null;
 
     try {
-      const response = await fetch(`${DEFAULT_API}/online/${encodeURIComponent(id)}`, {
+      const response = await fetch(`${activeApi()}/online/${encodeURIComponent(id)}`, {
         method: "GET",
         cache: "no-store"
       });
@@ -1026,7 +1123,7 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
 
   async function refreshViaRest() {
     try {
-      const response = await fetch(`${DEFAULT_API}/online?limit=${LIST_LIMIT}`, {
+      const response = await fetch(`${activeApi()}/online?limit=${LIST_LIMIT}`, {
         method: "GET",
         cache: "no-store"
       });
@@ -1060,6 +1157,7 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
   function exposeApi() {
     window.Net = window.Net || {};
     window.Net.socket = socket;
+    window.Net.apiBase = activeApi();
     window.Net.getPlayerId = getPlayerId;
     window.Net.getName = getName;
     window.Net.openOnline = openOnlineModal;
@@ -1072,6 +1170,16 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
     window.addEventListener("botbar:links-ready", () => {
       updatePresenceUI(latestSnapshot);
     });
+
+    apiBase = await resolveApiBase();
+    if (apiBase) {
+      console.info("[net] online api:", apiBase);
+      try {
+        localStorage.setItem("cardastika:apiLast", apiBase);
+      } catch {
+        // ignore
+      }
+    }
 
     await refreshViaRest();
 
@@ -1093,7 +1201,7 @@ import { buildAndCachePublicProfileSnapshot, readPublicProfileCache } from "./pu
     }
 
     try {
-      socket = io(DEFAULT_API, { transports: ["websocket", "polling"] });
+      socket = io(activeApi(), { transports: ["websocket", "polling"] });
     } catch (err) {
       console.warn("[net] socket connect failed", err);
       exposeApi();
