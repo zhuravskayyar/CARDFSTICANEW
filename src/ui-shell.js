@@ -17,6 +17,60 @@ function ensureMojibakeRepairer() {
   }
 }
 
+function shouldEnablePerfLiteMode() {
+  try {
+    const forced = String(localStorage.getItem("cardastika:perfMode") || "").trim().toLowerCase();
+    if (forced === "lite" || forced === "low") return true;
+    if (forced === "full" || forced === "off") return false;
+  } catch {
+    // ignore localStorage errors
+  }
+
+  let prefersReducedMotion = false;
+  let coarsePointer = false;
+  let saveData = false;
+  let lowMemory = false;
+  let lowCpu = false;
+  let hasTouch = false;
+
+  try {
+    prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
+    coarsePointer =
+      window.matchMedia?.("(pointer: coarse)")?.matches === true ||
+      window.matchMedia?.("(hover: none)")?.matches === true;
+  } catch {
+    // ignore
+  }
+
+  try {
+    saveData = window.navigator?.connection?.saveData === true;
+  } catch {
+    // ignore
+  }
+
+  const deviceMemory = Number(window.navigator?.deviceMemory || 0);
+  const hardwareConcurrency = Number(window.navigator?.hardwareConcurrency || 0);
+  const maxTouchPoints = Number(window.navigator?.maxTouchPoints || 0);
+
+  lowMemory = Number.isFinite(deviceMemory) && deviceMemory > 0 && deviceMemory <= 4;
+  lowCpu = Number.isFinite(hardwareConcurrency) && hardwareConcurrency > 0 && hardwareConcurrency <= 4;
+  hasTouch = Number.isFinite(maxTouchPoints) && maxTouchPoints > 0;
+
+  return prefersReducedMotion || saveData || (coarsePointer && (lowMemory || lowCpu || hasTouch));
+}
+
+function applyPerfLiteModeClass() {
+  const root = document.documentElement;
+  if (!root?.classList) return false;
+  const enabled = shouldEnablePerfLiteMode();
+  root.classList.toggle("perf-lite", enabled);
+  window.CARDASTIKA_PERF_LITE = enabled;
+  return enabled;
+}
+
+// Apply before heavy UI styles/animations kick in.
+applyPerfLiteModeClass();
+
 // Run as early as possible (script is loaded with defer).
 ensureMojibakeRepairer();
 

@@ -11,6 +11,9 @@
   let tipEl = null;
   let currentTarget = null;
   let pollTimer = null;
+  let viewportTickQueued = false;
+  const SCROLL_LISTENER_OPTS = { capture: true, passive: true };
+  const SYNC_INTERVAL_MS = 500;
 
   function cssEscape(value) {
     if (globalThis.CSS?.escape) return CSS.escape(String(value));
@@ -68,11 +71,21 @@
       tipEl = null;
     }
     window.removeEventListener("resize", handleViewportChange);
-    window.removeEventListener("scroll", handleViewportChange, true);
+    window.removeEventListener("scroll", handleViewportChange, SCROLL_LISTENER_OPTS);
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
   }
 
   function handleViewportChange() {
-    if (currentTarget) placeTip(currentTarget);
+    if (viewportTickQueued) return;
+    viewportTickQueued = true;
+    requestAnimationFrame(() => {
+      viewportTickQueued = false;
+      if (currentTarget) placeTip(currentTarget);
+    });
+  }
+
+  function handleVisibilityChange() {
+    if (!document.hidden) sync();
   }
 
   function sync() {
@@ -95,8 +108,12 @@
   }
 
   window.addEventListener("resize", handleViewportChange);
-  window.addEventListener("scroll", handleViewportChange, true);
+  window.addEventListener("scroll", handleViewportChange, SCROLL_LISTENER_OPTS);
+  document.addEventListener("visibilitychange", handleVisibilityChange);
 
   sync();
-  pollTimer = setInterval(sync, 180);
+  pollTimer = setInterval(() => {
+    if (document.hidden) return;
+    sync();
+  }, SYNC_INTERVAL_MS);
 })();

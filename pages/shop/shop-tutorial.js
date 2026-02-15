@@ -9,6 +9,9 @@
   let targetBtn = null;
   let tipEl = null;
   let timer = null;
+  let placeTickQueued = false;
+  const SCROLL_LISTENER_OPTS = { capture: true, passive: true };
+  const SYNC_INTERVAL_MS = 500;
 
   function ensureTip() {
     if (tipEl) return tipEl;
@@ -48,8 +51,22 @@
       tipEl.remove();
       tipEl = null;
     }
-    window.removeEventListener("resize", placeTip);
-    window.removeEventListener("scroll", placeTip, true);
+    window.removeEventListener("resize", schedulePlaceTip);
+    window.removeEventListener("scroll", schedulePlaceTip, SCROLL_LISTENER_OPTS);
+    document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }
+
+  function schedulePlaceTip() {
+    if (placeTickQueued) return;
+    placeTickQueued = true;
+    requestAnimationFrame(() => {
+      placeTickQueued = false;
+      placeTip();
+    });
+  }
+
+  function handleVisibilityChange() {
+    if (!document.hidden) sync();
   }
 
   function sync() {
@@ -70,9 +87,13 @@
     placeTip();
   }
 
-  window.addEventListener("resize", placeTip);
-  window.addEventListener("scroll", placeTip, true);
+  window.addEventListener("resize", schedulePlaceTip);
+  window.addEventListener("scroll", schedulePlaceTip, SCROLL_LISTENER_OPTS);
+  document.addEventListener("visibilitychange", handleVisibilityChange);
 
   sync();
-  timer = setInterval(sync, 200);
+  timer = setInterval(() => {
+    if (document.hidden) return;
+    sync();
+  }, SYNC_INTERVAL_MS);
 })();

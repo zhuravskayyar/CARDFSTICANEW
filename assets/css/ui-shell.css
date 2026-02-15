@@ -13674,3 +13674,41 @@ html.has-botbar-links .botbar.botbar--with-links .botbar-links__link--news b{
 html.has-botbar-links .botbar.botbar--with-links .botbar-links__sep{
   color: rgba(95, 161, 205, 0.92);
 }
+
+/* ===== Perf Lite (mobile / low-end) ===== */
+html.perf-lite *,
+html.perf-lite *::before,
+html.perf-lite *::after{
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+html.perf-lite .hud,
+html.perf-lite .botbar,
+html.perf-lite #onlinePresenceModal .online-modal__card,
+html.perf-lite #onlineProfileModal .online-profile__card,
+html.perf-lite #globalChatModal .global-chat{
+  backdrop-filter: none !important;
+}
+
+html.perf-lite .hud::before,
+html.perf-lite .hud::after,
+html.perf-lite .duel-flight-original,
+html.perf-lite .duel-flight-original.fx-trail::before,
+html.perf-lite .battle-cards .ref-card.hit,
+html.perf-lite .battle-cards .ref-card.flash,
+html.perf-lite .battle-cards .ref-card.is-hit,
+html.perf-lite .battle-cards .ref-card.fx-impact::after,
+html.perf-lite .fx-spark{
+  filter: none !important;
+  box-shadow: none !important;
+}
+
+html.perf-lite .duel-dmg{
+  text-shadow: none !important;
+}
+
+html.perf-lite .menu-container .dust-overlay{
+  opacity: 0 !important;
+}

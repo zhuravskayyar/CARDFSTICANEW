@@ -50,6 +50,16 @@
   const ATTACK_SWAP_MS = 260;
   const ATTACK_RETURN_MS = 240;
   const ATTACK_IMPACT_STOP_MS = 24;
+  const isPerfLiteMotion = () => {
+    if (document?.documentElement?.classList?.contains("perf-lite")) return true;
+    try {
+      if (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) return true;
+      if (window.matchMedia?.("(pointer: coarse)")?.matches) return true;
+    } catch {
+      // ignore
+    }
+    return Number(window.navigator?.maxTouchPoints || 0) > 0;
+  };
   const safeGetItem = (storage, key) => {
     try {
       return storage?.getItem?.(key) ?? null;
@@ -206,6 +216,21 @@
     refreshCardRefs();
   }
 
+  function swapCardsInstant(attackerEl, defenderEl){
+    const attackerSlot = attackerEl?.closest(".battle-card-slot");
+    const defenderSlot = defenderEl?.closest(".battle-card-slot");
+    if (!attackerSlot || !defenderSlot || attackerSlot === defenderSlot) return;
+
+    const attackerPlaceholder = document.createComment("attacker-slot");
+    const defenderPlaceholder = document.createComment("defender-slot");
+
+    attackerSlot.replaceChild(attackerPlaceholder, attackerEl);
+    defenderSlot.replaceChild(defenderPlaceholder, defenderEl);
+    attackerSlot.replaceChild(defenderEl, attackerPlaceholder);
+    defenderSlot.replaceChild(attackerEl, defenderPlaceholder);
+    refreshCardRefs();
+  }
+
   function showDamagePop(targetEl, dmg){
     if (!targetEl) return;
     const value = Math.max(0, Math.round(Number(dmg) || 0));
@@ -231,7 +256,7 @@
   }
 
   function spawnSparksAt(x, y, count = 5){
-    if (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) return;
+    if (isPerfLiteMotion()) return;
 
     for (let i = 0; i < count; i++) {
       const spark = document.createElement("div");
@@ -257,6 +282,7 @@
   }
 
   function triggerRecoil(targetEl, attackerEl){
+    if (isPerfLiteMotion()) return;
     if (!targetEl || !attackerEl) return;
     const a = rectCenter(attackerEl);
     const t = rectCenter(targetEl);
@@ -275,6 +301,7 @@
   }
 
   function cameraShake(boardEl){
+    if (isPerfLiteMotion()) return;
     if (!boardEl?.classList) return;
     boardEl.classList.remove("fx-shake");
     void boardEl.offsetWidth;
@@ -297,6 +324,7 @@
   }
 
   async function animateAttack(attackerEl, targetEl, dmg = 0, boardEl = null, onImpact = null){
+    const liteMotion = isPerfLiteMotion();
     let resolved = false;
     const finish = () => {
       if (resolved) return;
@@ -309,20 +337,15 @@
       return;
     }
 
-    if (typeof attackerEl.animate !== "function") {
+    if (typeof attackerEl.animate !== "function" || liteMotion) {
       await wait(ATTACK_IMPACT_STOP_MS);
       triggerImpactFx(targetEl, boardEl || els?.arena, attackerEl);
       showDamagePop(targetEl, dmg);
-      await swapCardsWithFlip(attackerEl, targetEl, ATTACK_SWAP_MS);
-      finish();
-      return;
-    }
-
-    if (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
-      await wait(ATTACK_IMPACT_STOP_MS);
-      triggerImpactFx(targetEl, boardEl || els?.arena, attackerEl);
-      showDamagePop(targetEl, dmg);
-      await swapCardsWithFlip(attackerEl, targetEl, ATTACK_SWAP_MS);
+      if (liteMotion) {
+        swapCardsInstant(attackerEl, targetEl);
+      } else {
+        await swapCardsWithFlip(attackerEl, targetEl, ATTACK_SWAP_MS);
+      }
       finish();
       return;
     }
